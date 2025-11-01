@@ -54,13 +54,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(locked) return;
     const idx = Number(e.currentTarget.dataset.idx);
     if(matched.has(idx) || flipped.includes(idx)) return;
-    if(flipped.length >= 2) return; // Prevent more than 2 cards
+    
+    // Lock immediately if this will be the second card
+    if(flipped.length === 1){
+      locked = true;
+    }
     
     flipTile(e.currentTarget, deck[idx]);
     flipped.push(idx);
     
     if(flipped.length === 2){
-      locked = true;
       moves++;
       movesEl.textContent = moves;
       const [a,b] = flipped;
