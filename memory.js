@@ -52,16 +52,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   function onTile(e){
     if(locked) return;
+    if(flipped.length >= 2) return; // Already have 2 cards flipped
     const idx = Number(e.currentTarget.dataset.idx);
     if(matched.has(idx) || flipped.includes(idx)) return;
     
-    // Lock immediately if this will be the second card
-    if(flipped.length === 1){
-      locked = true;
-    }
-    
     flipTile(e.currentTarget, deck[idx]);
     flipped.push(idx);
+    
+    // Lock immediately after flipping second card
+    if(flipped.length === 2){
+      locked = true;
+    }
     
     if(flipped.length === 2){
       moves++;
