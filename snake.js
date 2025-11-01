@@ -33,10 +33,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     
     // Show instruction if not started
     if(!gameStarted){
-      ctx.fillStyle = '#fff';
-      ctx.font = '20px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.font = '18px Arial, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Press arrow key or WASD to start', canvas.width/2, canvas.height/2 - 40);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Press arrow key or WASD to start', canvas.width/2, canvas.height/2);
     }
   }
 
@@ -47,11 +48,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows){
       stop();
       ctx.fillStyle = '#ef4444';
-      ctx.font = 'bold 24px Inter, sans-serif';
+      ctx.font = 'bold 24px Arial, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Game Over! Hit a wall', canvas.width/2, canvas.height/2);
-      ctx.font = '16px Inter, sans-serif';
-      ctx.fillText('Press any key to restart', canvas.width/2, canvas.height/2 + 30);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Game Over! Hit a wall', canvas.width/2, canvas.height/2 - 20);
+      ctx.fillStyle = '#fff';
+      ctx.font = '16px Arial, sans-serif';
+      ctx.fillText('Press any key to restart', canvas.width/2, canvas.height/2 + 20);
       return;
     }
     
@@ -59,11 +62,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(snake.some(s=>s.x===head.x && s.y===head.y)){
       stop();
       ctx.fillStyle = '#ef4444';
-      ctx.font = 'bold 24px Inter, sans-serif';
+      ctx.font = 'bold 24px Arial, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Game Over! Hit yourself', canvas.width/2, canvas.height/2);
-      ctx.font = '16px Inter, sans-serif';
-      ctx.fillText('Press any key to restart', canvas.width/2, canvas.height/2 + 30);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Game Over! Hit yourself', canvas.width/2, canvas.height/2 - 20);
+      ctx.fillStyle = '#fff';
+      ctx.font = '16px Arial, sans-serif';
+      ctx.fillText('Press any key to restart', canvas.width/2, canvas.height/2 + 20);
       return;
     }
     
