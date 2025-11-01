@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Simon — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Simon Says memory game. Repeat the growing color sequence. How far can you go?" />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html"><img src="assets/favicon.svg" class="logo" alt="logo"/><span class="brand-text">Game Site</span></a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="index.html">Home</a>
+          <a href="tictactoe.html">Tic Tac Toe</a>
+          <a href="memory.html">Memory</a>
+          <a href="snake.html">Snake</a>
+          <a href="rps.html">RPS</a>
+          <a href="whack.html">Whack</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>Simon</h1>
+        <p class="muted">Repeat the color sequence. The sequence grows each round.</p>
+        <div id="simon-board" class="simon-board">
+          <div class="card-tile simon-pad simon-red" data-pad="0"></div>
+          <div class="card-tile simon-pad simon-yellow" data-pad="1"></div>
+          <div class="card-tile simon-pad simon-green" data-pad="2"></div>
+          <div class="card-tile simon-pad simon-blue" data-pad="3"></div>
+        </div>
+        <div class="flex-center mt-1">
+          <button id="simon-start" class="btn">Start</button>
+          <div class="muted">Level: <strong id="simon-level">0</strong></div>
+        </div>
+        <div id="simon-result" class="muted mt-half"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
+    <script src="script.js" defer></script>
+    <script src="simon.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Game Controller -->
+  <path d="M52 20C52 15 48 12 42 12H22C16 12 12 15 12 20L8 36C6 42 8 46 14 46C18 46 20 44 22 40L24 36H40L42 40C44 44 46 46 50 46C56 46 58 42 56 36L52 20Z" fill="url(#grad)" stroke="#1e293b" stroke-width="2"/>
+  <!-- D-pad -->
+  <rect x="18" y="22" width="4" height="12" rx="1" fill="#0f172a"/>
+  <rect x="16" y="26" width="8" height="4" rx="1" fill="#0f172a"/>
+  <!-- Buttons -->
+  <circle cx="44" cy="24" r="3" fill="#0f172a"/>
+  <circle cx="48" cy="28" r="3" fill="#0f172a"/>
+  <circle cx="40" cy="28" r="3" fill="#0f172a"/>
+  <circle cx="44" cy="32" r="3" fill="#0f172a"/>
+  <!-- Highlights -->
+  <ellipse cx="28" cy="18" rx="8" ry="3" fill="rgba(255,255,255,0.2)"/>
+</svg>

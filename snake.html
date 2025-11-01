@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Snake — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Classic Snake game in your browser. Use arrow keys to grow your snake and avoid hitting yourself!" />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Game Site</span>
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="index.html">Home</a>
+          <a href="tictactoe.html">Tic Tac Toe</a>
+          <a href="memory.html">Memory</a>
+          <a href="rps.html">RPS</a>
+          <a href="simon.html">Simon</a>
+          <a href="whack.html">Whack</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>Snake</h1>
+        <canvas id="snake" class="snake-canvas" width="400" height="400"></canvas>
+        <div class="controls">
+          <button id="start" class="btn">Start</button>
+          <button id="stop" class="btn">Stop</button>
+          <div class="status" id="snake-score"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
+    <script src="script.js" defer></script>
+    <script src="snake.js" defer></script>
+  </body>
+</html>

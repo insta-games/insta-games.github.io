@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Memory Match — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Test your memory with this classic card-matching game. Flip tiles, find pairs, and win!" />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Game Site</span>
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="index.html">Home</a>
+          <a href="tictactoe.html">Tic Tac Toe</a>
+          <a href="snake.html">Snake</a>
+          <a href="rps.html">RPS</a>
+          <a href="simon.html">Simon</a>
+          <a href="whack.html">Whack</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap">
+        <h1>Memory Match</h1>
+        <div class="flex-center" style="margin-bottom:1rem">
+          <div class="muted">Level: <strong id="mem-level">1</strong></div>
+          <div class="muted">Moves: <strong id="mem-moves">0</strong></div>
+        </div>
+        <div id="memory" class="memory-grid"></div>
+        <div class="controls">
+          <button id="restart" class="btn">Restart Level</button>
+          <div class="status" id="mem-status"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
+    <script src="script.js" defer></script>
+    <script src="memory.js" defer></script>
+  </body>
+</html>

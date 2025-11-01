@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rock Paper Scissors — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Play Rock-Paper-Scissors against the computer. Quick rounds, instant results, track your score!" />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html"><img src="assets/favicon.svg" class="logo" alt="logo"/><span class="brand-text">Game Site</span></a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="index.html">Home</a>
+          <a href="tictactoe.html">Tic Tac Toe</a>
+          <a href="memory.html">Memory</a>
+          <a href="snake.html">Snake</a>
+          <a href="simon.html">Simon</a>
+          <a href="whack.html">Whack</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>Rock · Paper · Scissors</h1>
+        <p class="muted">Best of many rounds — play against the computer.</p>
+        <div class="game-controls mt-1">
+          <button class="btn" data-choice="rock">🪨 Rock</button>
+          <button class="btn" data-choice="paper">📄 Paper</button>
+          <button class="btn" data-choice="scissors">✂️ Scissors</button>
+        </div>
+        <div class="flex-center mt-1">
+          <div>Player: <strong id="score-player">0</strong></div>
+          <div>Computer: <strong id="score-computer">0</strong></div>
+        </div>
+        <div id="rps-result" class="muted mt-half"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
+    <script src="script.js" defer></script>
+    <script src="rps.js" defer></script>
+  </body>
+</html>

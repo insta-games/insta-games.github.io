@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Game Site — Play Browser Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="A small collection of browser games — polished UI and responsive layout." />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Game Site</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="features">
+        <div class="grid">
+          <article class="card">
+            <h3>Tic Tac Toe</h3>
+            <p>Classic 3×3. Two players share the same keyboard.</p>
+            <p><a class="btn" href="tictactoe.html">Play</a></p>
+          </article>
+          <article class="card">
+            <h3>Memory Match</h3>
+            <p>Flip tiles and find pairs.</p>
+            <p><a class="btn" href="memory.html">Play</a></p>
+          </article>
+          <article class="card">
+            <h3>Snake</h3>
+            <p>The classic snake game — arrow keys to move.</p>
+            <p><a class="btn" href="snake.html">Play</a></p>
+          </article>
+          <article class="card">
+            <h3>Rock · Paper · Scissors</h3>
+            <p>Quick round-based game — beat the computer.</p>
+            <p><a class="btn" href="rps.html">Play</a></p>
+          </article>
+          <article class="card">
+            <h3>Simon</h3>
+            <p>Repeat the color sequence. How long can you go?</p>
+            <p><a class="btn" href="simon.html">Play</a></p>
+          </article>
+          <article class="card">
+            <h3>Whack-a-Mole</h3>
+            <p>Click the mole when it appears. Beat the timer.</p>
+            <p><a class="btn" href="whack.html">Play</a></p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><small>&copy; <span id="year"></span> Game Site</small></div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
