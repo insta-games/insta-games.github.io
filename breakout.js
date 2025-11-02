@@ -9,13 +9,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let bricks = [];
   let score = 0;
   let lives = 3;
+  let level = 1;
   let running = false;
   let gameOver = false;
   let won = false;
   let loopId = null;
 
-  // Brick setup
-  const brickRows = 5;
+  // Brick setup - increases with level
+  const brickRows = Math.min(5 + Math.floor((level - 1) / 2), 8); // 5-8 rows
   const brickCols = 8;
   const brickW = 55;
   const brickH = 20;
@@ -25,13 +26,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   function initBricks(){
     bricks = [];
-    for(let r=0; r<brickRows; r++){
+    const rows = Math.min(5 + Math.floor((level - 1) / 2), 8);
+    const colors = ['#ef4444','#f59e0b','#10b981','#06b6d4','#8b5cf6','#ec4899','#f97316','#14b8a6'];
+    for(let r=0; r<rows; r++){
       for(let c=0; c<brickCols; c++){
         bricks.push({
           x: c * (brickW + brickPadding) + brickOffsetLeft,
           y: r * (brickH + brickPadding) + brickOffsetTop,
           status: 1,
-          color: ['#ef4444','#f59e0b','#10b981','#06b6d4','#8b5cf6'][r]
+          color: colors[r % colors.length]
         });
       }
     }
@@ -41,10 +44,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
     paddle.x = canvas.width/2 - 50;
     ball.x = canvas.width/2;
     ball.y = canvas.height - 50;
-    ball.dx = 3;
-    ball.dy = -3;
+    // Ball speed increases with level
+    const speedMultiplier = 1 + (level - 1) * 0.15;
+    ball.dx = 3 * speedMultiplier;
+    ball.dy = -3 * speedMultiplier;
     score = 0;
     lives = 3;
+    level = 1;
     gameOver = false;
     won = false;
     initBricks();
@@ -53,7 +59,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   function updateStatus(){
-    statusEl.textContent = `Score: ${score} | Lives: ${lives}`;
+    statusEl.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
   }
 
   function draw(){
@@ -104,10 +110,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
       ctx.font = 'bold 28px Arial, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('You Win!', canvas.width/2, canvas.height/2 - 20);
+      if(level >= 10){
+        ctx.fillText('You Beat All 10 Levels!', canvas.width/2, canvas.height/2 - 20);
+      } else {
+        ctx.fillText(`Level ${level} Complete!`, canvas.width/2, canvas.height/2 - 20);
+      }
       ctx.fillStyle = '#fff';
       ctx.font = '16px Arial, sans-serif';
-      ctx.fillText('Press SPACE or tap to restart', canvas.width/2, canvas.height/2 + 20);
+      if(level >= 10){
+        ctx.fillText('Press SPACE or tap to restart', canvas.width/2, canvas.height/2 + 20);
+      } else {
+        ctx.fillText('Next level starting...', canvas.width/2, canvas.height/2 + 20);
+      }
     }
   }
 
@@ -136,8 +150,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
       } else {
         ball.x = canvas.width/2;
         ball.y = canvas.height - 50;
-        ball.dx = 3;
-        ball.dy = -3;
+        const speedMultiplier = 1 + (level - 1) * 0.15;
+        ball.dx = 3 * speedMultiplier;
+        ball.dy = -3 * speedMultiplier;
         running = false;
       }
     }
@@ -168,9 +183,34 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(bricks.every(b => b.status === 0)){
       running = false;
       won = true;
+      // Advance to next level
+      setTimeout(()=>{
+        if(level < 10){
+          level++;
+          nextLevel();
+        } else {
+          // Beat all 10 levels
+          won = true;
+        }
+      }, 1500);
     }
 
     draw();
+  }
+
+  function nextLevel(){
+    paddle.x = canvas.width/2 - 50;
+    ball.x = canvas.width/2;
+    ball.y = canvas.height - 50;
+    // Ball speed increases with level
+    const speedMultiplier = 1 + (level - 1) * 0.15;
+    ball.dx = 3 * speedMultiplier;
+    ball.dy = -3 * speedMultiplier;
+    won = false;
+    initBricks();
+    updateStatus();
+    draw();
+    running = true;
   }
 
   function start(){
