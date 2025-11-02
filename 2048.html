@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Breakout — Game Site</title>
+    <title>2048 — Game Site</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css" />
-    <meta name="description" content="Classic Breakout brick breaker game. Use arrow keys, mouse, or touch to control the paddle!" />
+    <meta name="description" content="Classic 2048 puzzle game. Combine tiles to reach 2048! Single-player and multiplayer modes." />
   </head>
   <body>
     <header class="site-header shadow">
@@ -26,25 +26,30 @@
           <a href="snake.html">Snake</a>
           <a href="simon.html">Simon</a>
           <a href="whack.html">Whack</a>
+          <a href="breakout.html">Breakout</a>
           <a href="pong.html">Pong</a>
-          <a href="2048.html">2048</a>
         </nav>
       </div>
     </header>
 
     <main class="container">
       <section class="game-wrap center">
-        <h1>Breakout</h1>
-        <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Use arrow keys, mouse, or touch to move the paddle. Break all bricks!</p>
-        <canvas id="breakout" class="snake-canvas" width="480" height="400"></canvas>
-        <div class="controls">
-          <div class="status" id="breakout-score" style="margin:0 auto;">Level: 1 | Score: 0 | Lives: 3</div>
+        <h1>2048</h1>
+        <div style="text-align:center;margin-bottom:1rem;">
+          <button id="mode-single" class="btn" style="margin:0.5rem;">Single Player</button>
+          <button id="mode-multi" class="btn" style="margin:0.5rem;">Multiplayer</button>
+        </div>
+        <p id="game-mode-text" style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Single Player: Use arrow keys or swipe to combine tiles!</p>
+        <div id="game-2048" class="game-2048"></div>
+        <div class="controls" style="margin-top:1rem;">
+          <button id="restart-2048" class="btn">Restart</button>
+          <div class="status" id="status-2048" style="margin-left:1rem;">Score: 0</div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
     <script src="script.js" defer></script>
-    <script src="breakout.js" defer></script>
+    <script src="2048.js" defer></script>
   </body>
 </html>

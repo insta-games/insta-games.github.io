@@ -398,3 +398,15 @@ body{
   -webkit-user-select: none;
   user-select: none;
 }
+
+/* 2048 styles */
+.tile-2048 {
+  height: 70px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
