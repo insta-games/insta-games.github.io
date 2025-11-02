@@ -35,7 +35,14 @@
     <main class="container">
       <section class="game-wrap center">
         <h1>Breakout</h1>
-        <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Use arrow keys, mouse, or touch to move the paddle. Break all bricks!</p>
+        
+        <!-- Mode Selection -->
+        <div class="controls" style="margin-bottom:1rem;">
+          <button id="singleBtn" class="btn">Single Player</button>
+          <button id="multiBtn" class="btn">2 Players</button>
+        </div>
+        <div id="modeText" class="muted" style="text-align:center;margin-bottom:1rem;"></div>
+        
         <canvas id="breakout" class="snake-canvas" width="480" height="400"></canvas>
         <div class="controls">
           <div class="status" id="breakout-score" style="margin:0 auto;">Level: 1 | Score: 0 | Lives: 3</div>

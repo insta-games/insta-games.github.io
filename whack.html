@@ -32,13 +32,21 @@
     <main class="container">
       <section class="game-wrap center">
         <h1>Whack-a-Mole</h1>
-        <p class="muted">Click the mole when it appears. 30-second rounds.</p>
+        
+        <!-- Mode Selection -->
+        <div class="controls" style="margin-bottom:1rem;">
+          <button id="singleBtn" class="btn">Single Player</button>
+          <button id="multiBtn" class="btn">2 Players</button>
+        </div>
+        <div id="modeText" class="muted" style="text-align:center;margin-bottom:1rem;"></div>
+        
         <div id="whack-grid" class="whack-grid">
         </div>
         <div class="flex-center mt-1">
           <button id="whack-start" class="btn">Start</button>
           <div class="muted">Time: <strong id="whack-time">30</strong>s</div>
-          <div class="muted">Score: <strong id="whack-score">0</strong></div>
+          <div class="muted" id="score1-container">Score: <strong id="whack-score">0</strong></div>
+          <div class="muted" id="score2-container" style="display:none;">P2: <strong id="whack-score2">0</strong></div>
         </div>
       </section>
     </main>

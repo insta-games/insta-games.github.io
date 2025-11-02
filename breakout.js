@@ -2,8 +2,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const canvas = document.getElementById('breakout');
   const ctx = canvas.getContext('2d');
   const statusEl = document.getElementById('breakout-score');
+  const singleBtn = document.getElementById('singleBtn');
+  const multiBtn = document.getElementById('multiBtn');
+  const modeText = document.getElementById('modeText');
 
   // Game state
+  let mode = 'single'; // 'single' or 'multi'
   let paddle = {x: canvas.width/2 - 50, y: canvas.height - 30, w: 100, h: 12, speed: 8};
   let ball = {x: canvas.width/2, y: canvas.height - 50, dx: 3, dy: -3, r: 6};
   let bricks = [];
@@ -14,6 +18,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let gameOver = false;
   let won = false;
   let loopId = null;
+  
+  // Multiplayer state
+  let currentPlayer = 1;
+  let player1Score = 0;
+  let player2Score = 0;
+  let player1Lives = 3;
+  let player2Lives = 3;
 
   // Brick setup - increases with level
   const brickRows = Math.min(5 + Math.floor((level - 1) / 2), 8); // 5-8 rows
@@ -48,9 +59,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const speedMultiplier = 1 + (level - 1) * 0.15;
     ball.dx = 3 * speedMultiplier;
     ball.dy = -3 * speedMultiplier;
-    score = 0;
-    lives = 3;
-    level = 1;
+    
+    if(mode === 'single'){
+      score = 0;
+      lives = 3;
+      level = 1;
+    } else {
+      // In multiplayer, reset everything
+      currentPlayer = 1;
+      player1Score = 0;
+      player2Score = 0;
+      player1Lives = 3;
+      player2Lives = 3;
+      level = 1;
+    }
+    
     gameOver = false;
     won = false;
     initBricks();
@@ -59,7 +82,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   function updateStatus(){
-    statusEl.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
+    if(mode === 'single'){
+      statusEl.textContent = `Level: ${level} | Score: ${score} | Lives: ${lives}`;
+    } else {
+      statusEl.textContent = `P${currentPlayer}'s Turn | P1: ${player1Score} (${player1Lives}❤) | P2: ${player2Score} (${player2Lives}❤)`;
+    }
   }
 
   function draw(){
@@ -76,7 +103,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     // Paddle
-    ctx.fillStyle = '#06b6d4';
+    ctx.fillStyle = mode === 'multi' && currentPlayer === 2 ? '#f59e0b' : '#06b6d4';
     ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
 
     // Ball
@@ -91,7 +118,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
       ctx.font = '18px Arial, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('Press SPACE or tap to start', canvas.width/2, canvas.height/2);
+      const startText = mode === 'multi' ? `Player ${currentPlayer}: Press SPACE to start` : 'Press SPACE or tap to start';
+      ctx.fillText(startText, canvas.width/2, canvas.height/2);
     }
 
     if(gameOver){
@@ -99,10 +127,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
       ctx.font = 'bold 28px Arial, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 - 20);
-      ctx.fillStyle = '#fff';
-      ctx.font = '16px Arial, sans-serif';
-      ctx.fillText('Press SPACE or tap to restart', canvas.width/2, canvas.height/2 + 20);
+      
+      if(mode === 'multi'){
+        const winner = player1Score > player2Score ? 'Player 1' : player2Score > player1Score ? 'Player 2' : 'Tie';
+        ctx.fillText(winner === 'Tie' ? "It's a Tie!" : `${winner} Wins!`, canvas.width/2, canvas.height/2 - 30);
+        ctx.fillStyle = '#fff';
+        ctx.font = '16px Arial, sans-serif';
+        ctx.fillText(`P1: ${player1Score} | P2: ${player2Score}`, canvas.width/2, canvas.height/2);
+        ctx.fillText('Press SPACE or tap to restart', canvas.width/2, canvas.height/2 + 30);
+      } else {
+        ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 - 20);
+        ctx.fillStyle = '#fff';
+        ctx.font = '16px Arial, sans-serif';
+        ctx.fillText('Press SPACE or tap to restart', canvas.width/2, canvas.height/2 + 20);
+      }
     }
 
     if(won){
@@ -142,17 +180,48 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     // Bottom - lose life
     if(ball.y + ball.r > canvas.height){
-      lives--;
-      updateStatus();
-      if(lives <= 0){
-        running = false;
-        gameOver = true;
+      if(mode === 'single'){
+        lives--;
+        updateStatus();
+        if(lives <= 0){
+          running = false;
+          gameOver = true;
+        } else {
+          ball.x = canvas.width/2;
+          ball.y = canvas.height - 50;
+          const speedMultiplier = 1 + (level - 1) * 0.15;
+          ball.dx = 3 * speedMultiplier;
+          ball.dy = -3 * speedMultiplier;
+          running = false;
+        }
       } else {
-        ball.x = canvas.width/2;
-        ball.y = canvas.height - 50;
-        const speedMultiplier = 1 + (level - 1) * 0.15;
-        ball.dx = 3 * speedMultiplier;
-        ball.dy = -3 * speedMultiplier;
+        // Multiplayer: lose life and switch turns
+        if(currentPlayer === 1){
+          player1Lives--;
+          if(player1Lives <= 0 && player2Lives <= 0){
+            running = false;
+            gameOver = true;
+          } else if(player1Lives > 0){
+            currentPlayer = 2;
+            resetBall();
+          } else {
+            currentPlayer = 2;
+            resetBall();
+          }
+        } else {
+          player2Lives--;
+          if(player1Lives <= 0 && player2Lives <= 0){
+            running = false;
+            gameOver = true;
+          } else if(player2Lives > 0){
+            currentPlayer = 1;
+            resetBall();
+          } else {
+            currentPlayer = 1;
+            resetBall();
+          }
+        }
+        updateStatus();
         running = false;
       }
     }
@@ -173,7 +242,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
            ball.y > b.y && ball.y < b.y + brickH){
           ball.dy = -ball.dy;
           b.status = 0;
-          score += 10;
+          
+          if(mode === 'single'){
+            score += 10;
+          } else {
+            if(currentPlayer === 1){
+              player1Score += 10;
+            } else {
+              player2Score += 10;
+            }
+          }
           updateStatus();
         }
       }
@@ -183,19 +261,36 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(bricks.every(b => b.status === 0)){
       running = false;
       won = true;
-      // Advance to next level
-      setTimeout(()=>{
-        if(level < 10){
-          level++;
-          nextLevel();
-        } else {
-          // Beat all 10 levels
-          won = true;
-        }
-      }, 1500);
+      
+      if(mode === 'single'){
+        // Advance to next level
+        setTimeout(()=>{
+          if(level < 10){
+            level++;
+            nextLevel();
+          } else {
+            // Beat all 10 levels
+            won = true;
+          }
+        }, 1500);
+      } else {
+        // In multiplayer, game ends when all bricks cleared
+        setTimeout(()=>{
+          gameOver = true;
+        }, 1000);
+      }
     }
 
     draw();
+  }
+  
+  function resetBall(){
+    ball.x = canvas.width/2;
+    ball.y = canvas.height - 50;
+    const speedMultiplier = 1 + (level - 1) * 0.15;
+    ball.dx = 3 * speedMultiplier;
+    ball.dy = -3 * speedMultiplier;
+    paddle.x = canvas.width/2 - 50;
   }
 
   function nextLevel(){
@@ -292,6 +387,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
     requestAnimationFrame(mainLoop);
   }
 
-  reset();
+  function setMode(newMode){
+    mode = newMode;
+    reset();
+    running = false;
+    
+    if(mode === 'single'){
+      singleBtn.classList.add('active');
+      multiBtn.classList.remove('active');
+      modeText.textContent = 'Single Player: Break all bricks across 10 levels!';
+    } else {
+      multiBtn.classList.add('active');
+      singleBtn.classList.remove('active');
+      modeText.textContent = 'Multiplayer: Players take turns. Highest score wins!';
+    }
+  }
+
+  singleBtn.addEventListener('click', () => setMode('single'));
+  multiBtn.addEventListener('click', () => setMode('multi'));
+
+  setMode('single');
   mainLoop();
 });
