@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>2048 — Game Site</title>
+    <title>Minesweeper — Game Site</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css" />
-    <meta name="description" content="Classic 2048 puzzle game. Combine tiles to reach 2048! Single-player and multiplayer modes." />
+    <meta name="description" content="Classic Minesweeper game with three difficulty levels. Left-click to reveal, right-click to flag!" />
   </head>
   <body>
     <header class="site-header shadow">
@@ -28,29 +28,36 @@
           <a href="whack.html">Whack</a>
           <a href="breakout.html">Breakout</a>
           <a href="pong.html">Pong</a>
-          <a href="minesweeper.html">Minesweeper</a>
+          <a href="2048.html">2048</a>
         </nav>
       </div>
     </header>
 
     <main class="container">
       <section class="game-wrap center">
-        <h1>2048</h1>
-        <div style="text-align:center;margin-bottom:1rem;">
-          <button id="mode-single" class="btn" style="margin:0.5rem;">Single Player</button>
-          <button id="mode-multi" class="btn" style="margin:0.5rem;">Multiplayer</button>
+        <h1>Minesweeper</h1>
+        
+        <!-- Difficulty Selection -->
+        <div class="controls" style="margin-bottom:1rem;">
+          <button id="easyBtn" class="btn">Easy</button>
+          <button id="mediumBtn" class="btn">Medium</button>
+          <button id="hardBtn" class="btn">Hard</button>
         </div>
-        <p id="game-mode-text" style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Single Player: Use arrow keys or swipe to combine tiles!</p>
-        <div id="game-2048" class="game-2048"></div>
+        <div id="difficultyText" class="muted" style="text-align:center;margin-bottom:1rem;"></div>
+        
+        <div id="minesweeper-grid" class="minesweeper-grid"></div>
+        
         <div class="controls" style="margin-top:1rem;">
-          <button id="restart-2048" class="btn">Restart</button>
-          <div class="status" id="status-2048" style="margin-left:1rem;">Score: 0</div>
+          <button id="restart" class="btn">New Game</button>
+          <div class="muted">Mines: <strong id="mine-count">10</strong></div>
+          <div class="muted">Time: <strong id="timer">0</strong>s</div>
+          <div class="status" id="game-status"></div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
     <script src="script.js" defer></script>
-    <script src="2048.js" defer></script>
+    <script src="minesweeper.js" defer></script>
   </body>
 </html>
