@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris - Game Collection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <h1>🎮 Game Collection</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="tictactoe.html">Tic Tac Toe</a>
+            <a href="memory.html">Memory</a>
+            <a href="snake.html">Snake</a>
+            <a href="simon.html">Simon</a>
+            <a href="whack.html">Whack-a-Mole</a>
+            <a href="breakout.html">Breakout</a>
+            <a href="pong.html">Pong</a>
+            <a href="2048.html">2048</a>
+            <a href="minesweeper.html">Minesweeper</a>
+            <a href="flappy.html">Flappy Bird</a>
+            <a href="invaders.html">Space Invaders</a>
+            <a href="tetris.html" class="active">Tetris</a>
+        </div>
+    </nav>
+
+    <main>
+        <h2>Tetris</h2>
+        <div class="game-info">
+            <p>Score: <span id="score">0</span></p>
+            <p>Lines: <span id="lines">0</span></p>
+            <p>Level: <span id="level">1</span></p>
+        </div>
+        
+        <div style="display: flex; gap: 20px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+            <canvas id="tetrisCanvas" width="300" height="600"></canvas>
+            <div>
+                <h3>Next Piece</h3>
+                <canvas id="nextCanvas" width="120" height="120"></canvas>
+                <div style="margin-top: 20px;">
+                    <h3>Controls</h3>
+                    <p>⬅️ ➡️ Move</p>
+                    <p>⬆️ Rotate</p>
+                    <p>⬇️ Soft Drop</p>
+                    <p>SPACE Hard Drop</p>
+                    <p>P Pause</p>
+                </div>
+                <button id="restartBtn" style="margin-top: 20px;">New Game</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="tetris.js"></script>
+</body>
+</html>
