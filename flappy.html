@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pong — Game Site</title>
+    <title>Flappy Bird — Game Site</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css" />
-    <meta name="description" content="Classic Pong game. Play against AI. Use arrow keys, WASD, or touch controls!" />
+    <meta name="description" content="Flappy Bird game. Tap or press SPACE to flap. Navigate through pipes and beat your high score!" />
   </head>
   <body>
     <header class="site-header shadow">
@@ -24,37 +24,29 @@
           <a href="tictactoe.html">Tic Tac Toe</a>
           <a href="memory.html">Memory</a>
           <a href="snake.html">Snake</a>
-                <a href="simon.html">Simon</a>
-      <a href="whack.html">Whack</a>
-      <a href="breakout.html">Breakout</a>
-      <a href="2048.html">2048</a>
-      <a href="minesweeper.html">Minesweeper</a>
-      <a href="flappy.html">Flappy Bird</a>
-    </nav>
+          <a href="simon.html">Simon</a>
+          <a href="whack.html">Whack</a>
+          <a href="breakout.html">Breakout</a>
+          <a href="pong.html">Pong</a>
+          <a href="2048.html">2048</a>
+          <a href="minesweeper.html">Minesweeper</a>
         </nav>
       </div>
     </header>
 
     <main class="container">
       <section class="game-wrap center">
-        <h1>Pong</h1>
-        
-        <!-- Mode Selection -->
-        <div class="controls" style="margin-bottom:1rem;">
-          <button id="singleBtn" class="btn">Single Player (vs AI)</button>
-          <button id="multiBtn" class="btn">2 Players</button>
-        </div>
-        <div id="modeText" class="muted" style="text-align:center;margin-bottom:1rem;"></div>
-        
-        <canvas id="pong" class="snake-canvas" width="600" height="400"></canvas>
+        <h1>Flappy Bird</h1>
+        <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Press SPACE or tap to flap!</p>
+        <canvas id="flappy" class="snake-canvas" width="400" height="600"></canvas>
         <div class="controls">
-          <div class="status" id="pong-score" style="margin:0 auto;">You: 0 | AI: 0</div>
+          <div class="status" id="flappy-status" style="margin:0 auto;">Score: 0 | High Score: 0</div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Game Site</small></div></footer>
     <script src="script.js" defer></script>
-    <script src="pong.js" defer></script>
+    <script src="flappy.js" defer></script>
   </body>
 </html>
