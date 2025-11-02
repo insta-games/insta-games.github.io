@@ -106,6 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     gridEl.innerHTML = '';
     gridEl.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
     gridEl.style.gridTemplateRows = `repeat(${rows}, 30px)`;
+    
+    console.log(`Rendering grid: ${rows}x${cols}, Total cells: ${rows * cols}`);
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -136,6 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gridEl.appendChild(cell);
       }
     }
+    
+    console.log(`Grid element children: ${gridEl.children.length}`);
   }
 
   function handleCellClick(e) {
@@ -238,6 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function setDifficulty(level) {
     difficulty = level;
     
+    console.log(`Setting difficulty to: ${level}`);
+    
     easyBtn.classList.remove('active');
     mediumBtn.classList.remove('active');
     hardBtn.classList.remove('active');
@@ -261,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
   hardBtn.addEventListener('click', () => setDifficulty('hard'));
   restartBtn.addEventListener('click', () => setDifficulty(difficulty));
 
+  console.log('Minesweeper script loaded, initializing...');
   // Start with easy difficulty
   setDifficulty('easy');
 });
