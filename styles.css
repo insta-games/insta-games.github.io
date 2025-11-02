@@ -418,7 +418,13 @@ body{
   background: #334155;
   padding: 2px;
   border-radius: 4px;
-  margin: 0 auto;
+  margin: 1rem auto;
+  justify-self: center;
+}
+
+.game-wrap.center .minesweeper-grid {
+  display: grid;
+  margin: 1rem auto;
 }
 
 .mine-cell {
@@ -433,6 +439,7 @@ body{
   font-weight: 700;
   cursor: pointer;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .mine-cell:hover:not(.revealed) {
