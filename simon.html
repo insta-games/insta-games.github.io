@@ -25,6 +25,14 @@
     <main class="container">
       <section class="game-wrap center">
         <h1>Simon</h1>
+        
+        <!-- Mode Selection -->
+        <div class="controls" style="margin-bottom:1rem;">
+          <button id="singleBtn" class="btn">Single Player</button>
+          <button id="multiBtn" class="btn">2 Players</button>
+        </div>
+        <div id="modeText" class="muted" style="text-align:center;margin-bottom:1rem;"></div>
+        
         <p class="muted">Repeat the color sequence. The sequence grows each round.</p>
         <div id="simon-board" class="simon-board">
           <div class="card-tile simon-pad simon-red" data-pad="0"></div>
@@ -35,6 +43,10 @@
         <div class="flex-center mt-1">
           <button id="simon-start" class="btn">Start</button>
           <div class="muted">Level: <strong id="simon-level">0</strong></div>
+          <div class="muted" id="player-scores" style="display:none;">
+            P1: <strong id="p1-score">0</strong> | 
+            P2: <strong id="p2-score">0</strong>
+          </div>
         </div>
         <div id="simon-result" class="muted mt-half"></div>
       </section>
