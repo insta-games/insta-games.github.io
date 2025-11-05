@@ -4,9 +4,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const status = document.getElementById('mem-status');
   const levelEl = document.getElementById('mem-level');
   const movesEl = document.getElementById('mem-moves');
-  const singleBtn = document.getElementById('singleBtn');
-  const multiBtn = document.getElementById('multiBtn');
-  const modeText = document.getElementById('modeText');
   const playerScores = document.getElementById('player-scores');
   const p1ScoreEl = document.getElementById('p1-score');
   const p2ScoreEl = document.getElementById('p2-score');
@@ -33,33 +30,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     {pairs: 12, cols: 6},  // Level 5: 6x4 (24 cards)
   ];
   
-  // Mode selection
-  singleBtn.addEventListener('click', () => {
-    isMultiplayer = false;
-    singleBtn.style.background = '#06b6d4';
-    multiBtn.style.background = '';
-    modeText.textContent = 'Single Player Mode';
-    playerScores.style.display = 'none';
-    restart.click();
-  });
-  
-  multiBtn.addEventListener('click', () => {
-    isMultiplayer = true;
-    multiBtn.style.background = '#06b6d4';
-    singleBtn.style.background = '';
-    modeText.textContent = '2 Player Mode - Player 1\'s turn';
-    playerScores.style.display = 'block';
-    p1Score = 0;
-    p2Score = 0;
-    currentPlayer = 1;
-    p1ScoreEl.textContent = '0';
-    p2ScoreEl.textContent = '0';
-    restart.click();
-  });
-  
-  // Start with single player
-  singleBtn.click();
-
   function shuffle(a){
     return a.sort(()=>Math.random()-0.5);
   }
