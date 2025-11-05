@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
         resultEl.textContent = `Player ${currentPlayer} made a mistake! Player ${otherPlayer} gets a point!`;
         currentPlayer = otherPlayer;
-        modeText.textContent = `Player ${currentPlayer}'s turn`;
       } else {
         resultEl.textContent = 'Wrong — try again (press Start)';
       }
