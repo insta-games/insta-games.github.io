@@ -218,4 +218,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     build();
   });
+
+  // Initialize the game
+  build();
 });
