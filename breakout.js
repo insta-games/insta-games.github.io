@@ -168,8 +168,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     ball.y += ball.dy;
 
     // Wall collisions
-    if(ball.x + ball.r > canvas.width || ball.x - ball.r < 0){
-      ball.dx = -ball.dx;
+    if(ball.x + ball.r > canvas.width){
+      // reflect and nudge back inside to avoid getting stuck
+      ball.x = canvas.width - ball.r - 0.5;
+      ball.dx = -Math.abs(ball.dx) || -3;
+      if(Math.abs(ball.dx) < 1) ball.dx = (ball.dx < 0 ? -1.5 : 1.5);
+    } else if(ball.x - ball.r < 0){
+      ball.x = ball.r + 0.5;
+      ball.dx = Math.abs(ball.dx) || 3;
+      if(Math.abs(ball.dx) < 1) ball.dx = (ball.dx < 0 ? -1.5 : 1.5);
     }
     if(ball.y - ball.r < 0){
       ball.dy = -ball.dy;

@@ -31,6 +31,13 @@
         
         <canvas id="pong" class="snake-canvas" width="600" height="400"></canvas>
         <div class="controls">
+          <label for="pong-difficulty" style="align-self:center;color:var(--muted)">Difficulty:</label>
+          <select id="pong-difficulty" class="btn" style="padding:0.5rem 0.75rem;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+            <option value="impossible" selected>Impossible</option>
+          </select>
           <button id="reset" class="btn reset-scores">Reset</button>
           <div class="status" id="pong-score" style="margin:0 auto;">You: 0 | AI: 0</div>
         </div>

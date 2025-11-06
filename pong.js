@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let running = false;
   let gameOver = false;
   let winner = '';
+  // difficulty selector
+  const diffEl = document.getElementById('pong-difficulty');
+  let difficulty = diffEl?.value || 'impossible';
+  if (diffEl) diffEl.addEventListener('change', (e) => { difficulty = e.target.value; });
 
   function reset(){
     ball.x = canvas.width/2;
@@ -161,14 +165,34 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     // Move opponent paddle (AI or Player 2)
     if (mode === 'single') {
-      // AI follows ball with slight delay
+      // AI behavior depends on difficulty
       const aiCenter = opponent.y + opponent.h/2;
-      if(ball.x > canvas.width/2){ // Only track when ball is on AI side
-        if(ball.y < aiCenter - 10){
-          opponent.y -= opponent.speed;
-        } else if(ball.y > aiCenter + 10){
-          opponent.y += opponent.speed;
+      const targetY = ball.y - opponent.h/2;
+      if (difficulty === 'easy') {
+        // Randomized, slow reactions. Only track when ball is very near the AI side
+        if (ball.x > canvas.width * 0.75) {
+          if (Math.random() < 0.6) {
+            if (aiCenter < ball.y - 6) opponent.y += opponent.speed * 0.6;
+            else if (aiCenter > ball.y + 6) opponent.y -= opponent.speed * 0.6;
+          }
         }
+      } else if (difficulty === 'medium') {
+        // Try to track, but with occasional mistakes
+        if (ball.x > canvas.width/2) {
+          const miss = Math.random() < 0.12; // 12% chance to miss
+          const aim = miss ? ball.y + (Math.random() - 0.5) * 80 : ball.y;
+          if (aiCenter < aim - 6) opponent.y += opponent.speed * 0.9;
+          else if (aiCenter > aim + 6) opponent.y -= opponent.speed * 0.9;
+        }
+      } else if (difficulty === 'hard') {
+        // Strong tracking with small reaction lag
+        if (ball.x > canvas.width/2) {
+          if (aiCenter < targetY - 4) opponent.y += opponent.speed * 1.1;
+          else if (aiCenter > targetY + 4) opponent.y -= opponent.speed * 1.1;
+        }
+      } else {
+        // impossible: perfect tracking (follow ball exactly)
+        opponent.y = ball.y - opponent.h/2;
       }
     } else {
       // Player 2 controls
