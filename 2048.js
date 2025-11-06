@@ -216,15 +216,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   // Keyboard controls
+  let lastMoveTime = 0;
+  const MOVE_COOLDOWN = 120; // ms
   document.addEventListener('keydown', (e)=>{
-    if(e.key === 'ArrowLeft') { e.preventDefault(); move('left'); }
-    if(e.key === 'ArrowRight') { e.preventDefault(); move('right'); }
-    if(e.key === 'ArrowUp') { e.preventDefault(); move('up'); }
-    if(e.key === 'ArrowDown') { e.preventDefault(); move('down'); }
-    if(e.key === 'a' || e.key === 'A') { e.preventDefault(); move('left'); }
-    if(e.key === 'd' || e.key === 'D') { e.preventDefault(); move('right'); }
-    if(e.key === 'w' || e.key === 'W') { e.preventDefault(); move('up'); }
-    if(e.key === 's' || e.key === 'S') { e.preventDefault(); move('down'); }
+    // ignore auto-repeats to prevent spamming
+    if (e.repeat) return;
+    const now = Date.now();
+    if (now - lastMoveTime < MOVE_COOLDOWN) return;
+
+    const handle = (dir) => { lastMoveTime = Date.now(); move(dir); };
+
+    if(e.key === 'ArrowLeft') { e.preventDefault(); handle('left'); }
+    if(e.key === 'ArrowRight') { e.preventDefault(); handle('right'); }
+    if(e.key === 'ArrowUp') { e.preventDefault(); handle('up'); }
+    if(e.key === 'ArrowDown') { e.preventDefault(); handle('down'); }
+    if(e.key === 'a' || e.key === 'A') { e.preventDefault(); handle('left'); }
+    if(e.key === 'd' || e.key === 'D') { e.preventDefault(); handle('right'); }
+    if(e.key === 'w' || e.key === 'W') { e.preventDefault(); handle('up'); }
+    if(e.key === 's' || e.key === 'S') { e.preventDefault(); handle('down'); }
   });
 
   // Touch controls

@@ -213,9 +213,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // Keyboard controls
   let keys = {};
   document.addEventListener('keydown', (e)=>{
+    // prevent page scroll for arrow keys, space, and WASD used for controls
+    if(['ArrowUp','ArrowDown',' ','w','W','s','S'].includes(e.key)) {
+      try { e.preventDefault(); } catch (err) {}
+    }
     keys[e.key] = true;
     if(e.key === ' '){
-      e.preventDefault();
       if(!running){
         start();
       }
