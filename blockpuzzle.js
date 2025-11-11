@@ -53,7 +53,7 @@ function generateNewPieces() {
         currentPieces.push({
             shape: JSON.parse(JSON.stringify(shape)),
             color: colors[Math.floor(Math.random() * colors.length)],
-            x: 50 + i * 160,
+            x: 20 + i * 165,
             y: PIECES_Y,
             placed: false
         });
@@ -363,7 +363,7 @@ canvas.addEventListener('mouseup', (e) => {
         } else {
             // Return to original position
             const index = currentPieces.indexOf(draggedPiece);
-            draggedPiece.x = 50 + index * 160;
+            draggedPiece.x = 20 + index * 165;
             draggedPiece.y = PIECES_Y;
         }
         
