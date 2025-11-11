@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Brick Breaker — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Play Brick Breaker - Break all the bricks!" />
+</head>
+<body class="game-page">
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <img src="assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Game Site</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="index.html">Single Player</a>
+                <a href="index.html#multiplayer">Multiplayer</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="game-container">
+            <div class="game-header">
+                <h1>🧱 Brick Breaker</h1>
+                <div class="game-info">
+                    <span id="score">Score: 0</span>
+                    <span id="level">Level: 1</span>
+                    <span id="lives">Lives: 3</span>
+                </div>
+            </div>
+
+            <canvas id="gameCanvas" width="600" height="500"></canvas>
+
+            <div class="game-controls">
+                <button id="startBtn" class="btn-primary">Start Game</button>
+                <button id="pauseBtn" class="btn-secondary" style="display: none;">Pause</button>
+            </div>
+
+            <div class="game-instructions">
+                <h3>How to Play</h3>
+                <p>Move the paddle with your mouse or arrow keys. Break all bricks to advance to the next level. Don't let the ball fall!</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <small>&copy; <span id="year"></span> Game Site | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="feedback.html" style="color: var(--accent); text-decoration: none;">Feedback</a></small>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script src="brickbreaker.js" defer></script>
+</body>
+</html>
