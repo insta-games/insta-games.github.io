@@ -205,12 +205,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 statusEl.style.color = '#94a3b8';
             }
         } else {
-            if (currentPlayer === 1) {
-                statusEl.textContent = aiThinking ? 'AI Thinking...' : 'Your Turn (Red)';
-                statusEl.style.color = '#ef4444';
-            } else {
+            if (aiThinking || currentPlayer === -1) {
                 statusEl.textContent = 'AI Thinking...';
                 statusEl.style.color = '#94a3b8';
+            } else {
+                statusEl.textContent = 'Your Turn (Red)';
+                statusEl.style.color = '#ef4444';
             }
         }
     }
@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     aiMakeMove({ fromRow: result.row, fromCol: result.col, ...nextJumps[0] });
                 } else {
                     // No more jumps, end AI turn
+                    aiThinking = false;
                     if (!checkWin()) {
                         currentPlayer = 1;
                         mustJump = hasJumps(1);
@@ -270,6 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 400);
         } else {
+            aiThinking = false;
             if (!checkWin()) {
                 currentPlayer = 1;
                 mustJump = hasJumps(1);
@@ -311,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     draw();
                     setTimeout(() => {
                         aiMove();
-                        aiThinking = false;
                     }, 500);
                 } else {
                     updateStatus();
