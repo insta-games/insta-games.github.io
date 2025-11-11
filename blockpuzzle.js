@@ -62,12 +62,12 @@ function generateNewPieces() {
 
 // Draw grid
 function drawGrid() {
-    // Background
-    ctx.fillStyle = '#1a1f35';
+    // Background - match site
+    ctx.fillStyle = '#0a0e1a';
     ctx.fillRect(GRID_OFFSET_X, GRID_OFFSET_Y, GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE);
     
-    // Grid lines
-    ctx.strokeStyle = '#2d3748';
+    // Subtle grid lines
+    ctx.strokeStyle = '#1e293b';
     ctx.lineWidth = 1;
     for (let i = 0; i <= GRID_SIZE; i++) {
         ctx.beginPath();
@@ -88,12 +88,23 @@ function drawGrid() {
                 const x = GRID_OFFSET_X + col * CELL_SIZE;
                 const y = GRID_OFFSET_Y + row * CELL_SIZE;
                 
-                ctx.fillStyle = grid[row][col];
-                ctx.fillRect(x + 2, y + 2, CELL_SIZE - 4, CELL_SIZE - 4);
+                // Dark blue block
+                const gradient = ctx.createLinearGradient(x, y, x + CELL_SIZE, y + CELL_SIZE);
+                gradient.addColorStop(0, '#1e293b');
+                gradient.addColorStop(1, '#0f172a');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
                 
-                ctx.strokeStyle = '#0a0e1a';
+                // Glowing edge
+                ctx.strokeStyle = '#475569';
                 ctx.lineWidth = 2;
-                ctx.strokeRect(x + 2, y + 2, CELL_SIZE - 4, CELL_SIZE - 4);
+                ctx.shadowColor = '#475569';
+                ctx.shadowBlur = 4;
+                ctx.strokeRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
+                
+                // Reset shadow
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
             }
         }
     }
@@ -112,12 +123,23 @@ function drawPiece(piece, alpha = 1) {
                 const x = piece.x + col * CELL_SIZE;
                 const y = piece.y + row * CELL_SIZE;
                 
-                ctx.fillStyle = piece.color;
-                ctx.fillRect(x + 2, y + 2, CELL_SIZE - 4, CELL_SIZE - 4);
+                // Dark blue block with gradient
+                const gradient = ctx.createLinearGradient(x, y, x + CELL_SIZE, y + CELL_SIZE);
+                gradient.addColorStop(0, '#1e3a8a');
+                gradient.addColorStop(1, '#1e40af');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
                 
-                ctx.strokeStyle = '#0a0e1a';
+                // Glowing edge
+                ctx.strokeStyle = '#3b82f6';
                 ctx.lineWidth = 2;
-                ctx.strokeRect(x + 2, y + 2, CELL_SIZE - 4, CELL_SIZE - 4);
+                ctx.shadowColor = '#3b82f6';
+                ctx.shadowBlur = 6;
+                ctx.strokeRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
+                
+                // Reset shadow
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
             }
         }
     }
@@ -128,7 +150,7 @@ function drawPiece(piece, alpha = 1) {
 function drawGhostPiece(piece, gridRow, gridCol) {
     if (!canPlacePiece(piece, gridRow, gridCol)) return;
     
-    ctx.globalAlpha = 0.3;
+    ctx.globalAlpha = 0.4;
     const shape = piece.shape;
     
     for (let row = 0; row < shape.length; row++) {
@@ -137,8 +159,13 @@ function drawGhostPiece(piece, gridRow, gridCol) {
                 const x = GRID_OFFSET_X + (gridCol + col) * CELL_SIZE;
                 const y = GRID_OFFSET_Y + (gridRow + row) * CELL_SIZE;
                 
-                ctx.fillStyle = piece.color;
-                ctx.fillRect(x + 2, y + 2, CELL_SIZE - 4, CELL_SIZE - 4);
+                // Ghost preview with blue glow
+                ctx.fillStyle = '#1e40af';
+                ctx.fillRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
+                
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
             }
         }
     }
