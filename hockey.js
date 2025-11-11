@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let scoreTimer = 0;
     
     // Physics constants
-    const FRICTION = 0.98;
+    const FRICTION = 0.995; // Increased from 0.98 for more slippery puck
     const PADDLE_SPEED = 6;
     const MAX_PUCK_SPEED = 15;
     const BOUNCE_DAMPING = 0.8;
