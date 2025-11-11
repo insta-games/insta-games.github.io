@@ -49,9 +49,10 @@ function generateNewPieces() {
     currentPieces = [];
     for (let i = 0; i < 3; i++) {
         const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const colors = ['#ef4444', '#f97316', '#eab308', '#10b981', '#06b6d4', '#8b5cf6'];
         currentPieces.push({
             shape: JSON.parse(JSON.stringify(shape)),
-            color: '#10b981', // Green color
+            color: colors[Math.floor(Math.random() * colors.length)],
             x: 50 + i * 180,
             y: PIECES_Y,
             placed: false
@@ -120,17 +121,17 @@ function drawPiece(piece, alpha = 1) {
                 const x = piece.x + col * CELL_SIZE;
                 const y = piece.y + row * CELL_SIZE;
                 
-                // Green block with gradient
+                // Dark blue block with gradient
                 const gradient = ctx.createLinearGradient(x, y, x + CELL_SIZE, y + CELL_SIZE);
-                gradient.addColorStop(0, '#059669');
-                gradient.addColorStop(1, '#10b981');
+                gradient.addColorStop(0, '#1e3a8a');
+                gradient.addColorStop(1, '#1e40af');
                 ctx.fillStyle = gradient;
                 ctx.fillRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
                 
                 // Glowing edge
-                ctx.strokeStyle = '#34d399';
+                ctx.strokeStyle = '#3b82f6';
                 ctx.lineWidth = 2;
-                ctx.shadowColor = '#10b981';
+                ctx.shadowColor = '#3b82f6';
                 ctx.shadowBlur = 6;
                 ctx.strokeRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
                 
@@ -193,11 +194,13 @@ function canPlacePiece(piece, gridRow, gridCol) {
 // Place piece on grid
 function placePiece(piece, gridRow, gridCol) {
     const shape = piece.shape;
+    const colors = ['#ef4444', '#f97316', '#eab308', '#10b981', '#06b6d4', '#8b5cf6'];
     
     for (let row = 0; row < shape.length; row++) {
         for (let col = 0; col < shape[row].length; col++) {
             if (shape[row][col]) {
-                grid[gridRow + row][gridCol + col] = '#10b981'; // Green color
+                // Assign random color to each placed block
+                grid[gridRow + row][gridCol + col] = colors[Math.floor(Math.random() * colors.length)];
             }
         }
     }
