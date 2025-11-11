@@ -29,6 +29,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css" />
+    
+    <!-- Structured Data - Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About Game Site",
+      "description": "Learn about Game Site - offering 25+ free browser games with no downloads required. Our mission is to provide accessible, fun gaming for everyone.",
+      "url": "https://sanjith-esp32.github.io/about.html",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Game Site",
+        "url": "https://sanjith-esp32.github.io/",
+        "description": "Free browser games platform offering 25+ games including classic arcade, puzzle, and multiplayer games.",
+        "sameAs": [
+          "https://github.com/sanjith-esp32/sanjith-esp32.github.io"
+        ]
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sanjith-esp32.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About"
+        }
+      ]
+    }
+    </script>
     <style>
         .about-content {
             max-width: 900px;

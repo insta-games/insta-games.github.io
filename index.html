@@ -42,6 +42,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css" />
+    
+    <!-- Structured Data - Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Game Site",
+      "url": "https://sanjith-esp32.github.io/",
+      "description": "Play 25+ free browser games instantly. Classic arcade games, puzzle games, and multiplayer games. No downloads required.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Game Site"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://sanjith-esp32.github.io/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Browser Games Collection",
+      "description": "Collection of 25+ free browser games",
+      "numberOfItems": 25,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "VideoGame",
+            "name": "Snake Game",
+            "url": "https://sanjith-esp32.github.io/snake.html",
+            "gamePlatform": "Web Browser",
+            "applicationCategory": "Game"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "VideoGame",
+            "name": "Tetris",
+            "url": "https://sanjith-esp32.github.io/tetris.html",
+            "gamePlatform": "Web Browser",
+            "applicationCategory": "Game"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "VideoGame",
+            "name": "Pong",
+            "url": "https://sanjith-esp32.github.io/pong.html",
+            "gamePlatform": "Web Browser",
+            "applicationCategory": "Game"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <header class="site-header shadow">
