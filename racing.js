@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
         width: CAR_WIDTH,
         height: CAR_HEIGHT,
         speed: 0,
-        maxSpeed: 8,
-        acceleration: 0.3,
-        friction: 0.15,
+        maxSpeed: 12, // Increased from 8
+        acceleration: 0.4, // Increased from 0.3
+        friction: 0.12, // Reduced for less slowdown
         color: '#06b6d4',
         keys: { up: false, down: false, left: false, right: false },
         lane: 0,
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
         width: CAR_WIDTH,
         height: CAR_HEIGHT,
         speed: 0,
-        maxSpeed: 8,
-        acceleration: 0.3,
-        friction: 0.15,
+        maxSpeed: 12, // Increased from 8
+        acceleration: 0.4, // Increased from 0.3
+        friction: 0.12, // Reduced for less slowdown
         color: '#3b82f6',
         keys: { up: false, down: false, left: false, right: false },
         lane: 1,
@@ -55,17 +55,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Obstacles
     let obstacles = [];
     let obstacleTimer = 0;
-    const OBSTACLE_INTERVAL = 120;
+    const OBSTACLE_INTERVAL = 100; // Reduced from 120 for more frequent obstacles
     
     // Speed boosts
     let boosts = [];
     let boostTimer = 0;
-    const BOOST_INTERVAL = 180;
+    const BOOST_INTERVAL = 150; // Reduced from 180 for more frequent boosts
     
     // Track scroll
     let trackOffset = 0;
     let distanceTraveled = 0;
-    const RACE_DISTANCE = 3000;
+    const RACE_DISTANCE = 2500; // Reduced from 3000 for faster races
     
     function createObstacle() {
         const lanes = [130, 630]; // Match player lane centers
@@ -153,28 +153,31 @@ document.addEventListener('DOMContentLoaded', function() {
         player1.distance += player1.speed;
         player2.distance += player2.speed;
         
-        // Update track offset based on average speed for visual effect
-        const avgSpeed = (player1.speed + player2.speed) / 2;
-        trackOffset += avgSpeed;
-        distanceTraveled += avgSpeed;
+        // Update track offset based on maximum speed (faster car drives the visual)
+        const maxSpeed = Math.max(player1.speed, player2.speed);
+        trackOffset += maxSpeed;
+        distanceTraveled += maxSpeed;
         
-        // Spawn obstacles
-        obstacleTimer++;
-        if (obstacleTimer >= OBSTACLE_INTERVAL) {
-            createObstacle();
-            obstacleTimer = 0;
+        // Spawn obstacles (only if cars are moving)
+        if (maxSpeed > 0) {
+            obstacleTimer++;
+            if (obstacleTimer >= OBSTACLE_INTERVAL) {
+                createObstacle();
+                obstacleTimer = 0;
+            }
+            
+            // Spawn boosts
+            boostTimer++;
+            if (boostTimer >= BOOST_INTERVAL) {
+                createBoost();
+                boostTimer = 0;
+            }
         }
         
-        // Spawn boosts
-        boostTimer++;
-        if (boostTimer >= BOOST_INTERVAL) {
-            createBoost();
-            boostTimer = 0;
-        }
-        
-        // Move obstacles
+        // Move obstacles based on max speed (track moves faster when cars go faster)
+        const obstacleSpeed = 3 + maxSpeed * 0.5; // Base speed + proportional to car speed
         for (let i = obstacles.length - 1; i >= 0; i--) {
-            obstacles[i].y += 5;
+            obstacles[i].y += obstacleSpeed;
             if (obstacles[i].y > TRACK_HEIGHT) {
                 obstacles.splice(i, 1);
             }
@@ -182,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Move boosts
         for (let i = boosts.length - 1; i >= 0; i--) {
-            boosts[i].y += 5;
+            boosts[i].y += obstacleSpeed;
             if (boosts[i].y > TRACK_HEIGHT) {
                 boosts.splice(i, 1);
             }
