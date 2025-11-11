@@ -3,17 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctx = canvas.getContext('2d');
     const statusEl = document.getElementById('status');
     const resetBtn = document.getElementById('resetBtn');
-    const singleBtn = document.getElementById('singleBtn');
-    const multiBtn = document.getElementById('multiBtn');
     
     const ROWS = 6;
     const COLS = 7;
     const CELL_SIZE = 80;
     const RADIUS = 30;
     
-    let gameMode = 'single'; // single or multi
     let board = [];
-    let currentPlayer = 1; // 1 = Red, 2 = Yellow
+    let currentPlayer = 1; // 1 = Red (Player), 2 = Yellow (AI)
     let gameOver = false;
     let winner = null;
     let aiThinking = false;
@@ -41,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     currentPlayer = currentPlayer === 1 ? 2 : 1;
                     updateStatus();
                     
-                    // AI turn in single player mode
-                    if (gameMode === 'single' && currentPlayer === 2 && !gameOver) {
+                    // AI turn
+                    if (currentPlayer === 2 && !gameOver) {
                         aiThinking = true;
                         setTimeout(() => {
                             aiMove();
@@ -245,18 +242,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 statusEl.textContent = '🏁 It\'s a Tie!';
                 statusEl.style.color = '#f59e0b';
             } else if (winner === 1) {
-                statusEl.textContent = '🏆 Red Wins!';
+                statusEl.textContent = '🏆 You Win!';
                 statusEl.style.color = '#ef4444';
             } else {
-                statusEl.textContent = '🏆 Yellow Wins!';
+                statusEl.textContent = '🏆 AI Wins!';
                 statusEl.style.color = '#eab308';
             }
         } else {
             if (currentPlayer === 1) {
-                statusEl.textContent = 'Red\'s Turn';
+                statusEl.textContent = 'Your Turn (Red)';
                 statusEl.style.color = '#ef4444';
             } else {
-                statusEl.textContent = gameMode === 'single' ? 'AI Thinking...' : 'Yellow\'s Turn';
+                statusEl.textContent = 'AI Thinking...';
                 statusEl.style.color = '#eab308';
             }
         }
@@ -312,21 +309,9 @@ document.addEventListener('DOMContentLoaded', function() {
         draw();
     }
     
-    function setGameMode(mode) {
-        gameMode = mode;
-        if (mode === 'single') {
-            singleBtn.classList.add('active');
-            multiBtn.classList.remove('active');
-        } else {
-            singleBtn.classList.remove('active');
-            multiBtn.classList.add('active');
-        }
-        resetGame();
-    }
-    
     canvas.addEventListener('click', (e) => {
         if (gameOver || aiThinking) return;
-        if (gameMode === 'single' && currentPlayer === 2) return;
+        if (currentPlayer === 2) return; // Prevent click during AI turn
         
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -339,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     canvas.addEventListener('mousemove', (e) => {
         if (gameOver || aiThinking) return;
-        if (gameMode === 'single' && currentPlayer === 2) return;
+        if (currentPlayer === 2) return; // No preview during AI turn
         
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -353,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const pieceY = -CELL_SIZE / 2;
             
             ctx.globalAlpha = 0.5;
-            ctx.fillStyle = currentPlayer === 1 ? '#ef4444' : '#eab308';
+            ctx.fillStyle = '#ef4444';
             ctx.beginPath();
             ctx.arc(pieceX, pieceY, RADIUS - 2, 0, Math.PI * 2);
             ctx.fill();
@@ -362,8 +347,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     resetBtn.addEventListener('click', resetGame);
-    singleBtn.addEventListener('click', () => setGameMode('single'));
-    multiBtn.addEventListener('click', () => setGameMode('multi'));
     
     // Initialize
     initBoard();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connect Four</title>
+    <title>Connect Four - 2 Player</title>
     <link rel="stylesheet" href="styles.css?v=2">
     <style>
         .connect4-container {
@@ -26,37 +26,21 @@
             min-height: 30px;
             color: var(--accent);
         }
-        .game-mode {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .game-mode button {
-            margin: 0 10px;
-        }
-        .game-mode button.active {
-            background: var(--accent);
-            color: white;
-        }
     </style>
 </head>
 <body>
     <div class="connect4-container">
-        <h1 style="text-align: center;">🔴🟡 Connect Four</h1>
-        
-        <div class="game-mode">
-            <button id="singleBtn" class="btn active">vs AI</button>
-            <button id="multiBtn" class="btn">2 Players</button>
-        </div>
+        <h1 style="text-align: center;">🔴🟡 Connect Four - 2 Player</h1>
         
         <div class="status" id="status">Red's Turn</div>
         <canvas id="gameCanvas" class="connect4-canvas" width="560" height="480"></canvas>
         
         <div style="text-align: center; margin-top: 20px;">
             <button id="resetBtn" class="btn">New Game</button>
-            <button onclick="window.location.href='index.html'" class="btn">Back to Games</button>
+            <button onclick="window.location.href='index.html#multiplayer'" class="btn">Back to Games</button>
         </div>
     </div>
     
-    <script src="connect4.js?v=1"></script>
+    <script src="connect4-multi.js?v=1"></script>
 </body>
 </html>
