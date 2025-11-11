@@ -154,6 +154,7 @@
                     <div class="form-group">
                         <label for="email">Your Email <span class="required">*</span></label>
                         <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        <input type="hidden" name="_replyto" id="_replyto">
                     </div>
 
                     <div class="form-group">
@@ -225,20 +226,32 @@
         const form = document.getElementById('feedback-form');
         const successMessage = document.getElementById('success-message');
         const errorMessage = document.getElementById('error-message');
+        const emailInput = document.getElementById('email');
+        const replyToInput = document.getElementById('_replyto');
+
+        // Copy email to _replyto field for Formspree
+        emailInput.addEventListener('input', () => {
+            replyToInput.value = emailInput.value;
+        });
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Ensure _replyto is set
+            replyToInput.value = emailInput.value;
+            
             const formData = new FormData(form);
             
             try {
-                const response = await fetch(form.action, {
+                const response = await fetch('https://formspree.io/f/xanywbja', {
                     method: 'POST',
                     body: formData,
                     headers: {
                         'Accept': 'application/json'
                     }
                 });
+
+                const data = await response.json();
 
                 if (response.ok) {
                     successMessage.style.display = 'block';
@@ -253,11 +266,16 @@
                         successMessage.style.display = 'none';
                     }, 5000);
                 } else {
-                    throw new Error('Form submission failed');
+                    // Show specific error if available
+                    if (data.errors) {
+                        console.error('Formspree errors:', data.errors);
+                    }
+                    throw new Error(data.error || 'Form submission failed');
                 }
             } catch (error) {
                 errorMessage.style.display = 'block';
                 successMessage.style.display = 'none';
+                errorMessage.textContent = '❌ ' + (error.message || 'Oops! Something went wrong. Please try again.');
                 console.error('Error:', error);
             }
         });
