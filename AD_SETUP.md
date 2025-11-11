@@ -95,3 +95,14 @@ Before going live:
 If you need help with AdSense setup:
 - AdSense Help: https://support.google.com/adsense
 - Common issues: Make sure your site is publicly accessible before applying to AdSense
+
+## Legal Requirements
+
+Your website now includes:
+- **Privacy Policy** (`privacy.html`) - Required for AdSense and GDPR compliance
+- **Terms of Service** (`terms.html`) - Protects you legally
+
+Both pages are linked in the footer. Make sure to:
+1. Review both pages and customize contact information if needed
+2. Update the "Last Updated" dates when you make changes
+3. Ensure they're accessible before applying for AdSense (Google requires a privacy policy)
