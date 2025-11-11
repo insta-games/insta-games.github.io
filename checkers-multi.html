@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Checkers - 2 Player — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Play Checkers with a friend! Take turns moving diagonally and jumping to capture!" />
+    <style>
+        .checkers-canvas {
+            background: transparent;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            display: block;
+            margin: 1rem auto;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <img src="assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Game Site</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="index.html">Single Player</a>
+                <a href="index.html#multiplayer">Multiplayer</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="game-wrap center">
+            <h1>⚫⚪ Checkers - 2 Player</h1>
+            <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Click a piece to select, then click a valid square to move. Jump to capture!</p>
+            
+            <div class="status" id="status" style="text-align:center;font-size:1.3em;margin:15px 0;min-height:30px;">Red's Turn</div>
+            <canvas id="gameCanvas" class="checkers-canvas" width="640" height="640"></canvas>
+            
+            <div class="controls">
+                <button id="resetBtn" class="btn reset-scores">New Game</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container"><small>&copy; <span id="year"></span> Game Site</small></div>
+    </footer>
+    
+    <script src="script.js" defer></script>
+    <script src="checkers-multi.js" defer></script>
+</body>
+</html>
