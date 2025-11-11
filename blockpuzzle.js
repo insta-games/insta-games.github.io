@@ -355,8 +355,9 @@ canvas.addEventListener('mouseup', (e) => {
         const mouseY = e.clientY - rect.top;
         
         // Calculate grid position based on top-left corner of piece
-        const gridCol = Math.floor((draggedPiece.x - GRID_OFFSET_X) / CELL_SIZE);
-        const gridRow = Math.floor((draggedPiece.y - GRID_OFFSET_Y) / CELL_SIZE);
+        // Use Math.round for better snapping to grid
+        const gridCol = Math.round((draggedPiece.x - GRID_OFFSET_X) / CELL_SIZE);
+        const gridRow = Math.round((draggedPiece.y - GRID_OFFSET_Y) / CELL_SIZE);
         
         if (canPlacePiece(draggedPiece, gridRow, gridCol)) {
             placePiece(draggedPiece, gridRow, gridCol);
