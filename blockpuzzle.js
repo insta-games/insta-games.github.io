@@ -198,7 +198,7 @@ function placePiece(piece, gridRow, gridCol) {
     for (let row = 0; row < shape.length; row++) {
         for (let col = 0; col < shape[row].length; col++) {
             if (shape[row][col]) {
-                grid[gridRow + row][gridCol + col] = piece.color;
+                grid[gridRow + row][gridCol + col] = '#10b981'; // Green color
             }
         }
     }
