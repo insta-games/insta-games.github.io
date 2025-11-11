@@ -13,6 +13,7 @@ let moves = 0;
 let timer = 0;
 let timerInterval = null;
 let showingSolution = false;
+let hoverTile = null;
 
 // Initialize game
 function init() {
@@ -31,7 +32,6 @@ function init() {
     movesDisplay.textContent = 'Moves: 0';
     timerDisplay.textContent = 'Time: 0:00';
     shuffle();
-    draw();
     startTimer();
 }
 
@@ -80,8 +80,6 @@ function moveTile(row, col, countMove = true) {
                 }, 100);
             }
         }
-        
-        draw();
     }
 }
 
@@ -104,9 +102,14 @@ function checkWin() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Draw grid background
-    ctx.fillStyle = '#1a1f35';
+    // Draw grid background with subtle pattern
+    ctx.fillStyle = '#0a0e1a';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw border around puzzle
+    ctx.strokeStyle = '#06b6d4';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
     
     // Draw tiles
     for (let row = 0; row < GRID_SIZE; row++) {
@@ -117,11 +120,14 @@ function draw() {
             const x = col * TILE_SIZE;
             const y = row * TILE_SIZE;
             
-            // Tile background
+            // Determine if tile is in correct position
+            const correctNum = row * GRID_SIZE + col + 1;
+            const isCorrect = showingSolution && (num === correctNum);
+            
+            // Tile background with gradient
             const gradient = ctx.createLinearGradient(x, y, x + TILE_SIZE, y + TILE_SIZE);
             if (showingSolution) {
-                const correctNum = row * GRID_SIZE + col + 1;
-                if (num === correctNum) {
+                if (isCorrect) {
                     gradient.addColorStop(0, '#10b981');
                     gradient.addColorStop(1, '#059669');
                 } else {
@@ -129,31 +135,85 @@ function draw() {
                     gradient.addColorStop(1, '#dc2626');
                 }
             } else {
-                gradient.addColorStop(0, '#06b6d4');
-                gradient.addColorStop(1, '#0891b2');
+                // Check if this tile is hovered and can be moved
+                const isHovered = hoverTile && hoverTile.row === row && hoverTile.col === col;
+                const canMove = isHovered && Math.abs(row - emptyPos.row) + Math.abs(col - emptyPos.col) === 1;
+                
+                if (canMove) {
+                    // Brighter gradient for movable tiles
+                    gradient.addColorStop(0, '#22d3ee');
+                    gradient.addColorStop(0.5, '#06b6d4');
+                    gradient.addColorStop(1, '#0891b2');
+                } else {
+                    // Beautiful blue gradient for normal state
+                    gradient.addColorStop(0, '#06b6d4');
+                    gradient.addColorStop(0.5, '#0891b2');
+                    gradient.addColorStop(1, '#0e7490');
+                }
             }
             ctx.fillStyle = gradient;
-            ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
             
-            // Tile border
-            ctx.strokeStyle = '#0a0e1a';
+            // Rounded rectangle tile
+            const radius = 8;
+            const padding = 4;
+            ctx.beginPath();
+            ctx.roundRect(x + padding, y + padding, TILE_SIZE - padding * 2, TILE_SIZE - padding * 2, radius);
+            ctx.fill();
+            
+            // Tile border/shadow effect
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
             ctx.lineWidth = 2;
-            ctx.strokeRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+            ctx.stroke();
             
-            // Tile number
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 48px Inter';
+            // Inner shadow effect
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.roundRect(x + padding + 2, y + padding + 2, TILE_SIZE - padding * 2 - 4, TILE_SIZE - padding * 2 - 4, radius - 2);
+            ctx.stroke();
+            
+            // Tile number with shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.font = 'bold 56px Inter, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
+            ctx.fillText(num, x + TILE_SIZE / 2 + 2, y + TILE_SIZE / 2 + 2);
+            
+            // Tile number main
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 56px Inter, sans-serif';
             ctx.fillText(num, x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+            
+            // Small indicator for correct position when showing solution
+            if (showingSolution && isCorrect) {
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 20px Inter';
+                ctx.fillText('✓', x + TILE_SIZE - 20, y + 20);
+            }
         }
     }
     
-    // Draw empty space indicator
+    // Draw empty space with glow effect
     const x = emptyPos.col * TILE_SIZE;
     const y = emptyPos.row * TILE_SIZE;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-    ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+    
+    // Outer glow
+    const glowGradient = ctx.createRadialGradient(
+        x + TILE_SIZE / 2, y + TILE_SIZE / 2, 0,
+        x + TILE_SIZE / 2, y + TILE_SIZE / 2, TILE_SIZE / 2
+    );
+    glowGradient.addColorStop(0, 'rgba(6, 182, 212, 0.2)');
+    glowGradient.addColorStop(1, 'rgba(6, 182, 212, 0)');
+    ctx.fillStyle = glowGradient;
+    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+    
+    // Empty space border
+    ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    const padding = 8;
+    ctx.strokeRect(x + padding, y + padding, TILE_SIZE - padding * 2, TILE_SIZE - padding * 2);
+    ctx.setLineDash([]);
 }
 
 // Timer functions
@@ -180,6 +240,34 @@ function formatTime(seconds) {
 }
 
 // Event listeners
+canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const col = Math.floor(x / TILE_SIZE);
+    const row = Math.floor(y / TILE_SIZE);
+    
+    if (row >= 0 && row < GRID_SIZE && col >= 0 && col < GRID_SIZE) {
+        hoverTile = { row, col };
+        
+        // Change cursor if tile can be moved
+        const canMove = Math.abs(row - emptyPos.row) + Math.abs(col - emptyPos.col) === 1;
+        canvas.style.cursor = canMove ? 'pointer' : 'default';
+    } else {
+        hoverTile = null;
+        canvas.style.cursor = 'default';
+    }
+    
+    draw();
+});
+
+canvas.addEventListener('mouseleave', () => {
+    hoverTile = null;
+    canvas.style.cursor = 'default';
+    draw();
+});
+
 canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -196,8 +284,15 @@ newGameBtn.addEventListener('click', init);
 hintBtn.addEventListener('click', () => {
     showingSolution = !showingSolution;
     hintBtn.textContent = showingSolution ? 'Hide Solution' : 'Show Solution';
-    draw();
 });
 
 // Initialize game on load
 init();
+
+// Continuous draw loop for smooth hover effects
+function gameLoop() {
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
