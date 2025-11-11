@@ -99,25 +99,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePlayer(player, opponent) {
         if (gameState !== 'playing') return;
         
-        // Movement
-        let dx = 0;
-        let dy = 0;
-        
-        if (player.keys.up) dy -= 1;
-        if (player.keys.down) dy += 1;
-        if (player.keys.left) dx -= 1;
-        if (player.keys.right) dx += 1;
-        
-        // Normalize diagonal movement
-        if (dx !== 0 && dy !== 0) {
-            dx *= 0.707;
-            dy *= 0.707;
+        // Tank-style rotation
+        const rotationSpeed = 0.05;
+        if (player.keys.left) {
+            player.angle -= rotationSpeed;
+        }
+        if (player.keys.right) {
+            player.angle += rotationSpeed;
         }
         
-        // Calculate angle
-        if (dx !== 0 || dy !== 0) {
-            player.angle = Math.atan2(dy, dx);
-        }
+        // Tank-style forward/backward movement
+        let moveDirection = 0;
+        if (player.keys.up) moveDirection = 1;
+        if (player.keys.down) moveDirection = -1;
+        
+        const dx = Math.cos(player.angle) * moveDirection;
+        const dy = Math.sin(player.angle) * moveDirection;
         
         // Move with collision detection
         const newX = player.x + dx * player.speed;
@@ -135,8 +132,10 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const wall of walls) {
             if (checkCollision({ x: player.x, y: player.y, width: player.width, height: player.height }, wall)) {
                 // Revert movement
-                player.x -= dx * player.speed;
-                player.y -= dy * player.speed;
+                if (moveDirection !== 0) {
+                    player.x -= dx * player.speed;
+                    player.y -= dy * player.speed;
+                }
                 break;
             }
         }
