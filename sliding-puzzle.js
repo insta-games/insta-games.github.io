@@ -140,49 +140,80 @@ function draw() {
                 const canMove = isHovered && Math.abs(row - emptyPos.row) + Math.abs(col - emptyPos.col) === 1;
                 
                 if (canMove) {
-                    // Brighter gradient for movable tiles
-                    gradient.addColorStop(0, '#22d3ee');
-                    gradient.addColorStop(0.5, '#06b6d4');
-                    gradient.addColorStop(1, '#0891b2');
+                    // Brighter gradient for movable tiles with glow
+                    gradient.addColorStop(0, '#67e8f9');
+                    gradient.addColorStop(0.5, '#22d3ee');
+                    gradient.addColorStop(1, '#06b6d4');
                 } else {
-                    // Beautiful blue gradient for normal state
-                    gradient.addColorStop(0, '#06b6d4');
-                    gradient.addColorStop(0.5, '#0891b2');
-                    gradient.addColorStop(1, '#0e7490');
+                    // Beautiful gradient based on tile number for variety
+                    const hue = 180 + (num * 10) % 60; // Cyan to blue range
+                    gradient.addColorStop(0, `hsl(${hue}, 80%, 60%)`);
+                    gradient.addColorStop(0.5, `hsl(${hue}, 70%, 50%)`);
+                    gradient.addColorStop(1, `hsl(${hue}, 60%, 40%)`);
                 }
             }
             ctx.fillStyle = gradient;
             
-            // Rounded rectangle tile
-            const radius = 8;
-            const padding = 4;
+            // Rounded rectangle tile with shadow
+            const radius = 12;
+            const padding = 5;
+            
+            // Outer shadow
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 4;
+            
             ctx.beginPath();
             ctx.roundRect(x + padding, y + padding, TILE_SIZE - padding * 2, TILE_SIZE - padding * 2, radius);
             ctx.fill();
             
-            // Tile border/shadow effect
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-            ctx.lineWidth = 2;
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            
+            // Glossy highlight on top
+            const highlightGradient = ctx.createLinearGradient(x, y + padding, x, y + TILE_SIZE / 3);
+            highlightGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+            highlightGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = highlightGradient;
+            ctx.beginPath();
+            ctx.roundRect(x + padding, y + padding, TILE_SIZE - padding * 2, TILE_SIZE / 3, [radius, radius, 0, 0]);
+            ctx.fill();
+            
+            // Tile border with shine
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.roundRect(x + padding, y + padding, TILE_SIZE - padding * 2, TILE_SIZE - padding * 2, radius);
             ctx.stroke();
             
-            // Inner shadow effect
-            ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+            // Inner darker border for depth
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.roundRect(x + padding + 2, y + padding + 2, TILE_SIZE - padding * 2 - 4, TILE_SIZE - padding * 2 - 4, radius - 2);
             ctx.stroke();
             
             // Tile number with shadow
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-            ctx.font = 'bold 56px Inter, sans-serif';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 2;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 64px Inter, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(num, x + TILE_SIZE / 2 + 2, y + TILE_SIZE / 2 + 2);
-            
-            // Tile number main
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 56px Inter, sans-serif';
             ctx.fillText(num, x + TILE_SIZE / 2, y + TILE_SIZE / 2);
+            
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
             
             // Small indicator for correct position when showing solution
             if (showingSolution && isCorrect) {
