@@ -263,6 +263,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentPlayer = 1;
                 mustJump = hasJumps(1);
             }
+            updateStatus();
+            draw();
         }
     }
     
@@ -299,8 +301,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => {
                         aiMove();
                         aiThinking = false;
-                        updateStatus();
-                        draw();
                     }, 500);
                 } else {
                     updateStatus();
