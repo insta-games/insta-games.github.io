@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Duel - 2 Player</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <style>
+        .snake-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .snake-canvas {
+            background: transparent;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        .player-controls {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .player-controls h3 {
+            margin-top: 0;
+        }
+        .controls-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .controls-list li {
+            padding: 5px 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .status {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 15px 0;
+            min-height: 30px;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="snake-container">
+        <h1 style="text-align: center;">🐍 Snake Duel</h1>
+        <div class="status" id="status">Press SPACE to Start!</div>
+        <canvas id="gameCanvas" class="snake-canvas" width="600" height="600"></canvas>
+        
+        <div class="controls">
+            <div class="player-controls" style="border-color: var(--accent);">
+                <h3 style="color: #06b6d4;">Player 1 (Cyan)</h3>
+                <ul class="controls-list">
+                    <li><strong>W/A/S/D:</strong> Move snake</li>
+                </ul>
+            </div>
+            <div class="player-controls" style="border-color: var(--accent-2);">
+                <h3 style="color: #3b82f6;">Player 2 (Blue)</h3>
+                <ul class="controls-list">
+                    <li><strong>Arrow Keys:</strong> Move snake</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="resetBtn" class="btn">New Game</button>
+            <button onclick="window.location.href='index.html#multiplayer'" class="btn">Back to Games</button>
+        </div>
+    </div>
+    
+    <script src="snakeduel.js?v=1"></script>
+</body>
+</html>
