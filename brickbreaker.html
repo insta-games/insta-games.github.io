@@ -27,28 +27,20 @@
     </header>
 
     <main class="container">
-        <div class="game-container">
-            <div class="game-header">
-                <h1>🧱 Brick Breaker</h1>
-                <div class="game-info">
-                    <span id="score">Score: 0</span>
-                    <span id="level">Level: 1</span>
-                    <span id="lives">Lives: 3</span>
-                </div>
+        <section class="game-wrap center">
+            <h1>🧱 Brick Breaker</h1>
+            <div class="status" style="display:flex;justify-content:space-around;margin-bottom:1rem;">
+                <span id="score">Score: 0</span>
+                <span id="level">Level: 1</span>
+                <span id="lives">Lives: 3</span>
             </div>
-
             <canvas id="gameCanvas" width="600" height="500"></canvas>
-
-            <div class="game-controls">
-                <button id="startBtn" class="btn-primary">Start Game</button>
-                <button id="pauseBtn" class="btn-secondary" style="display: none;">Pause</button>
+            <div class="controls">
+                <button id="startBtn" class="btn">Start Game</button>
+                <button id="pauseBtn" class="btn reset-scores" style="display: none;">Pause</button>
             </div>
-
-            <div class="game-instructions">
-                <h3>How to Play</h3>
-                <p>Move the paddle with your mouse or arrow keys. Break all bricks to advance to the next level. Don't let the ball fall!</p>
-            </div>
-        </div>
+            <p style="text-align:center;color:#94a3b8;margin-top:1rem;">Move the paddle with your mouse or arrow keys. Break all bricks to advance!</p>
+        </section>
     </main>
 
     <footer class="site-footer">

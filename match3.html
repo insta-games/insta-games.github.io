@@ -27,26 +27,18 @@
     </header>
 
     <main class="container">
-        <div class="game-container">
-            <div class="game-header">
-                <h1>💎 Match 3</h1>
-                <div class="game-info">
-                    <span id="score">Score: 0</span>
-                    <span id="moves">Moves: 30</span>
-                </div>
+        <section class="game-wrap center">
+            <h1>💎 Match 3</h1>
+            <div class="status" style="display:flex;justify-content:space-around;margin-bottom:1rem;">
+                <span id="score">Score: 0</span>
+                <span id="moves">Moves: 30</span>
             </div>
-
             <canvas id="gameCanvas" width="500" height="500"></canvas>
-
-            <div class="game-controls">
-                <button id="newGameBtn" class="btn-primary">New Game</button>
+            <div class="controls">
+                <button id="newGameBtn" class="btn">New Game</button>
             </div>
-
-            <div class="game-instructions">
-                <h3>How to Play</h3>
-                <p>Swap adjacent gems to create matches of 3 or more. Make matches to score points. You have 30 moves per game!</p>
-            </div>
-        </div>
+            <p style="text-align:center;color:#94a3b8;margin-top:1rem;">Swap adjacent gems to create matches of 3 or more. You have 30 moves!</p>
+        </section>
     </main>
 
     <footer class="site-footer">
