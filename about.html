@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-33Q7MTCK21"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-33Q7MTCK21');
+    </script>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>About Us — Game Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="About Game Site - Free browser games for everyone. Learn about our mission and what we offer." />
+    <style>
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .about-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-align: center;
+        }
+        .about-content h2 {
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .about-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+        .about-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--muted);
+        }
+        .about-content li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .stat-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+        .mission-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+            border-left: 4px solid var(--accent);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <img src="assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Game Site</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="index.html">Single Player</a>
+                <a href="index.html#multiplayer">Multiplayer</a>
+                <a href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="about-content">
+            <h1>🎮 About Game Site</h1>
+
+            <div class="mission-box">
+                <h2 style="margin-top: 0;">Our Mission</h2>
+                <p style="margin-bottom: 0;">To provide free, accessible, and fun browser-based games for everyone. No downloads, no installations, no hassle — just pure gaming enjoyment right in your browser.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Free Games</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Browser-Based</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Cost to Play</span>
+                </div>
+            </div>
+
+            <h2>What We Offer</h2>
+            <p>Game Site is a curated collection of classic and modern browser games, all playable instantly without any downloads or sign-ups. Our games are designed to work seamlessly on desktop and mobile devices.</p>
+
+            <p>We feature a diverse range of games including:</p>
+            <ul>
+                <li><strong>Classic Arcade Games:</strong> Pong, Snake, Tetris, Space Invaders, Breakout, Pac-Man, and more</li>
+                <li><strong>Puzzle Games:</strong> Sliding Puzzle, Match-3, Block Puzzle, Minesweeper, Memory</li>
+                <li><strong>Action Games:</strong> Flappy Bird, Whack-a-Mole, Racing</li>
+                <li><strong>Multiplayer Games:</strong> Local multiplayer versions of Pong, Tic-Tac-Toe, Connect 4, Checkers, Snake Duel, and more</li>
+            </ul>
+
+            <h2>Our Values</h2>
+            <ul>
+                <li><strong>Accessibility:</strong> All games are free and work directly in your browser — no barriers to entry</li>
+                <li><strong>Privacy:</strong> We don't collect personal data. Your high scores are saved locally on your device</li>
+                <li><strong>Quality:</strong> Each game is polished with smooth controls, responsive design, and clean UI</li>
+                <li><strong>Fun First:</strong> Our goal is simple — provide entertainment and nostalgia for gamers of all ages</li>
+            </ul>
+
+            <h2>Why Browser Games?</h2>
+            <p>Browser games offer instant gratification. Whether you have 5 minutes or an hour, you can jump into a game without downloads, updates, or account creation. Perfect for:</p>
+            <ul>
+                <li>Quick breaks during work or study</li>
+                <li>Casual gaming on any device</li>
+                <li>Playing with friends locally (multiplayer games)</li>
+                <li>Nostalgia for classic arcade experiences</li>
+                <li>Testing games without commitment</li>
+            </ul>
+
+            <h2>Technology</h2>
+            <p>All our games are built using modern web technologies:</p>
+            <ul>
+                <li><strong>HTML5 Canvas:</strong> For smooth graphics and animations</li>
+                <li><strong>JavaScript:</strong> Pure vanilla JavaScript for game logic</li>
+                <li><strong>CSS3:</strong> Responsive design that works on all screen sizes</li>
+                <li><strong>No Plugins Required:</strong> Everything runs natively in your browser</li>
+            </ul>
+
+            <h2>Contact & Support</h2>
+            <p>We love hearing from our players! If you have feedback, suggestions for new games, bug reports, or just want to say hi, please visit our <a href="feedback.html" style="color: var(--accent); text-decoration: none;">Feedback page</a>.</p>
+
+            <p>You can also reach us through:</p>
+            <ul>
+                <li><strong>Email:</strong> games3910394@gmail.com</li>
+                <li><strong>GitHub:</strong> <a href="https://github.com/sanjith-esp32/sanjith-esp32.github.io" target="_blank" style="color: var(--accent); text-decoration: none;">sanjith-esp32.github.io</a></li>
+            </ul>
+
+            <h2>Future Plans</h2>
+            <p>We're constantly working to improve and expand Game Site. Here's what we're planning:</p>
+            <ul>
+                <li>Adding more games regularly</li>
+                <li>Improving existing games based on user feedback</li>
+                <li>Adding online multiplayer features</li>
+                <li>Creating mobile-optimized controls</li>
+                <li>Building a community around our games</li>
+            </ul>
+
+            <div class="cta-section">
+                <h2>Ready to Play?</h2>
+                <p>Jump into our collection of games and start having fun!</p>
+                <div class="cta-buttons">
+                    <a href="index.html" class="btn">Browse Single Player Games</a>
+                    <a href="index.html#multiplayer" class="btn">Try Multiplayer Games</a>
+                    <a href="feedback.html" class="btn" style="background: rgba(59, 130, 246, 0.2); color: var(--accent);">Send Feedback</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <small>&copy; <span id="year"></span> Game Site | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="about.html" style="color: var(--accent); text-decoration: none;">About</a> | <a href="feedback.html" style="color: var(--accent); text-decoration: none;">Feedback</a></small>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
