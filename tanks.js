@@ -118,26 +118,28 @@ document.addEventListener('DOMContentLoaded', function() {
             const dx = Math.cos(player.angle) * moveDirection * player.speed;
             const dy = Math.sin(player.angle) * moveDirection * player.speed;
             
+            // Store old position
+            const oldX = player.x;
+            const oldY = player.y;
+            
             // Calculate new position
-            const newX = player.x + dx;
-            const newY = player.y + dy;
+            player.x += dx;
+            player.y += dy;
             
             // Check boundaries
-            let canMoveX = newX >= 0 && newX + player.width <= WIDTH;
-            let canMoveY = newY >= 0 && newY + player.height <= HEIGHT;
-            
-            // Tentatively move
-            if (canMoveX) player.x = newX;
-            if (canMoveY) player.y = newY;
+            if (player.x < 0 || player.x + player.width > WIDTH) {
+                player.x = oldX;
+            }
+            if (player.y < 0 || player.y + player.height > HEIGHT) {
+                player.y = oldY;
+            }
             
             // Check wall collisions
-            let collided = false;
             for (const wall of walls) {
                 if (checkCollision({ x: player.x, y: player.y, width: player.width, height: player.height }, wall)) {
-                    // Revert movement
-                    if (canMoveX) player.x -= dx;
-                    if (canMoveY) player.y -= dy;
-                    collided = true;
+                    // Revert to old position
+                    player.x = oldX;
+                    player.y = oldY;
                     break;
                 }
             }
