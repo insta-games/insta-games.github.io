@@ -24,6 +24,7 @@
             color: #06b6d4;
             font-size: 1.5rem;
             z-index: 1;
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -36,20 +37,19 @@
 </head>
 <body>
     <header class="site-header shadow">
-        <nav class="container">
-            <div class="logo">🎮 Sanjith's Games</div>
-            <ul class="nav-links">
-                <li><a href="index.html#single-player">Single Player</a></li>
-                <li><a href="index.html#local-multiplayer">Local Multiplayer</a></li>
-                <li><a href="index.html#online-multiplayer">Online Multiplayer</a></li>
-                <li><a href="index.html#about">About</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <img src="assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Game Site</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="index.html#section-singleplayer">Single Player</a>
+                <a href="index.html#section-local-multiplayer">Local Multiplayer</a>
+                <a href="index.html#section-online-multiplayer" class="active">Online Multiplayer</a>
+                <a href="about.html">About</a>
+            </nav>
+        </div>
     </header>
 
     <div class="loading">Loading Paper.io...</div>
