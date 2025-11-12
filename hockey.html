@@ -76,6 +76,23 @@
     </style>
 </head>
 <body>
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <img src="assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Game Site</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
+                <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
+                <a href="javascript:void(0)" id="nav-online-multiplayer">Online Multiplayer</a>
+                <a href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
     <div class="hockey-container">
         <h1 style="text-align: center;">🏒 Air Hockey</h1>
         <div class="scores">
@@ -107,7 +124,9 @@
             <button onclick="window.location.href='index.html#multiplayer'" class="btn">Back to Games</button>
         </div>
     </div>
+    </main>
     
+    <script src="script.js" defer></script>
     <script src="hockey.js?v=3"></script>
 </body>
 </html>
