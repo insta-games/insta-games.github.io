@@ -30,6 +30,7 @@ let mouseX = 0;
 let mouseY = 0;
 let isShooting = false;
 let shootAngle = 0;
+let rotationSpeed = 0.08; // Radians per frame for tank controls
 
 // Touch controls
 let leftJoystick = { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0 };
@@ -220,37 +221,45 @@ function update() {
         moved = true;
     }
     
-    // Shooting direction (Arrow keys)
+    // Shooting direction - Tank Controls (Arrow keys)
+    // Left/Right rotate, Up shoots
     let hasShootInput = false;
-    let shootDx = 0;
-    let shootDy = 0;
     
-    if (keys['arrowup']) { shootDy = -1; hasShootInput = true; }
-    if (keys['arrowdown']) { shootDy = 1; hasShootInput = true; }
-    if (keys['arrowleft']) { shootDx = -1; hasShootInput = true; }
-    if (keys['arrowright']) { shootDx = 1; hasShootInput = true; }
+    // Rotate shooting angle with left/right arrows (tank controls)
+    if (keys['arrowleft']) {
+        shootAngle -= rotationSpeed;
+        player.angle = shootAngle;
+    }
+    if (keys['arrowright']) {
+        shootAngle += rotationSpeed;
+        player.angle = shootAngle;
+    }
     
-    // Touch shooting (right joystick)
+    // Shoot with up arrow
+    if (keys['arrowup']) {
+        isShooting = true;
+        hasShootInput = true;
+    } else if (!rightJoystick.active) {
+        isShooting = false;
+    }
+    
+    // Touch shooting (right joystick) - free aim with touch
     if (rightJoystick.active) {
         const jdx = rightJoystick.currentX - rightJoystick.startX;
         const jdy = rightJoystick.currentY - rightJoystick.startY;
         const distance = Math.sqrt(jdx * jdx + jdy * jdy);
         
         if (distance > 20) { // Dead zone for shooting
-            shootDx = jdx;
-            shootDy = jdy;
+            shootAngle = Math.atan2(jdy, jdx);
+            player.angle = shootAngle;
             hasShootInput = true;
             isShooting = true;
         }
     }
     
-    // Calculate shoot angle
-    if (hasShootInput && (shootDx !== 0 || shootDy !== 0)) {
-        shootAngle = Math.atan2(shootDy, shootDx);
-        player.angle = shootAngle;
-        isShooting = true;
-    } else {
-        isShooting = false;
+    // Initialize shootAngle if not set
+    if (shootAngle === 0 && player.angle !== undefined) {
+        shootAngle = player.angle;
     }
     
     // Send update to server
