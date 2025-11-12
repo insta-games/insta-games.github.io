@@ -157,20 +157,18 @@ function floodFill(ownTerritory, trail) {
     maxY = Math.max(maxY, point.y);
   }
   
-  // Limit the area we check to prevent excessive lag (max 150x150 tiles = 22,500 checks)
+  // Limit the area we check to prevent excessive lag (max 200x200 tiles)
   const width = (maxX - minX) / GRID_SIZE;
   const height = (maxY - minY) / GRID_SIZE;
+  const totalCells = width * height;
   
-  if (width > 150 || height > 150) {
-    console.log(`Area too large (${width}x${height}), skipping fill`);
+  if (width > 200 || height > 200 || totalCells > 40000) {
+    console.log(`Area too large (${width}x${height}, ${totalCells} cells), skipping fill`);
     return [];
   }
   
-  // Batch process in smaller chunks to avoid blocking
-  const maxChecksPerBatch = 5000;
-  let checksThisBatch = 0;
-  
   // Check all grid positions within bounding box using point-in-polygon test
+  // Use the center of each cell for the test
   for (let x = minX; x <= maxX; x += GRID_SIZE) {
     for (let y = minY; y <= maxY; y += GRID_SIZE) {
       const key = `${x},${y}`;
@@ -178,18 +176,15 @@ function floodFill(ownTerritory, trail) {
       // Skip if already territory or part of trail
       if (territorySet.has(key) || trailSet.has(key)) continue;
       
+      // Test center point of the cell
+      const testX = x + GRID_SIZE / 2;
+      const testY = y + GRID_SIZE / 2;
+      
       // Check if this point is inside the polygon formed by trail
-      if (isInsidePolygon(x + GRID_SIZE/2, y + GRID_SIZE/2, trail)) {
+      if (isInsidePolygon(testX, testY, trail)) {
         filled.push({ x, y });
       }
-      
-      checksThisBatch++;
-      if (checksThisBatch >= maxChecksPerBatch) {
-        // Prevent server from hanging on huge areas
-        break;
-      }
     }
-    if (checksThisBatch >= maxChecksPerBatch) break;
   }
   
   return filled;
@@ -222,10 +217,21 @@ setInterval(() => {
       if (onOwnTerritory && !player.onOwnTerritory) {
         // Just returned to territory - complete the trail
         if (trails[id].length > 2) {
+          // Create a closed polygon by connecting trail back to territory
           const trail = [...trails[id], { x: gridX, y: gridY }];
           
+          // Find where we left the territory originally to close the loop properly
+          const firstTrailPoint = trails[id][0];
+          
+          // Create the complete closed polygon for filling
+          // This ensures the polygon is properly closed for the fill algorithm
+          const closedPolygon = [...trail];
+          
           // Fill enclosed area
-          const newTerritory = floodFill(territories[id], trail);
+          const newTerritory = floodFill(territories[id], closedPolygon);
+          
+          console.log(`Filled ${newTerritory.length} new cells from trail of ${trail.length} points`);
+          
           territories[id] = [...territories[id], ...trail, ...newTerritory];
           
           // Update score
