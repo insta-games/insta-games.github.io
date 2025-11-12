@@ -29,6 +29,11 @@ let keys = {};
 let mouseX = 0;
 let mouseY = 0;
 let isShooting = false;
+let shootAngle = 0;
+
+// Touch controls
+let leftJoystick = { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0 };
+let rightJoystick = { active: false, startX: 0, startY: 0, currentX: 0, currentY: 0 };
 
 // Join game
 function joinGame() {
@@ -103,18 +108,64 @@ document.addEventListener('keyup', (e) => {
     keys[e.key.toLowerCase()] = false;
 });
 
-canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+// Touch controls
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    for (let touch of e.changedTouches) {
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        
+        // Left half = movement joystick
+        if (x < canvas.width / 2) {
+            leftJoystick.active = true;
+            leftJoystick.startX = x;
+            leftJoystick.startY = y;
+            leftJoystick.currentX = x;
+            leftJoystick.currentY = y;
+            leftJoystick.touchId = touch.identifier;
+        }
+        // Right half = shooting joystick
+        else {
+            rightJoystick.active = true;
+            rightJoystick.startX = x;
+            rightJoystick.startY = y;
+            rightJoystick.currentX = x;
+            rightJoystick.currentY = y;
+            rightJoystick.touchId = touch.identifier;
+        }
+    }
 });
 
-canvas.addEventListener('mousedown', () => {
-    isShooting = true;
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    for (let touch of e.changedTouches) {
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        
+        if (leftJoystick.active && touch.identifier === leftJoystick.touchId) {
+            leftJoystick.currentX = x;
+            leftJoystick.currentY = y;
+        }
+        if (rightJoystick.active && touch.identifier === rightJoystick.touchId) {
+            rightJoystick.currentX = x;
+            rightJoystick.currentY = y;
+        }
+    }
 });
 
-canvas.addEventListener('mouseup', () => {
-    isShooting = false;
+canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    for (let touch of e.changedTouches) {
+        if (leftJoystick.touchId === touch.identifier) {
+            leftJoystick.active = false;
+        }
+        if (rightJoystick.touchId === touch.identifier) {
+            rightJoystick.active = false;
+            isShooting = false;
+        }
+    }
 });
 
 // Prevent context menu on right click
@@ -133,15 +184,30 @@ function update() {
     const player = players[myId];
     let moved = false;
     
-    // Movement (WASD)
+    // Movement (WASD only)
     const speed = 5; // Will be modified by upgrades on server
     let dx = 0;
     let dy = 0;
     
-    if (keys['w'] || keys['arrowup']) dy -= speed;
-    if (keys['s'] || keys['arrowdown']) dy += speed;
-    if (keys['a'] || keys['arrowleft']) dx -= speed;
-    if (keys['d'] || keys['arrowright']) dx += speed;
+    // Keyboard movement (WASD)
+    if (keys['w']) dy -= speed;
+    if (keys['s']) dy += speed;
+    if (keys['a']) dx -= speed;
+    if (keys['d']) dx += speed;
+    
+    // Touch movement (left joystick)
+    if (leftJoystick.active) {
+        const jdx = leftJoystick.currentX - leftJoystick.startX;
+        const jdy = leftJoystick.currentY - leftJoystick.startY;
+        const distance = Math.sqrt(jdx * jdx + jdy * jdy);
+        
+        if (distance > 10) { // Dead zone
+            const maxDistance = 80;
+            const factor = Math.min(distance, maxDistance) / maxDistance;
+            dx = (jdx / distance) * speed * factor;
+            dy = (jdy / distance) * speed * factor;
+        }
+    }
     
     if (dx !== 0 || dy !== 0) {
         player.x += dx;
@@ -154,13 +220,41 @@ function update() {
         moved = true;
     }
     
-    // Calculate angle to mouse
-    const worldMouseX = mouseX + camera.x;
-    const worldMouseY = mouseY + camera.y;
-    player.angle = Math.atan2(worldMouseY - player.y, worldMouseX - player.x);
+    // Shooting direction (Arrow keys)
+    let hasShootInput = false;
+    let shootDx = 0;
+    let shootDy = 0;
+    
+    if (keys['arrowup']) { shootDy = -1; hasShootInput = true; }
+    if (keys['arrowdown']) { shootDy = 1; hasShootInput = true; }
+    if (keys['arrowleft']) { shootDx = -1; hasShootInput = true; }
+    if (keys['arrowright']) { shootDx = 1; hasShootInput = true; }
+    
+    // Touch shooting (right joystick)
+    if (rightJoystick.active) {
+        const jdx = rightJoystick.currentX - rightJoystick.startX;
+        const jdy = rightJoystick.currentY - rightJoystick.startY;
+        const distance = Math.sqrt(jdx * jdx + jdy * jdy);
+        
+        if (distance > 20) { // Dead zone for shooting
+            shootDx = jdx;
+            shootDy = jdy;
+            hasShootInput = true;
+            isShooting = true;
+        }
+    }
+    
+    // Calculate shoot angle
+    if (hasShootInput && (shootDx !== 0 || shootDy !== 0)) {
+        shootAngle = Math.atan2(shootDy, shootDx);
+        player.angle = shootAngle;
+        isShooting = true;
+    } else {
+        isShooting = false;
+    }
     
     // Send update to server
-    if (moved || player.angle) {
+    if (moved || player.angle !== undefined) {
         socket.emit('playerMove', {
             x: player.x,
             y: player.y,
@@ -169,8 +263,8 @@ function update() {
     }
     
     // Shooting
-    if (isShooting || keys[' ']) {
-        socket.emit('shoot', { angle: player.angle });
+    if (isShooting) {
+        socket.emit('shoot', { angle: shootAngle });
     }
     
     // Update camera to follow player
@@ -233,6 +327,16 @@ function render() {
         ctx.lineTo(trailX, trailY);
         ctx.stroke();
     });
+    
+    // Draw touch joysticks
+    if (leftJoystick.active) {
+        drawJoystick(leftJoystick.startX, leftJoystick.startY, 
+                     leftJoystick.currentX, leftJoystick.currentY, 'rgba(76,209,196,0.3)');
+    }
+    if (rightJoystick.active) {
+        drawJoystick(rightJoystick.startX, rightJoystick.startY, 
+                     rightJoystick.currentX, rightJoystick.currentY, 'rgba(255,107,107,0.3)');
+    }
     
     // Draw players
     Object.values(players).forEach(player => {
@@ -305,6 +409,31 @@ function render() {
             ctx.fillText(`Lv.${player.level}`, screenX, screenY + 35);
         }
     });
+}
+
+// Draw joystick helper
+function drawJoystick(startX, startY, currentX, currentY, color) {
+    // Base
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(startX, startY, 60, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Border
+    ctx.strokeStyle = color.replace('0.3', '0.6');
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    
+    // Stick
+    ctx.fillStyle = color.replace('0.3', '0.8');
+    ctx.beginPath();
+    ctx.arc(currentX, currentY, 30, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Stick border
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 }
 
 // HUD functions
