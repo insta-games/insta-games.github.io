@@ -185,8 +185,8 @@ io.on('connection', (socket) => {
     bullets.push({
       id: bulletId++,
       playerId: socket.id,
-      x: player.x,
-      y: player.y,
+      x: player.x + Math.cos(data.angle) * 20,
+      y: player.y + Math.sin(data.angle) * 20,
       angle: data.angle,
       distance: 0,
       size: 5 + getUpgradeBonus(player, 'BULLET_SIZE')
