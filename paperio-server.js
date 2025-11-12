@@ -157,15 +157,11 @@ function floodFill(ownTerritory, trail) {
     maxY = Math.max(maxY, point.y);
   }
   
-  // Limit the area we check to prevent excessive lag (max 200x200 tiles)
   const width = (maxX - minX) / GRID_SIZE;
   const height = (maxY - minY) / GRID_SIZE;
   const totalCells = width * height;
   
-  if (width > 200 || height > 200 || totalCells > 40000) {
-    console.log(`Area too large (${width}x${height}, ${totalCells} cells), skipping fill`);
-    return [];
-  }
+  console.log(`Filling area: ${width}x${height} = ${totalCells} cells to check`);
   
   // Check all grid positions within bounding box using point-in-polygon test
   // Use the center of each cell for the test
@@ -186,6 +182,8 @@ function floodFill(ownTerritory, trail) {
       }
     }
   }
+  
+  console.log(`Filled ${filled.length} new cells from trail of ${trail.length} points`);
   
   return filled;
 }
@@ -229,8 +227,6 @@ setInterval(() => {
           
           // Fill enclosed area
           const newTerritory = floodFill(territories[id], closedPolygon);
-          
-          console.log(`Filled ${newTerritory.length} new cells from trail of ${trail.length} points`);
           
           territories[id] = [...territories[id], ...trail, ...newTerritory];
           
