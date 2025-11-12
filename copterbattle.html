@@ -243,6 +243,43 @@
             transform: scale(1.05);
         }
         
+        .warning-box {
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .warning-box h3 {
+            color: #FFC107;
+            margin-bottom: 10px;
+        }
+        
+        .warning-box p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .warning-box .btn {
+            background: #FFC107;
+            color: #333;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .warning-box .btn:hover {
+            background: #FFD54F;
+            transform: scale(1.05);
+        }
+        
         .notification {
             position: fixed;
             top: 20px;
@@ -304,6 +341,16 @@
     <div class="container">
         <h1>🚁 Copter Battle</h1>
         <p class="subtitle">Real-time Multiplayer Helicopter Game</p>
+        
+        <!-- HTTPS Warning (only shows on HTTPS) -->
+        <div class="warning-box" id="httpsWarning" style="display:none;">
+            <h3>⚠️ Connection Issue</h3>
+            <p>This game requires an HTTP connection to work properly. Click the button below to open the game in a new tab where it will work:</p>
+            <a href="http://188.166.220.144/copterbattle.html" class="btn" target="_blank">🚀 Open Game (HTTP Version)</a>
+            <p style="margin-top:15px;font-size:0.9em;opacity:0.8;">
+                Note: The HTTP version is hosted on our game server. We're working on getting an SSL certificate for full HTTPS support!
+            </p>
+        </div>
         
         <!-- Login Screen -->
         <div id="loginScreen">

@@ -1,5 +1,40 @@
 // Copter Battle - Client-side JavaScript
-const socket = io('http://188.166.220.144:3000');
+
+// Check if we're on HTTPS (GitHub Pages) and show warning
+if (window.location.protocol === 'https:') {
+    const warning = document.getElementById('httpsWarning');
+    if (warning) {
+        warning.style.display = 'block';
+    }
+    // Try to connect anyway, but it might be blocked by browser
+}
+
+// Use window.location.protocol to auto-detect if we're on HTTP or HTTPS
+const SERVER_URL = 'http://188.166.220.144:3000';
+const socket = io(SERVER_URL, {
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionAttempts: 10
+});
+
+// Handle connection errors
+socket.on('connect_error', (error) => {
+    console.error('Connection error:', error);
+    if (window.location.protocol === 'https:') {
+        showNotification('❌ Cannot connect: Mixed content blocked. Please use the HTTP version button above!');
+    } else {
+        showNotification('❌ Cannot connect to game server. Please try again.');
+    }
+});
+
+socket.on('connect', () => {
+    console.log('Connected to game server!');
+    const warning = document.getElementById('httpsWarning');
+    if (warning) {
+        warning.style.display = 'none';
+    }
+});
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
