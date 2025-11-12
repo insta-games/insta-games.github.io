@@ -3,25 +3,45 @@ document.addEventListener('DOMContentLoaded', function () {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Section switching for Single Player / Multiplayer
+  // Section switching for Single Player / Local Multiplayer / Online Multiplayer
   const navSingleplayer = document.getElementById('nav-singleplayer');
-  const navMultiplayer = document.getElementById('nav-multiplayer');
+  const navLocalMultiplayer = document.getElementById('nav-local-multiplayer');
+  const navOnlineMultiplayer = document.getElementById('nav-online-multiplayer');
   const sectionSingleplayer = document.getElementById('section-singleplayer');
-  const sectionMultiplayer = document.getElementById('section-multiplayer');
+  const sectionLocalMultiplayer = document.getElementById('section-local-multiplayer');
+  const sectionOnlineMultiplayer = document.getElementById('section-online-multiplayer');
   
-  if (navSingleplayer && navMultiplayer && sectionSingleplayer && sectionMultiplayer) {
+  if (navSingleplayer && navLocalMultiplayer && navOnlineMultiplayer && 
+      sectionSingleplayer && sectionLocalMultiplayer && sectionOnlineMultiplayer) {
+    
+    // Function to hide all sections
+    function hideAllSections() {
+      sectionSingleplayer.style.display = 'none';
+      sectionLocalMultiplayer.style.display = 'none';
+      sectionOnlineMultiplayer.style.display = 'none';
+    }
+    
+    // Function to remove all active classes
+    function removeAllActive() {
+      navSingleplayer.classList.remove('active');
+      navLocalMultiplayer.classList.remove('active');
+      navOnlineMultiplayer.classList.remove('active');
+    }
+    
     // Check URL hash on page load
     function checkHash() {
-      if (window.location.hash === '#multiplayer') {
-        sectionSingleplayer.style.display = 'none';
-        sectionMultiplayer.style.display = 'block';
-        navMultiplayer.classList.add('active');
-        navSingleplayer.classList.remove('active');
+      hideAllSections();
+      removeAllActive();
+      
+      if (window.location.hash === '#local-multiplayer') {
+        sectionLocalMultiplayer.style.display = 'block';
+        navLocalMultiplayer.classList.add('active');
+      } else if (window.location.hash === '#online-multiplayer') {
+        sectionOnlineMultiplayer.style.display = 'block';
+        navOnlineMultiplayer.classList.add('active');
       } else {
         sectionSingleplayer.style.display = 'block';
-        sectionMultiplayer.style.display = 'none';
         navSingleplayer.classList.add('active');
-        navMultiplayer.classList.remove('active');
       }
     }
     
@@ -33,21 +53,32 @@ document.addEventListener('DOMContentLoaded', function () {
     
     navSingleplayer.addEventListener('click', function (e) {
       window.location.hash = '';
+      hideAllSections();
+      removeAllActive();
       sectionSingleplayer.style.display = 'block';
-      sectionMultiplayer.style.display = 'none';
       navSingleplayer.classList.add('active');
-      navMultiplayer.classList.remove('active');
       // close mobile nav
       const siteNav = document.getElementById('site-nav');
       if (window.innerWidth <= 640 && siteNav) siteNav.style.display = 'none';
     });
 
-    navMultiplayer.addEventListener('click', function (e) {
-      window.location.hash = 'multiplayer';
-      sectionSingleplayer.style.display = 'none';
-      sectionMultiplayer.style.display = 'block';
-      navMultiplayer.classList.add('active');
-      navSingleplayer.classList.remove('active');
+    navLocalMultiplayer.addEventListener('click', function (e) {
+      window.location.hash = 'local-multiplayer';
+      hideAllSections();
+      removeAllActive();
+      sectionLocalMultiplayer.style.display = 'block';
+      navLocalMultiplayer.classList.add('active');
+      // close mobile nav
+      const siteNav = document.getElementById('site-nav');
+      if (window.innerWidth <= 640 && siteNav) siteNav.style.display = 'none';
+    });
+
+    navOnlineMultiplayer.addEventListener('click', function (e) {
+      window.location.hash = 'online-multiplayer';
+      hideAllSections();
+      removeAllActive();
+      sectionOnlineMultiplayer.style.display = 'block';
+      navOnlineMultiplayer.classList.add('active');
       // close mobile nav
       const siteNav = document.getElementById('site-nav');
       if (window.innerWidth <= 640 && siteNav) siteNav.style.display = 'none';
