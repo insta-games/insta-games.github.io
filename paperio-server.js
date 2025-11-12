@@ -15,7 +15,7 @@ const PORT = 3001;
 const GAME_WIDTH = 2000;
 const GAME_HEIGHT = 2000;
 const GRID_SIZE = 10;
-const PLAYER_SPEED = 3;
+const PLAYER_SPEED = 1.5;
 const INITIAL_TERRITORY_SIZE = 10;
 
 // Game state
