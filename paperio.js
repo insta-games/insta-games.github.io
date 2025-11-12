@@ -7,6 +7,9 @@ const socket = io('https://188.166.220.144', {
 
 let canvas, ctx;
 
+// Start render loop immediately (it will wait for canvas)
+render();
+
 // Initialize canvas when page loads
 window.addEventListener('DOMContentLoaded', () => {
     canvas = document.getElementById('gameCanvas');
@@ -20,9 +23,6 @@ window.addEventListener('DOMContentLoaded', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
-    
-    // Start render loop
-    render();
 });
 
 // Game state
@@ -105,6 +105,12 @@ function updateDirection() {
 
 // Render loop
 function render() {
+    // Don't render if canvas not initialized yet
+    if (!canvas || !ctx) {
+        requestAnimationFrame(render);
+        return;
+    }
+    
     // Clear canvas
     ctx.fillStyle = '#0f1419';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
