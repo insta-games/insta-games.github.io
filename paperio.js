@@ -109,6 +109,12 @@ function render() {
     }
 
     ctx.save();
+    
+    // Apply zoom (2x zoom = closer view)
+    const zoom = 2;
+    ctx.scale(zoom, zoom);
+    
+    // Adjust camera translation for zoom
     ctx.translate(-camera.x, -camera.y);
 
     // Draw map boundaries
@@ -117,11 +123,12 @@ function render() {
     // Draw grid
     drawGrid();
 
-    // Calculate visible area
-    const visibleMinX = camera.x;
-    const visibleMaxX = camera.x + canvas.width;
-    const visibleMinY = camera.y;
-    const visibleMaxY = camera.y + canvas.height;
+    // Calculate visible area (adjusted for zoom)
+    const zoom = 2;
+    const visibleMinX = camera.x - (canvas.width / zoom) / 2;
+    const visibleMaxX = camera.x + (canvas.width / zoom) * 1.5;
+    const visibleMinY = camera.y - (canvas.height / zoom) / 2;
+    const visibleMaxY = camera.y + (canvas.height / zoom) * 1.5;
 
     // Draw territories
     for (const playerId in territories) {
