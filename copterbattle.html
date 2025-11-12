@@ -23,9 +23,10 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
-            background: #1a1a2e;
-            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(59,130,246,0.08), transparent 50%),
+                        linear-gradient(180deg, #050811 0%, #0a0e1a 100%);
+            color: #f9fafb;
             overflow: hidden;
         }
         
@@ -35,7 +36,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,32 +53,33 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.2);
-            color: white;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #06b6d4;
             padding: 10px 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
+            font-weight: 600;
         }
         
         .back-button:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.4);
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
             transform: translateX(-5px);
+            box-shadow: 0 8px 20px rgba(6,182,212,0.15);
         }
         
         .login-box {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
             padding: 50px 40px;
-            border-radius: 20px;
+            border-radius: 16px;
             text-align: center;
-            border: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
         
         .helicopter-icon {
@@ -95,22 +96,24 @@
         .login-box h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #4ECDC4, #45B7D1);
+            background: linear-gradient(135deg, #f9fafb 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: bold;
+            font-weight: 800;
+            letter-spacing: -0.03em;
         }
         
         .login-box .subtitle {
             font-size: 1.1em;
             margin-bottom: 15px;
-            color: rgba(255,255,255,0.9);
+            color: #9ca3af;
+            font-weight: 600;
         }
         
         .login-box .description {
             margin-bottom: 30px;
-            opacity: 0.7;
+            color: #9ca3af;
             font-size: 0.95em;
             line-height: 1.5;
         }
@@ -123,32 +126,33 @@
         .login-box input {
             padding: 15px 20px;
             font-size: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
             width: 100%;
-            background: rgba(255,255,255,0.9);
+            background: rgba(17, 24, 39, 0.6);
+            color: #f9fafb;
             transition: all 0.3s;
         }
         
         .login-box input:focus {
             outline: none;
-            border-color: #4ECDC4;
-            box-shadow: 0 0 20px rgba(78,205,196,0.3);
-            transform: translateY(-2px);
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6,182,212,0.1);
+            background: rgba(17, 24, 39, 0.8);
         }
         
         .login-box button {
             padding: 15px 50px;
             font-size: 18px;
-            background: linear-gradient(135deg, #4ECDC4, #45B7D1);
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
             color: white;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: bold;
+            font-weight: 700;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(78,205,196,0.4);
+            box-shadow: 0 8px 20px rgba(6,182,212,0.15);
         }
         
         .login-box button:disabled {
@@ -158,12 +162,12 @@
         }
         
         .login-box button:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(78,205,196,0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(6,182,212,0.25);
         }
         
         .login-box button:active:not(:disabled) {
-            transform: translateY(-1px);
+            transform: translateY(0px);
         }
         
         .game-features {
@@ -175,14 +179,32 @@
         }
         
         .feature {
-            background: rgba(255,255,255,0.05);
+            background: rgba(59, 130, 246, 0.08);
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 0.9em;
+            border: 1px solid rgba(59, 130, 246, 0.12);
+        }
+        
+        .feature strong {
+            color: #06b6d4;
+        }
+        
+        .feature small {
+            color: #9ca3af;
         }
         
         .feature-icon {
             margin-right: 8px;
+        }
+        
+        #connectionStatus {
+            margin-bottom: 25px;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.08);
+            border-radius: 10px;
+            font-size: 14px;
+            border: 1px solid rgba(59, 130, 246, 0.12);
         }
         
         #gameScreen {
@@ -195,7 +217,7 @@
         #gameCanvas {
             display: block;
             cursor: crosshair;
-            background: #2d2d44;
+            background: #0a0e1a;
         }
         
         #hud {
@@ -213,25 +235,28 @@
         }
         
         .player-stats {
-            background: rgba(0,0,0,0.7);
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(12px);
             padding: 15px 20px;
-            border-radius: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
             pointer-events: all;
         }
         
         .health-bar {
             width: 200px;
             height: 25px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 12px;
             overflow: hidden;
             margin-top: 10px;
             position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .health-fill {
             height: 100%;
-            background: linear-gradient(90deg, #FF6B6B, #FF8E53);
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
             transition: width 0.3s;
         }
         
@@ -240,14 +265,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-weight: bold;
+            font-weight: 700;
             font-size: 12px;
+            color: #f9fafb;
         }
         
         .leaderboard {
-            background: rgba(0,0,0,0.7);
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(12px);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
             min-width: 250px;
             max-height: 300px;
             overflow-y: auto;
@@ -270,8 +298,8 @@
         }
         
         .leaderboard-item.me {
-            background: rgba(76,209,196,0.3);
-            border: 1px solid #4ECDC4;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
         }
         
         #upgradeMenu {
@@ -279,11 +307,14 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(12px);
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
             display: none;
             pointer-events: all;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
         
         .upgrade-grid {
@@ -293,19 +324,21 @@
         }
         
         .upgrade-btn {
-            background: rgba(76,209,196,0.3);
-            border: 2px solid #4ECDC4;
-            color: white;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #f9fafb;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             font-size: 12px;
+            font-weight: 600;
         }
         
         .upgrade-btn:hover {
-            background: rgba(76,209,196,0.5);
-            transform: scale(1.05);
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 4px 12px rgba(6,182,212,0.2);
         }
         
         .upgrade-btn.maxed {
@@ -345,7 +378,7 @@
             }
             50% {
                 transform: scale(1.1);
-                box-shadow: 0 6px 25px rgba(76,209,196,0.6);
+                box-shadow: 0 6px 25px rgba(6,182,212,0.6);
             }
         }
         
@@ -354,16 +387,19 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.9);
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(12px);
             padding: 40px;
-            border-radius: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
             display: none;
             z-index: 500;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
         
         .death-screen h2 {
-            color: #FF6B6B;
+            color: #3b82f6;
             margin-bottom: 20px;
             font-size: 2.5em;
         }
@@ -377,14 +413,21 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(12px);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
             font-size: 12px;
         }
         
         .controls-hint div {
             margin: 5px 0;
+            color: #9ca3af;
+        }
+        
+        .controls-hint strong {
+            color: #06b6d4;
         }
         
         .upgrade-button-mobile {
@@ -393,8 +436,8 @@
             right: 20px;
             width: 60px;
             height: 60px;
-            background: rgba(76,209,196,0.9);
-            border: 3px solid #4ECDC4;
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            border: 2px solid rgba(6,182,212,0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -403,9 +446,13 @@
             cursor: pointer;
             z-index: 100;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(6,182,212,0.3);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+        }
+        
+        .upgrade-button-mobile:active {
+            transform: scale(0.9);
         }
         
         .upgrade-button-mobile:active {
