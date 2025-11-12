@@ -139,31 +139,36 @@ function isInsidePolygon(x, y, polygon) {
   return inside;
 }
 
-function floodFill(startX, startY, ownTerritory, trail) {
-  const filled = [];
-  const queue = [{ x: startX, y: startY }];
-  const visited = new Set();
+function floodFill(ownTerritory, trail) {
+  if (trail.length < 3) return [];
   
-  while (queue.length > 0) {
-    const pos = queue.shift();
-    const key = `${pos.x},${pos.y}`;
-    
-    if (visited.has(key)) continue;
-    visited.add(key);
-    
-    // Check if position is already owned territory or trail
-    if (isOnTerritory(pos.x, pos.y, ownTerritory)) continue;
-    if (trail.some(t => Math.abs(t.x - pos.x) < GRID_SIZE && Math.abs(t.y - pos.y) < GRID_SIZE)) continue;
-    
-    // Check if inside the trail polygon
-    if (isInsidePolygon(pos.x, pos.y, trail)) {
-      filled.push({ x: pos.x, y: pos.y });
+  const filled = [];
+  const territorySet = new Set(ownTerritory.map(t => `${t.x},${t.y}`));
+  const trailSet = new Set(trail.map(t => `${t.x},${t.y}`));
+  
+  // Find bounding box of the trail
+  let minX = Infinity, maxX = -Infinity;
+  let minY = Infinity, maxY = -Infinity;
+  
+  for (const point of trail) {
+    minX = Math.min(minX, point.x);
+    maxX = Math.max(maxX, point.x);
+    minY = Math.min(minY, point.y);
+    maxY = Math.max(maxY, point.y);
+  }
+  
+  // Check all grid positions within bounding box
+  for (let x = minX; x <= maxX; x += GRID_SIZE) {
+    for (let y = minY; y <= maxY; y += GRID_SIZE) {
+      const key = `${x},${y}`;
       
-      // Add neighbors
-      queue.push({ x: pos.x + GRID_SIZE, y: pos.y });
-      queue.push({ x: pos.x - GRID_SIZE, y: pos.y });
-      queue.push({ x: pos.x, y: pos.y + GRID_SIZE });
-      queue.push({ x: pos.x, y: pos.y - GRID_SIZE });
+      // Skip if already territory or part of trail
+      if (territorySet.has(key) || trailSet.has(key)) continue;
+      
+      // Check if this point is inside the polygon formed by trail
+      if (isInsidePolygon(x + GRID_SIZE/2, y + GRID_SIZE/2, trail)) {
+        filled.push({ x, y });
+      }
     }
   }
   
@@ -197,7 +202,7 @@ setInterval(() => {
           const trail = [...trails[id], { x: gridX, y: gridY }];
           
           // Fill enclosed area
-          const newTerritory = floodFill(player.x, player.y, territories[id], trail);
+          const newTerritory = floodFill(territories[id], trail);
           territories[id] = [...territories[id], ...trail, ...newTerritory];
           
           // Update score
