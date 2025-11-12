@@ -111,6 +111,9 @@ function render() {
     ctx.save();
     ctx.translate(-camera.x, -camera.y);
 
+    // Draw map boundaries
+    drawMapBoundaries();
+
     // Draw grid
     drawGrid();
 
@@ -227,6 +230,30 @@ function render() {
     updateUI();
 
     requestAnimationFrame(render);
+}
+
+function drawMapBoundaries() {
+    // Draw map border
+    ctx.strokeStyle = '#06b6d4';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    
+    // Draw outer shadow/glow
+    ctx.strokeStyle = 'rgba(6, 182, 212, 0.3)';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(-4, -4, GAME_WIDTH + 8, GAME_HEIGHT + 8);
+    
+    // Fill outside area with darker color
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    
+    // Top
+    ctx.fillRect(-10000, -10000, 20000 + GAME_WIDTH, 10000);
+    // Bottom
+    ctx.fillRect(-10000, GAME_HEIGHT, 20000 + GAME_WIDTH, 10000);
+    // Left
+    ctx.fillRect(-10000, 0, 10000, GAME_HEIGHT);
+    // Right
+    ctx.fillRect(GAME_WIDTH, 0, 10000, GAME_HEIGHT);
 }
 
 function drawGrid() {
