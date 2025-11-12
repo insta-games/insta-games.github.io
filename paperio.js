@@ -1,7 +1,6 @@
 // Paper.io Clone - Client
-const socket = io('https://188.166.220.144:3001', {
-    secure: true,
-    rejectUnauthorized: false
+const socket = io('http://188.166.220.144', {
+    path: '/paperio-socket/'
 });
 
 const canvas = document.getElementById('gameCanvas');
