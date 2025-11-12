@@ -571,7 +571,7 @@ function updateUpgradeMenu() {
     if (!myId || !players[myId]) return;
     
     const player = players[myId];
-    const availablePoints = Math.floor(player.xp / 10);
+    const availablePoints = Math.floor(player.xp / 50);
     const spentPoints = Object.values(player.upgrades).reduce((sum, level) => sum + level, 0);
     
     document.getElementById('availablePoints').textContent = availablePoints - spentPoints;
