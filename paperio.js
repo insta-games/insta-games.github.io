@@ -208,8 +208,8 @@ function render() {
 }
 
 function drawGrid() {
-    ctx.strokeStyle = '#1a2332';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#141820';
+    ctx.lineWidth = 0.5;
 
     const startX = Math.floor(camera.x / GRID_SIZE) * GRID_SIZE;
     const startY = Math.floor(camera.y / GRID_SIZE) * GRID_SIZE;
@@ -234,33 +234,39 @@ function drawGrid() {
 function drawTerritoryBorder(territory) {
     if (territory.length === 0) return;
 
-    // Find border tiles
-    const borderTiles = new Set();
+    // Draw border segments only on edges
+    const tileSet = new Set(territory.map(t => `${t.x},${t.y}`));
+    
+    ctx.beginPath();
     
     for (const tile of territory) {
-        const neighbors = [
-            { x: tile.x + GRID_SIZE, y: tile.y },
-            { x: tile.x - GRID_SIZE, y: tile.y },
-            { x: tile.x, y: tile.y + GRID_SIZE },
-            { x: tile.x, y: tile.y - GRID_SIZE }
-        ];
-
-        for (const neighbor of neighbors) {
-            const hasNeighbor = territory.some(t => 
-                t.x === neighbor.x && t.y === neighbor.y
-            );
-            if (!hasNeighbor) {
-                borderTiles.add(`${tile.x},${tile.y}`);
-                break;
-            }
+        const x = tile.x;
+        const y = tile.y;
+        
+        // Check each edge and draw a line if there's no neighbor
+        // Top edge
+        if (!tileSet.has(`${x},${y - GRID_SIZE}`)) {
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + GRID_SIZE, y);
+        }
+        // Bottom edge
+        if (!tileSet.has(`${x},${y + GRID_SIZE}`)) {
+            ctx.moveTo(x, y + GRID_SIZE);
+            ctx.lineTo(x + GRID_SIZE, y + GRID_SIZE);
+        }
+        // Left edge
+        if (!tileSet.has(`${x - GRID_SIZE},${y}`)) {
+            ctx.moveTo(x, y);
+            ctx.lineTo(x, y + GRID_SIZE);
+        }
+        // Right edge
+        if (!tileSet.has(`${x + GRID_SIZE},${y}`)) {
+            ctx.moveTo(x + GRID_SIZE, y);
+            ctx.lineTo(x + GRID_SIZE, y + GRID_SIZE);
         }
     }
-
-    // Draw border
-    for (const key of borderTiles) {
-        const [x, y] = key.split(',').map(Number);
-        ctx.strokeRect(x, y, GRID_SIZE, GRID_SIZE);
-    }
+    
+    ctx.stroke();
 }
 
 function updateUI() {
