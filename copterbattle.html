@@ -35,61 +35,154 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateX(-5px);
         }
         
         .login-box {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            padding: 40px;
+            padding: 50px 40px;
             border-radius: 20px;
             text-align: center;
-            max-width: 400px;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .helicopter-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
         
         .login-box h1 {
-            font-size: 3em;
+            font-size: 2.5em;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #4ECDC4, #45B7D1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
         }
         
-        .login-box p {
+        .login-box .subtitle {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .login-box .description {
             margin-bottom: 30px;
-            opacity: 0.9;
+            opacity: 0.7;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
         }
         
         .login-box input {
-            padding: 15px;
+            padding: 15px 20px;
             font-size: 16px;
-            border: none;
-            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
             width: 100%;
-            margin-bottom: 20px;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s;
+        }
+        
+        .login-box input:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 20px rgba(78,205,196,0.3);
+            transform: translateY(-2px);
         }
         
         .login-box button {
-            padding: 15px 40px;
+            padding: 15px 50px;
             font-size: 18px;
-            background: #4ECDC4;
+            background: linear-gradient(135deg, #4ECDC4, #45B7D1);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(78,205,196,0.4);
         }
         
         .login-box button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
         }
         
         .login-box button:hover:not(:disabled) {
-            background: #45B7D1;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(78,205,196,0.6);
+        }
+        
+        .login-box button:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+        
+        .game-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+        
+        .feature-icon {
+            margin-right: 8px;
         }
         
         #gameScreen {
@@ -336,20 +429,81 @@
             font-weight: bold;
             border: 2px solid white;
         }
+        
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 40px 30px;
+            }
+            
+            .login-box h1 {
+                font-size: 2em;
+            }
+            
+            .helicopter-icon {
+                font-size: 4em;
+            }
+            
+            .game-features {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .controls-hint {
+                font-size: 10px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Login Screen -->
     <div id="loginScreen">
-        <div class="login-box">
-            <h1>🚁 Copter Battle</h1>
-            <p>Real-time Multiplayer Combat Arena</p>
-            <div id="connectionStatus" style="margin-bottom: 20px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 14px;">
-                <div id="connectingMsg">🔄 Connecting to server...</div>
+        <div class="login-container">
+            <a href="index.html" class="back-button">
+                ← Back to Games
+            </a>
+            
+            <div class="login-box">
+                <div class="helicopter-icon">🚁</div>
+                <h1>Copter Battle Arena</h1>
+                <p class="subtitle">Real-Time Multiplayer Combat</p>
+                <p class="description">
+                    Battle players worldwide in intense helicopter combat. Earn XP, unlock upgrades, and dominate the leaderboard!
+                </p>
+                
+                <div id="connectionStatus" style="margin-bottom: 25px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; font-size: 14px; border: 2px solid rgba(255,255,255,0.2);">
+                    <div id="connectingMsg">🔄 Connecting to server...</div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="playerName" placeholder="Enter your name" maxlength="20" autofocus>
+                </div>
+                
+                <button onclick="joinGame()" id="joinBtn" disabled>🔫 Join Battle</button>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <span class="feature-icon">⚡</span>
+                        <strong>5 Upgrades</strong><br>
+                        <small>Fire rate, damage, health & more</small>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🏆</span>
+                        <strong>Leaderboard</strong><br>
+                        <small>Compete for the top spot</small>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🎮</span>
+                        <strong>Easy Controls</strong><br>
+                        <small>WASD + arrows or touch</small>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🌍</span>
+                        <strong>Real-Time</strong><br>
+                        <small>Battle players live online</small>
+                    </div>
+                </div>
             </div>
-            <input type="text" id="playerName" placeholder="Enter your name" maxlength="20" autofocus>
-            <br>
-            <button onclick="joinGame()" id="joinBtn" disabled>🔫 Join Battle</button>
         </div>
     </div>
 
