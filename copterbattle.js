@@ -2,7 +2,24 @@
 const SERVER_URL = window.location.protocol + '//' + window.location.host;
 const socket = io(SERVER_URL, {
     transports: ['websocket', 'polling'],
-    reconnection: true
+    reconnection: true,
+    reconnectionAttempts: 10,
+    reconnectionDelay: 1000,
+    timeout: 10000
+});
+
+// Connection status
+socket.on('connect', () => {
+    console.log('✅ Connected to server!', socket.id);
+});
+
+socket.on('connect_error', (error) => {
+    console.error('❌ Connection error:', error);
+    alert('Failed to connect to game server. Please refresh the page.');
+});
+
+socket.on('disconnect', (reason) => {
+    console.log('Disconnected:', reason);
 });
 
 const canvas = document.getElementById('gameCanvas');
@@ -40,6 +57,15 @@ let rightJoystick = { active: false, startX: 0, startY: 0, currentX: 0, currentY
 function joinGame() {
     const nameInput = document.getElementById('playerName');
     const name = nameInput.value.trim() || `Player${Math.floor(Math.random() * 1000)}`;
+    
+    console.log('Attempting to join game as:', name);
+    console.log('Socket connected:', socket.connected);
+    console.log('Socket ID:', socket.id);
+    
+    if (!socket.connected) {
+        alert('Not connected to server. Please wait and try again.');
+        return;
+    }
     
     socket.emit('joinGame', { name: name });
 }
