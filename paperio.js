@@ -275,6 +275,9 @@ function render() {
 
     // Update UI
     updateUI();
+    
+    // Draw minimap
+    drawMinimap();
 
     requestAnimationFrame(render);
 }
@@ -407,6 +410,59 @@ function updateUI() {
             <div>${p.score}</div>
         </div>
     `).join('');
+}
+
+function drawMinimap() {
+    if (!myId || !players[myId]) return;
+
+    const minimapSize = 150;
+    const minimapPadding = 10;
+    const minimapX = canvas.width - minimapSize - minimapPadding;
+    const minimapY = canvas.height - minimapSize - minimapPadding;
+    
+    // Save context
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transformations
+    
+    // Draw minimap background
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw minimap border
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw map boundary
+    ctx.strokeStyle = '#00ffff';
+    ctx.lineWidth = 1;
+    const mapScaleX = minimapSize / GAME_WIDTH;
+    const mapScaleY = minimapSize / GAME_HEIGHT;
+    ctx.strokeRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw all players on minimap
+    for (const id in players) {
+        const player = players[id];
+        if (!player.alive) continue;
+        
+        const minimapPlayerX = minimapX + player.x * mapScaleX;
+        const minimapPlayerY = minimapY + player.y * mapScaleY;
+        
+        // Draw player dot
+        ctx.fillStyle = player.color;
+        ctx.beginPath();
+        ctx.arc(minimapPlayerX, minimapPlayerY, id === myId ? 4 : 2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Highlight current player
+        if (id === myId) {
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+    }
+    
+    ctx.restore();
 }
 
 // Start game when Enter is pressed on name input

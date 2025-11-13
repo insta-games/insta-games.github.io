@@ -253,6 +253,9 @@ function render() {
 
     // Draw UI
     drawUI();
+    
+    // Draw minimap
+    drawMinimap();
 
     requestAnimationFrame(render);
 }
@@ -356,3 +359,61 @@ function drawUI() {
     ctx.fillText('WASD/Arrows: Move', 20, canvas.height - 35);
     ctx.fillText('SPACE: Boost (lose length)', 20, canvas.height - 15);
 }
+
+function drawMinimap() {
+    if (!myId || !players[myId]) return;
+
+    const minimapSize = 150;
+    const minimapPadding = 10;
+    const minimapX = canvas.width - minimapSize - minimapPadding;
+    const minimapY = canvas.height - minimapSize - minimapPadding;
+    
+    // Draw minimap background
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw minimap border
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw map boundary
+    ctx.strokeStyle = '#00ffff';
+    ctx.lineWidth = 1;
+    const mapScaleX = minimapSize / GAME_WIDTH;
+    const mapScaleY = minimapSize / GAME_HEIGHT;
+    ctx.strokeRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw all snakes on minimap
+    for (const id in players) {
+        const player = players[id];
+        if (!player.alive || !player.segments.length) continue;
+        
+        const head = player.segments[0];
+        const minimapPlayerX = minimapX + head.x * mapScaleX;
+        const minimapPlayerY = minimapY + head.y * mapScaleY;
+        
+        // Draw snake dot
+        ctx.fillStyle = player.color;
+        ctx.beginPath();
+        ctx.arc(minimapPlayerX, minimapPlayerY, id === myId ? 4 : 2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Highlight current player
+        if (id === myId) {
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+    }
+    
+    // Draw food clusters (sample every 5th food)
+    ctx.fillStyle = 'rgba(76, 175, 80, 0.6)';
+    for (let i = 0; i < food.length; i += 5) {
+        const f = food[i];
+        const fx = minimapX + f.x * mapScaleX;
+        const fy = minimapY + f.y * mapScaleY;
+        ctx.fillRect(fx, fy, 1, 1);
+    }
+}
+

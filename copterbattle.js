@@ -516,6 +516,61 @@ function render() {
             ctx.fillText(`Lv.${player.level}`, screenX, screenY + 35);
         }
     });
+    
+    // Draw minimap
+    drawMinimap();
+}
+
+function drawMinimap() {
+    if (!myId || !players[myId]) return;
+
+    const minimapSize = 150;
+    const minimapPadding = 10;
+    const minimapX = canvas.width - minimapSize - minimapPadding;
+    const minimapY = canvas.height - minimapSize - minimapPadding;
+    
+    // Draw minimap background
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Draw minimap border
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(minimapX, minimapY, minimapSize, minimapSize);
+    
+    // Map scale (assuming 2000x2000 game world)
+    const WORLD_SIZE = 2000;
+    const mapScale = minimapSize / WORLD_SIZE;
+    
+    // Draw all players on minimap
+    for (const id in players) {
+        const player = players[id];
+        
+        const minimapPlayerX = minimapX + player.x * mapScale;
+        const minimapPlayerY = minimapY + player.y * mapScale;
+        
+        // Draw player dot
+        ctx.fillStyle = player.color;
+        ctx.beginPath();
+        ctx.arc(minimapPlayerX, minimapPlayerY, id === myId ? 4 : 2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Highlight current player
+        if (id === myId) {
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+    }
+    
+    // Draw bullets on minimap
+    ctx.fillStyle = 'rgba(255, 255, 0, 0.6)';
+    for (const id in bullets) {
+        const bullet = bullets[id];
+        const bx = minimapX + bullet.x * mapScale;
+        const by = minimapY + bullet.y * mapScale;
+        ctx.fillRect(bx, by, 1, 1);
+    }
 }
 
 // Helper function to shade colors
