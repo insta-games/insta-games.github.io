@@ -33,7 +33,7 @@ let tanks = {};
 let tankId = 0;
 
 // Tank constants
-const MAX_TANKS = 5;
+const MAX_TANKS = 20;
 const TANK_SIZE = 35;
 const TANK_SPEED = 2;
 const TANK_HEALTH = 60;
