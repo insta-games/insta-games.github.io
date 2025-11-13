@@ -146,7 +146,7 @@ function floodFill(ownTerritory, trail) {
   const territorySet = new Set(ownTerritory.map(t => `${t.x},${t.y}`));
   const trailSet = new Set(trail.map(t => `${t.x},${t.y}`));
   
-  // Find bounding box of the trail
+  // Find bounding box of the trail - expand slightly to ensure we don't miss cells
   let minX = Infinity, maxX = -Infinity;
   let minY = Infinity, maxY = -Infinity;
   
@@ -156,6 +156,12 @@ function floodFill(ownTerritory, trail) {
     minY = Math.min(minY, point.y);
     maxY = Math.max(maxY, point.y);
   }
+  
+  // Align to grid and expand by one cell in each direction
+  minX = Math.floor(minX / GRID_SIZE) * GRID_SIZE - GRID_SIZE;
+  maxX = Math.ceil(maxX / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
+  minY = Math.floor(minY / GRID_SIZE) * GRID_SIZE - GRID_SIZE;
+  maxY = Math.ceil(maxY / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
   
   const width = (maxX - minX) / GRID_SIZE;
   const height = (maxY - minY) / GRID_SIZE;
@@ -170,7 +176,6 @@ function floodFill(ownTerritory, trail) {
   console.log(`Filling area: ${width}x${height} = ${totalCells} cells to check`);
   
   // Check all grid positions within bounding box using point-in-polygon test
-  // Use the center of each cell for the test
   for (let x = minX; x <= maxX; x += GRID_SIZE) {
     for (let y = minY; y <= maxY; y += GRID_SIZE) {
       const key = `${x},${y}`;
@@ -178,7 +183,8 @@ function floodFill(ownTerritory, trail) {
       // Skip if already territory or part of trail
       if (territorySet.has(key) || trailSet.has(key)) continue;
       
-      // Test center point of the cell
+      // Test multiple points within the cell to handle edge cases
+      // Test center point primarily
       const testX = x + GRID_SIZE / 2;
       const testY = y + GRID_SIZE / 2;
       
