@@ -168,20 +168,29 @@ function render() {
         const player = players[id];
         if (!player.alive) continue;
 
-        // Draw snake body
+        // Draw snake body (sample segments for long snakes to improve performance)
         ctx.strokeStyle = player.color;
         ctx.lineWidth = SEGMENT_SIZE * 1.8;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
         ctx.beginPath();
-        for (let i = 0; i < player.segments.length; i++) {
+        const maxSegmentsToDraw = 100; // Limit segments for performance
+        const step = player.segments.length > maxSegmentsToDraw ? 
+                     Math.ceil(player.segments.length / maxSegmentsToDraw) : 1;
+        
+        for (let i = 0; i < player.segments.length; i += step) {
             const seg = player.segments[i];
             if (i === 0) {
                 ctx.moveTo(seg.x, seg.y);
             } else {
                 ctx.lineTo(seg.x, seg.y);
             }
+        }
+        // Always include the last segment
+        if (player.segments.length > 1) {
+            const lastSeg = player.segments[player.segments.length - 1];
+            ctx.lineTo(lastSeg.x, lastSeg.y);
         }
         ctx.stroke();
 
@@ -407,9 +416,9 @@ function drawMinimap() {
         }
     }
     
-    // Draw food clusters (sample every 5th food)
+    // Draw food clusters (sample every 10th food for better performance)
     ctx.fillStyle = 'rgba(76, 175, 80, 0.6)';
-    for (let i = 0; i < food.length; i += 5) {
+    for (let i = 0; i < food.length; i += 10) {
         const f = food[i];
         const fx = minimapX + f.x * mapScaleX;
         const fy = minimapY + f.y * mapScaleY;

@@ -116,7 +116,10 @@ io.on('connection', (socket) => {
 });
 
 // Game loop
+let tickCount = 0;
 setInterval(() => {
+    tickCount++;
+    
     // Update all snakes
     for (const id in players) {
         const player = players[id];
@@ -223,13 +226,15 @@ setInterval(() => {
         }
     }
 
-    // Send updates to all clients (30 FPS)
-    io.emit('gameState', {
-        players,
-        food
-    });
+    // Send updates to all clients only every 2 ticks (30 FPS instead of 60)
+    if (tickCount % 2 === 0) {
+        io.emit('gameState', {
+            players,
+            food
+        });
+    }
 
-}, 1000 / 60); // 60 FPS server
+}, 1000 / 60); // 60 FPS physics, 30 FPS broadcasts
 
 http.listen(PORT, () => {
     console.log(`Snake.io server running on port ${PORT}`);

@@ -256,10 +256,14 @@ function render() {
 
         const trail = trails[playerId];
         
-        // Draw trail tiles
+        // Draw trail tiles (only visible ones)
         ctx.fillStyle = player.color + 'CC'; // More opaque
         for (const tile of trail) {
-            ctx.fillRect(tile.x, tile.y, GRID_SIZE, GRID_SIZE);
+            // Skip tiles that are clearly off-screen
+            if (tile.x + GRID_SIZE >= visibleMinX && tile.x <= visibleMaxX &&
+                tile.y + GRID_SIZE >= visibleMinY && tile.y <= visibleMaxY) {
+                ctx.fillRect(tile.x, tile.y, GRID_SIZE, GRID_SIZE);
+            }
         }
 
         // Draw trail line
