@@ -436,37 +436,25 @@ function render() {
         ctx.translate(screenX, screenY);
         ctx.rotate(tank.angle);
         
-        // Tank body (darker gray)
+        // Simplified tank body (single draw)
         ctx.fillStyle = '#555555';
         ctx.fillRect(-17.5, -17.5, 35, 35);
         
-        // Tank turret (slightly lighter)
-        ctx.fillStyle = '#666666';
-        ctx.beginPath();
-        ctx.arc(0, 0, 12, 0, Math.PI * 2);
-        ctx.fill();
-        
         // Tank barrel
-        ctx.fillStyle = '#444444';
-        ctx.fillRect(0, -3, 20, 6);
-        
-        // Tank outline
-        ctx.strokeStyle = '#333333';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(-17.5, -17.5, 35, 35);
+        ctx.fillStyle = '#333333';
+        ctx.fillRect(0, -2, 18, 4);
         
         ctx.restore();
         
-        // Tank health bar
-        const barWidth = 40;
-        const barHeight = 5;
-        const healthPercent = tank.health / 60; // TANK_HEALTH = 60
-        
-        ctx.fillStyle = '#333333';
-        ctx.fillRect(screenX - barWidth/2, screenY - 30, barWidth, barHeight);
-        
-        ctx.fillStyle = healthPercent > 0.5 ? '#4ECDC4' : healthPercent > 0.25 ? '#FFA500' : '#FF4444';
-        ctx.fillRect(screenX - barWidth/2, screenY - 30, barWidth * healthPercent, barHeight);
+        // Tank health bar (simplified)
+        const healthPercent = tank.health / 60;
+        if (healthPercent < 1) { // Only show if damaged
+            const barWidth = 35;
+            ctx.fillStyle = '#333333';
+            ctx.fillRect(screenX - barWidth/2, screenY - 25, barWidth, 3);
+            ctx.fillStyle = healthPercent > 0.5 ? '#4ECDC4' : '#FF4444';
+            ctx.fillRect(screenX - barWidth/2, screenY - 25, barWidth * healthPercent, 3);
+        }
     });
     
     // Draw touch joysticks

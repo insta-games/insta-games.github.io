@@ -33,7 +33,7 @@ let tanks = {};
 let tankId = 0;
 
 // Tank constants
-const MAX_TANKS = 10;
+const MAX_TANKS = 5;
 const TANK_SIZE = 35;
 const TANK_SPEED = 2;
 const TANK_HEALTH = 60;
@@ -121,9 +121,14 @@ function updateTanks() {
 }
 
 // Game loop
+let tickCount = 0;
 setInterval(() => {
-  // Update tanks AI
-  updateTanks();
+  tickCount++;
+  
+  // Update tanks AI only every 3rd frame (reduce CPU usage)
+  if (tickCount % 3 === 0) {
+    updateTanks();
+  }
   
   // Update bullets
   bullets = bullets.filter(bullet => {
@@ -212,14 +217,16 @@ setInterval(() => {
     return true;
   });
 
-  // Broadcast game state
-  io.emit('gameState', {
-    players: players,
-    bullets: bullets,
-    tanks: tanks
-  });
+  // Broadcast game state only 30 times per second (every other frame)
+  if (tickCount % 2 === 0) {
+    io.emit('gameState', {
+      players: players,
+      bullets: bullets,
+      tanks: tanks
+    });
+  }
 
-}, 1000 / 60); // 60 FPS
+}, 1000 / 60); // 60 FPS physics, 30 FPS broadcasts
 
 // Socket.io handlers
 io.on('connection', (socket) => {
