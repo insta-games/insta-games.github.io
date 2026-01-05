@@ -11,8 +11,29 @@ document.addEventListener('DOMContentLoaded', function () {
   const sectionLocalMultiplayer = document.getElementById('section-local-multiplayer');
   const sectionOnlineMultiplayer = document.getElementById('section-online-multiplayer');
   
-  if (navSingleplayer && navLocalMultiplayer && navOnlineMultiplayer && 
-      sectionSingleplayer && sectionLocalMultiplayer && sectionOnlineMultiplayer) {
+  // Check if we're on the index page with sections or on a game page
+  const isIndexPage = sectionSingleplayer && sectionLocalMultiplayer && sectionOnlineMultiplayer;
+  
+  if (navSingleplayer && navLocalMultiplayer && navOnlineMultiplayer) {
+    // If on a game page (no sections), navigation links go to index.html
+    if (!isIndexPage) {
+      navSingleplayer.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'index.html';
+      });
+      
+      navLocalMultiplayer.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'index.html#local-multiplayer';
+      });
+      
+      navOnlineMultiplayer.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'index.html#online-multiplayer';
+      });
+    }
+    // If on index page with sections, use section switching
+    else if (isIndexPage) {
     
     // Function to hide all sections
     function hideAllSections() {
@@ -83,7 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const siteNav = document.getElementById('site-nav');
       if (window.innerWidth <= 640 && siteNav) siteNav.style.display = 'none';
     });
-  }
+    } // end isIndexPage
+  } // end navigation check
 
   // mobile nav toggle
   const navToggle = document.getElementById('nav-toggle');
