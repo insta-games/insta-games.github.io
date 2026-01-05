@@ -40,7 +40,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }
 
   pads.forEach(p=>p.addEventListener('click', (e)=>{
-    if(playing) return;
+    if(playing) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     const i = Number(e.currentTarget.dataset.pad);
     flashPad(i,200);
     input.push(i);
