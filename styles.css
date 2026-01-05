@@ -388,7 +388,7 @@ body{
 }
 
 .snake-canvas{
-  background:linear-gradient(135deg, #0a0e1a 0%, #050811 100%);
+  background:linear-gradient(135deg, rgba(17,24,39,0.95) 0%, rgba(10,14,26,0.98) 100%);
   display:block;
   margin:1.5rem auto;
   border-radius:14px;
