@@ -188,18 +188,26 @@ function rotate(piece) {
     );
     
     const previousShape = piece.shape;
+    const previousX = piece.x;
     piece.shape = rotated;
     
-    // Wall kick
-    let offset = 0;
-    while (collide(piece, board)) {
-        piece.x += offset;
-        offset = -(offset + (offset > 0 ? 1 : -1));
-        if (offset > piece.shape[0].length) {
-            piece.shape = previousShape;
+    // Try basic rotation first
+    if (!collide(piece, board)) {
+        return;
+    }
+    
+    // Wall kick - try shifting left and right
+    const kicks = [1, -1, 2, -2];
+    for (let kick of kicks) {
+        piece.x = previousX + kick;
+        if (!collide(piece, board)) {
             return;
         }
     }
+    
+    // If no valid position found, revert rotation
+    piece.shape = previousShape;
+    piece.x = previousX;
 }
 
 // Clear completed lines
