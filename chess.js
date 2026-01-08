@@ -317,9 +317,17 @@
     }
 
     // Get valid moves for a piece (with check validation)
-    function getValidMoves(row, col) {
+    function getValidMoves(row, col, forColor = null) {
         const piece = board[row][col];
-        if (!piece || piece.color !== currentPlayer) return [];
+        if (!piece) return [];
+        
+        // If forColor is specified, only return moves for that color
+        // Otherwise, only return moves if it's the current player's piece
+        if (forColor !== null) {
+            if (piece.color !== forColor) return [];
+        } else {
+            if (piece.color !== currentPlayer) return [];
+        }
 
         const rawMoves = getRawMoves(row, col);
         
@@ -350,7 +358,7 @@
             for (let col = 0; col < BOARD_SIZE; col++) {
                 const piece = board[row][col];
                 if (piece && piece.color === color) {
-                    const moves = getValidMoves(row, col);
+                    const moves = getValidMoves(row, col, color);
                     if (moves.length > 0) {
                         return false;
                     }
@@ -373,7 +381,7 @@
             for (let col = 0; col < BOARD_SIZE; col++) {
                 const piece = board[row][col];
                 if (piece && piece.color === color) {
-                    const moves = getValidMoves(row, col);
+                    const moves = getValidMoves(row, col, color);
                     if (moves.length > 0) {
                         return false;
                     }
@@ -536,7 +544,7 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
                 for (let col = 0; col < BOARD_SIZE; col++) {
                     const piece = board[row][col];
                     if (piece && piece.color === BLACK) {
-                        const moves = getValidMoves(row, col);
+                        const moves = getValidMoves(row, col, BLACK);
                         for (let move of moves) {
                             allMoves.push({
                                 from: { row, col },
