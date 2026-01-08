@@ -45,30 +45,30 @@
         }
 
         // Place black pieces
-        board[0][0] = { type: PIECES.ROOK, color: BLACK };
-        board[0][1] = { type: PIECES.KNIGHT, color: BLACK };
-        board[0][2] = { type: PIECES.BISHOP, color: BLACK };
-        board[0][3] = { type: PIECES.QUEEN, color: BLACK };
-        board[0][4] = { type: PIECES.KING, color: BLACK };
-        board[0][5] = { type: PIECES.BISHOP, color: BLACK };
-        board[0][6] = { type: PIECES.KNIGHT, color: BLACK };
-        board[0][7] = { type: PIECES.ROOK, color: BLACK };
+        board[0][0] = { type: PIECES.ROOK, color: BLACK, hasMoved: false };
+        board[0][1] = { type: PIECES.KNIGHT, color: BLACK, hasMoved: false };
+        board[0][2] = { type: PIECES.BISHOP, color: BLACK, hasMoved: false };
+        board[0][3] = { type: PIECES.QUEEN, color: BLACK, hasMoved: false };
+        board[0][4] = { type: PIECES.KING, color: BLACK, hasMoved: false };
+        board[0][5] = { type: PIECES.BISHOP, color: BLACK, hasMoved: false };
+        board[0][6] = { type: PIECES.KNIGHT, color: BLACK, hasMoved: false };
+        board[0][7] = { type: PIECES.ROOK, color: BLACK, hasMoved: false };
         for (let col = 0; col < BOARD_SIZE; col++) {
-            board[1][col] = { type: PIECES.PAWN, color: BLACK };
+            board[1][col] = { type: PIECES.PAWN, color: BLACK, hasMoved: false };
         }
 
         // Place white pieces
         for (let col = 0; col < BOARD_SIZE; col++) {
-            board[6][col] = { type: PIECES.PAWN, color: WHITE };
+            board[6][col] = { type: PIECES.PAWN, color: WHITE, hasMoved: false };
         }
-        board[7][0] = { type: PIECES.ROOK, color: WHITE };
-        board[7][1] = { type: PIECES.KNIGHT, color: WHITE };
-        board[7][2] = { type: PIECES.BISHOP, color: WHITE };
-        board[7][3] = { type: PIECES.QUEEN, color: WHITE };
-        board[7][4] = { type: PIECES.KING, color: WHITE };
-        board[7][5] = { type: PIECES.BISHOP, color: WHITE };
-        board[7][6] = { type: PIECES.KNIGHT, color: WHITE };
-        board[7][7] = { type: PIECES.ROOK, color: WHITE };
+        board[7][0] = { type: PIECES.ROOK, color: WHITE, hasMoved: false };
+        board[7][1] = { type: PIECES.KNIGHT, color: WHITE, hasMoved: false };
+        board[7][2] = { type: PIECES.BISHOP, color: WHITE, hasMoved: false };
+        board[7][3] = { type: PIECES.QUEEN, color: WHITE, hasMoved: false };
+        board[7][4] = { type: PIECES.KING, color: WHITE, hasMoved: false };
+        board[7][5] = { type: PIECES.BISHOP, color: WHITE, hasMoved: false };
+        board[7][6] = { type: PIECES.KNIGHT, color: WHITE, hasMoved: false };
+        board[7][7] = { type: PIECES.ROOK, color: WHITE, hasMoved: false };
 
         selectedSquare = null;
         validMoves = [];
@@ -286,6 +286,39 @@
                         moves.push({ row: newRow, col: newCol });
                     }
                 }
+                
+                // Castling
+                if (!piece.hasMoved && !isInCheck[piece.color]) {
+                    // Kingside castling
+                    const kingsideRook = board[row][7];
+                    if (kingsideRook && kingsideRook.type === PIECES.ROOK && 
+                        kingsideRook.color === piece.color && !kingsideRook.hasMoved) {
+                        // Check if squares between are empty
+                        if (!board[row][5] && !board[row][6]) {
+                            // Check if squares king passes through are not under attack
+                            const opponent = piece.color === WHITE ? BLACK : WHITE;
+                            if (!isSquareUnderAttack(row, 5, opponent) && 
+                                !isSquareUnderAttack(row, 6, opponent)) {
+                                moves.push({ row, col: 6, isCastling: true, rookCol: 7 });
+                            }
+                        }
+                    }
+                    
+                    // Queenside castling
+                    const queensideRook = board[row][0];
+                    if (queensideRook && queensideRook.type === PIECES.ROOK && 
+                        queensideRook.color === piece.color && !queensideRook.hasMoved) {
+                        // Check if squares between are empty
+                        if (!board[row][1] && !board[row][2] && !board[row][3]) {
+                            // Check if squares king passes through are not under attack
+                            const opponent = piece.color === WHITE ? BLACK : WHITE;
+                            if (!isSquareUnderAttack(row, 2, opponent) && 
+                                !isSquareUnderAttack(row, 3, opponent)) {
+                                moves.push({ row, col: 2, isCastling: true, rookCol: 0 });
+                            }
+                        }
+                    }
+                }
                 break;
         }
 
@@ -461,7 +494,7 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
     }
 
     // Make a move
-    function makeMove(fromRow, fromCol, toRow, toCol) {
+    function makeMove(fromRow, fromCol, toRow, toCol, moveData = null) {
         const piece = board[fromRow][fromCol];
         const capturedPiece = board[toRow][toCol];
         
@@ -470,17 +503,34 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
             capturedPieces[piece.color].push({ ...capturedPiece });
         }
 
+        // Check if this is a castling move
+        const isCastling = moveData && moveData.isCastling;
+        let rookMove = null;
+
         // Save move for undo
         moveHistory.push({
             from: { row: fromRow, col: fromCol },
             to: { row: toRow, col: toCol },
             piece: { ...piece },
             capturedPiece: capturedPiece ? { ...capturedPiece } : null,
-            checkStatus: { ...isInCheck }
+            checkStatus: { ...isInCheck },
+            isCastling: isCastling,
+            rookMove: isCastling ? { from: moveData.rookCol, to: moveData.rookCol === 7 ? 5 : 3 } : null
         });
 
         board[toRow][toCol] = piece;
         board[fromRow][fromCol] = null;
+        piece.hasMoved = true;
+
+        // Handle castling - move the rook
+        if (isCastling) {
+            const rookFromCol = moveData.rookCol;
+            const rookToCol = rookFromCol === 7 ? 5 : 3; // Kingside: 7->5, Queenside: 0->3
+            const rook = board[fromRow][rookFromCol];
+            board[fromRow][rookToCol] = rook;
+            board[fromRow][rookFromCol] = null;
+            rook.hasMoved = true;
+        }
 
         // Check for pawn promotion
         if (piece.type === PIECES.PAWN && (toRow === 0 || toRow === 7)) {
@@ -546,7 +596,8 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
 
         // If a square is selected and clicked square is a valid move
         if (selectedSquare && validMoves.some(m => m.row === row && m.col === col)) {
-            makeMove(selectedSquare.row, selectedSquare.col, row, col);
+            const moveData = validMoves.find(m => m.row === row && m.col === col);
+            makeMove(selectedSquare.row, selectedSquare.col, row, col, moveData);
             selectedSquare = null;
             validMoves = [];
             
@@ -585,6 +636,15 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
         board[lastMove.from.row][lastMove.from.col] = lastMove.piece;
         board[lastMove.to.row][lastMove.to.col] = lastMove.capturedPiece;
         
+        // Undo castling rook move
+        if (lastMove.isCastling && lastMove.rookMove) {
+            const rookToCol = lastMove.rookMove.to;
+            const rookFromCol = lastMove.rookMove.from;
+            const rook = board[lastMove.from.row][rookToCol];
+            board[lastMove.from.row][rookFromCol] = rook;
+            board[lastMove.from.row][rookToCol] = null;
+        }
+        
         // Remove from captured pieces
         if (lastMove.capturedPiece) {
             capturedPieces[lastMove.piece.color].pop();
@@ -597,6 +657,8 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
         validMoves = [];
         updateCheckStatus();
         updateStatus();
+        draw();
+    });
         draw();
     });
 
