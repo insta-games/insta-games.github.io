@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let lastTime = 0;
-  const targetFPS = 15; // Slower game speed
+  const targetFPS = 10; // Even slower game speed
   const frameDelay = 1000 / targetFPS;
 
   function gameLoop(currentTime) {
