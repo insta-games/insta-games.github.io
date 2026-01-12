@@ -276,12 +276,26 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = bgGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Draw board with themed blue gradient
+        // Draw board with themed blue gradient and rounded corners
         const boardGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        boardGradient.addColorStop(0, '#1e40af');
+        boardGradient.addColorStop(0, '#2563eb');
+        boardGradient.addColorStop(0.5, '#1e40af');
         boardGradient.addColorStop(1, '#1e3a8a');
         ctx.fillStyle = boardGradient;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.shadowBlur = 0;
+        
+        // Draw board frame/border for depth
+        ctx.strokeStyle = '#1e3a8a';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
+        
+        // Inner highlight on board
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
         
         // Draw grid and pieces
         for (let row = 0; row < ROWS; row++) {
@@ -289,47 +303,84 @@ document.addEventListener('DOMContentLoaded', function() {
                 const x = col * CELL_SIZE + CELL_SIZE / 2;
                 const y = row * CELL_SIZE + CELL_SIZE / 2;
                 
-                // Draw slot with subtle shadow
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                // Draw slot with deep shadow (creates 3D effect)
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = 'rgba(0,0,0,0.8)';
+                ctx.shadowOffsetY = 2;
                 ctx.fillStyle = '#0a0e1a';
                 ctx.beginPath();
                 ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
                 ctx.fill();
+                
+                // Inner ring for depth
                 ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
+                ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(x, y, RADIUS - 1, 0, Math.PI * 2);
+                ctx.stroke();
                 
                 // Draw piece
                 if (board[row][col] === 1) {
-                    // Player 1 - cyan/teal gradient with glow (matching theme)
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = 'rgba(6, 182, 212, 0.6)';
+                    // Player 1 - cyan/teal gradient with glow
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = 'rgba(6, 182, 212, 0.8)';
                     const p1Gradient = ctx.createRadialGradient(
-                        x - RADIUS/3, y - RADIUS/3, RADIUS/5,
+                        x - RADIUS/2.5, y - RADIUS/2.5, RADIUS/6,
                         x, y, RADIUS - 2
                     );
-                    p1Gradient.addColorStop(0, '#22d3ee');
-                    p1Gradient.addColorStop(1, '#06b6d4');
+                    p1Gradient.addColorStop(0, '#67e8f9');
+                    p1Gradient.addColorStop(0.3, '#22d3ee');
+                    p1Gradient.addColorStop(1, '#0891b2');
                     ctx.fillStyle = p1Gradient;
                     ctx.beginPath();
-                    ctx.arc(x, y, RADIUS - 2, 0, Math.PI * 2);
+                    ctx.arc(x, y, RADIUS - 3, 0, Math.PI * 2);
                     ctx.fill();
+                    
+                    // Add highlight shine
                     ctx.shadowBlur = 0;
+                    const highlightGradient = ctx.createRadialGradient(
+                        x - RADIUS/3, y - RADIUS/3, 0,
+                        x - RADIUS/3, y - RADIUS/3, RADIUS/2
+                    );
+                    highlightGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+                    highlightGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = highlightGradient;
+                    ctx.beginPath();
+                    ctx.arc(x, y, RADIUS - 3, 0, Math.PI * 2);
+                    ctx.fill();
                 } else if (board[row][col] === 2) {
-                    // Player 2 - orange/amber gradient with glow (matching theme)
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = 'rgba(249, 115, 22, 0.6)';
+                    // Player 2 - orange/amber gradient with glow
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = 'rgba(249, 115, 22, 0.8)';
                     const p2Gradient = ctx.createRadialGradient(
-                        x - RADIUS/3, y - RADIUS/3, RADIUS/5,
+                        x - RADIUS/2.5, y - RADIUS/2.5, RADIUS/6,
                         x, y, RADIUS - 2
                     );
-                    p2Gradient.addColorStop(0, '#fbbf24');
-                    p2Gradient.addColorStop(1, '#f97316');
+                    p2Gradient.addColorStop(0, '#fde047');
+                    p2Gradient.addColorStop(0.3, '#fbbf24');
+                    p2Gradient.addColorStop(1, '#ea580c');
                     ctx.fillStyle = p2Gradient;
                     ctx.beginPath();
-                    ctx.arc(x, y, RADIUS - 2, 0, Math.PI * 2);
+                    ctx.arc(x, y, RADIUS - 3, 0, Math.PI * 2);
                     ctx.fill();
+                    
+                    // Add highlight shine
                     ctx.shadowBlur = 0;
+                    const highlightGradient = ctx.createRadialGradient(
+                        x - RADIUS/3, y - RADIUS/3, 0,
+                        x - RADIUS/3, y - RADIUS/3, RADIUS/2
+                    );
+                    highlightGradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+                    highlightGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = highlightGradient;
+                    ctx.beginPath();
+                    ctx.arc(x, y, RADIUS - 3, 0, Math.PI * 2);
+                    ctx.fill();
                 }
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
             }
         }
     }
@@ -372,18 +423,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const pieceX = col * CELL_SIZE + CELL_SIZE / 2;
             const pieceY = -CELL_SIZE / 2;
             
-            ctx.globalAlpha = 0.5;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = 'rgba(6, 182, 212, 0.5)';
+            ctx.globalAlpha = 0.6;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = 'rgba(6, 182, 212, 0.6)';
             const previewGradient = ctx.createRadialGradient(
-                pieceX - RADIUS/3, pieceY - RADIUS/3, RADIUS/5,
+                pieceX - RADIUS/2.5, pieceY - RADIUS/2.5, RADIUS/6,
                 pieceX, pieceY, RADIUS - 2
             );
-            previewGradient.addColorStop(0, '#22d3ee');
-            previewGradient.addColorStop(1, '#06b6d4');
+            previewGradient.addColorStop(0, '#67e8f9');
+            previewGradient.addColorStop(0.3, '#22d3ee');
+            previewGradient.addColorStop(1, '#0891b2');
             ctx.fillStyle = previewGradient;
             ctx.beginPath();
-            ctx.arc(pieceX, pieceY, RADIUS - 2, 0, Math.PI * 2);
+            ctx.arc(pieceX, pieceY, RADIUS - 3, 0, Math.PI * 2);
             ctx.fill();
             ctx.globalAlpha = 1;
             ctx.shadowBlur = 0;
