@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-33Q7MTCK21"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-33Q7MTCK21');
+    </script>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Crossy Road Game - Play Free Online | Insta-Games</title>
+    <meta name="description" content="Cross the busy roads and rivers safely! Avoid cars and hop on logs. Free browser game, no download required." />
+    <meta name="keywords" content="crossy road, frogger game, road crossing game, arcade game, browser game" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Insta-Games</span>
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>Crossy Road</h1>
+        <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Use arrow keys or WASD to cross roads and rivers. Avoid cars and don't fall in water!</p>
+        <canvas id="crossyroad" width="500" height="600"></canvas>
+        <div class="controls">
+          <button id="reset" class="btn">New Game</button>
+          <div class="status" id="crossy-score" style="margin:0 auto;">Score: 0 | Lives: 3</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games</small></div></footer>
+    <script src="script.js" defer></script>
+    <script src="crossyroad.js" defer></script>
+  </body>
+</html>
