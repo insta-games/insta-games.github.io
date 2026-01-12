@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   let isAiThinking = false;
+  let gameStarted = false;
   
   const wins = [
     [0,1,2],[3,4,5],[6,7,8],
@@ -207,9 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
     board = Array(9).fill(null);
     turn = 'X';
     isAiThinking = false;
+    gameStarted = false;
     cells.forEach(c=>c.classList.remove('win'));
     render();
     status.textContent = `Turn: ${turn}`;
+    
+    // Re-enable difficulty selector when board is reset
+    if (diffEl) {
+      diffEl.disabled = false;
+    }
   }
 
   function cellClick(e){
@@ -220,6 +227,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // In single player mode, only allow X (human) to play
     if (mode === 'single' && turn === 'O') return;
+    
+    // Once the first move is made, lock the difficulty
+    if (!gameStarted && mode === 'single') {
+      gameStarted = true;
+      if (diffEl) {
+        diffEl.disabled = true;
+      }
+    }
     
     board[i] = turn;
     turn = turn === 'X' ? 'O' : 'X';
@@ -256,6 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
     scoreX.textContent = '0';
     scoreO.textContent = '0';
     scoreDraws.textContent = '0';
+    gameStarted = false;
+    if (diffEl) {
+      diffEl.disabled = false;
+    }
     resetBoard();
   });
   
