@@ -269,15 +269,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function draw() {
-        // Background
-        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        gradient.addColorStop(0, '#1a1f35');
-        gradient.addColorStop(1, '#0a0e1a');
-        ctx.fillStyle = gradient;
+        // Background with themed gradient
+        const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        bgGradient.addColorStop(0, '#1e293b');
+        bgGradient.addColorStop(1, '#0f172a');
+        ctx.fillStyle = bgGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Draw board
-        ctx.fillStyle = '#1e40af';
+        // Draw board with themed blue gradient
+        const boardGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        boardGradient.addColorStop(0, '#1e40af');
+        boardGradient.addColorStop(1, '#1e3a8a');
+        ctx.fillStyle = boardGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         // Draw grid and pieces
@@ -286,23 +289,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 const x = col * CELL_SIZE + CELL_SIZE / 2;
                 const y = row * CELL_SIZE + CELL_SIZE / 2;
                 
-                // Draw slot
+                // Draw slot with subtle shadow
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
                 ctx.fillStyle = '#0a0e1a';
                 ctx.beginPath();
                 ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.shadowBlur = 0;
                 
                 // Draw piece
                 if (board[row][col] === 1) {
-                    ctx.fillStyle = '#ef4444';
+                    // Player 1 - cyan/teal gradient with glow (matching theme)
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = 'rgba(6, 182, 212, 0.6)';
+                    const p1Gradient = ctx.createRadialGradient(
+                        x - RADIUS/3, y - RADIUS/3, RADIUS/5,
+                        x, y, RADIUS - 2
+                    );
+                    p1Gradient.addColorStop(0, '#22d3ee');
+                    p1Gradient.addColorStop(1, '#06b6d4');
+                    ctx.fillStyle = p1Gradient;
                     ctx.beginPath();
                     ctx.arc(x, y, RADIUS - 2, 0, Math.PI * 2);
                     ctx.fill();
+                    ctx.shadowBlur = 0;
                 } else if (board[row][col] === 2) {
-                    ctx.fillStyle = '#eab308';
+                    // Player 2 - orange/amber gradient with glow (matching theme)
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = 'rgba(249, 115, 22, 0.6)';
+                    const p2Gradient = ctx.createRadialGradient(
+                        x - RADIUS/3, y - RADIUS/3, RADIUS/5,
+                        x, y, RADIUS - 2
+                    );
+                    p2Gradient.addColorStop(0, '#fbbf24');
+                    p2Gradient.addColorStop(1, '#f97316');
+                    ctx.fillStyle = p2Gradient;
                     ctx.beginPath();
                     ctx.arc(x, y, RADIUS - 2, 0, Math.PI * 2);
                     ctx.fill();
+                    ctx.shadowBlur = 0;
                 }
             }
         }
@@ -347,11 +373,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const pieceY = -CELL_SIZE / 2;
             
             ctx.globalAlpha = 0.5;
-            ctx.fillStyle = '#ef4444';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = 'rgba(6, 182, 212, 0.5)';
+            const previewGradient = ctx.createRadialGradient(
+                pieceX - RADIUS/3, pieceY - RADIUS/3, RADIUS/5,
+                pieceX, pieceY, RADIUS - 2
+            );
+            previewGradient.addColorStop(0, '#22d3ee');
+            previewGradient.addColorStop(1, '#06b6d4');
+            ctx.fillStyle = previewGradient;
             ctx.beginPath();
             ctx.arc(pieceX, pieceY, RADIUS - 2, 0, Math.PI * 2);
             ctx.fill();
             ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
         }
     });
     
