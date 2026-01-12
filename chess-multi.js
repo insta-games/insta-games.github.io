@@ -661,8 +661,6 @@ ${winnerCaptured.length > 0 ? `🎯 Pieces captured: ${winnerCaptured.map(p => g
         updateStatus();
         draw();
     });
-        draw();
-    });
 
     // Start game
     initBoard();
