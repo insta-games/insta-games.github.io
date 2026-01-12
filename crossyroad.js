@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Responsive canvas sizing
   function resizeCanvas() {
-    const maxWidth = Math.min(600, window.innerWidth - 40);
+    const maxWidth = Math.min(800, window.innerWidth - 40);
     canvas.width = maxWidth;
     canvas.height = maxWidth * 1.2;
   }
