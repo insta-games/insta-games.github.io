@@ -50,6 +50,9 @@ let leftPressed = false;
 let rightPressed = false;
 let moveCounter = 0;
 const moveDelay = 100; // milliseconds between moves when key is held
+const initialMoveDelay = 200; // initial delay before fast repeat starts
+let leftFirstMove = false;
+let rightFirstMove = false;
 
 // Initialize board
 function createBoard() {
@@ -413,13 +416,16 @@ function update(time = 0) {
     dropCounter += deltaTime;
     moveCounter += deltaTime;
     
-    // Handle continuous left/right movement
-    if (moveCounter > moveDelay) {
+    // Handle continuous left/right movement with initial delay
+    const currentMoveDelay = (leftFirstMove || rightFirstMove) ? initialMoveDelay : moveDelay;
+    if (moveCounter > currentMoveDelay) {
         if (leftPressed) {
             move(-1);
+            leftFirstMove = false; // After first delay, switch to fast repeat
         }
         if (rightPressed) {
             move(1);
+            rightFirstMove = false; // After first delay, switch to fast repeat
         }
         moveCounter = 0;
     }
@@ -451,6 +457,7 @@ document.addEventListener('keydown', e => {
             if (!leftPressed) {
                 move(-1);
                 leftPressed = true;
+                leftFirstMove = true; // Mark that we need initial delay
                 moveCounter = 0;
             }
             break;
@@ -458,6 +465,7 @@ document.addEventListener('keydown', e => {
             if (!rightPressed) {
                 move(1);
                 rightPressed = true;
+                rightFirstMove = true; // Mark that we need initial delay
                 moveCounter = 0;
             }
             break;
@@ -490,9 +498,11 @@ document.addEventListener('keyup', e => {
     switch(e.key) {
         case 'ArrowLeft':
             leftPressed = false;
+            leftFirstMove = false;
             break;
         case 'ArrowRight':
             rightPressed = false;
+            rightFirstMove = false;
             break;
     }
 });
