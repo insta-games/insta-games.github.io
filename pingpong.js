@@ -176,7 +176,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // Obstacle collision
         for (const obs of obstacles) {
             if (checkCollision(ballRect, obs)) {
-                ball.vx = -ball.vx;
+                // Determine which side of the obstacle was hit
+                const ballCenterX = ball.x;
+                const obsCenterX = obs.x + obs.width / 2;
+                
+                // Reverse direction and push ball out of obstacle
+                if (ballCenterX < obsCenterX) {
+                    ball.vx = -Math.abs(ball.vx);
+                    ball.x = obs.x - ball.size / 2;
+                } else {
+                    ball.vx = Math.abs(ball.vx);
+                    ball.x = obs.x + obs.width + ball.size / 2;
+                }
             }
         }
         
