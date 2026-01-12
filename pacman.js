@@ -390,8 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      const newGX = ghost.x + ghost.dir.x * 0.3;
-      const newGY = ghost.y + ghost.dir.y * 0.3;
+      const newGX = ghost.x + ghost.dir.x * 0.2;
+      const newGY = ghost.y + ghost.dir.y * 0.2;
       
       if (canMove(Math.floor(newGX), Math.floor(newGY))) {
         ghost.x = newGX;
