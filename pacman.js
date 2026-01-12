@@ -333,6 +333,14 @@ document.addEventListener('DOMContentLoaded', () => {
           won = true;
           gameOver = true;
           checkAndSetHighScore(score);
+          // Track game completion
+          if (typeof gtag === 'function') {
+            gtag('event', 'game_complete', {
+              'game_name': 'pacman',
+              'score': score,
+              'result': 'won'
+            });
+          }
         }
       } else if (cell === 3) {
         maze[pacman.y][pacman.x] = 0;
@@ -346,6 +354,14 @@ document.addEventListener('DOMContentLoaded', () => {
           won = true;
           gameOver = true;
           checkAndSetHighScore(score);
+          // Track game completion
+          if (typeof gtag === 'function') {
+            gtag('event', 'game_complete', {
+              'game_name': 'pacman',
+              'score': score,
+              'result': 'won'
+            });
+          }
         }
       }
     }
@@ -422,6 +438,14 @@ document.addEventListener('DOMContentLoaded', () => {
           if (lives <= 0) {
             gameOver = true;
             checkAndSetHighScore(score);
+            // Track game over
+            if (typeof gtag === 'function') {
+              gtag('event', 'game_over', {
+                'game_name': 'pacman',
+                'score': score,
+                'result': 'lost'
+              });
+            }
           } else {
             reset();
             gameStarted = false;
@@ -457,6 +481,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (keys['ArrowUp'] || keys['w'] || keys['W'] || keys['ArrowDown'] || keys['s'] || keys['S'] ||
           keys['ArrowLeft'] || keys['a'] || keys['A'] || keys['ArrowRight'] || keys['d'] || keys['D']) {
         gameStarted = true;
+        // Track game start
+        if (typeof gtag === 'function') {
+          gtag('event', 'game_start', {
+            'game_name': 'pacman'
+          });
+        }
       }
     }
     
