@@ -76,6 +76,88 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
         }
+        .touch-controls {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        @media (max-width: 768px), (hover: none) {
+            .touch-controls {
+                display: block;
+            }
+        }
+        .joystick-container {
+            position: absolute;
+            bottom: 0;
+            width: 150px;
+            height: 150px;
+            pointer-events: all;
+        }
+        .joystick-container.left {
+            left: 30px;
+        }
+        .joystick-container.right {
+            right: 30px;
+        }
+        .joystick-base {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+        .joystick-knob {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s;
+        }
+        .joystick-container.left .joystick-knob {
+            background: rgba(6, 182, 212, 0.7);
+            border: 3px solid #06b6d4;
+        }
+        .joystick-container.right .joystick-knob {
+            background: rgba(59, 130, 246, 0.7);
+            border: 3px solid #3b82f6;
+        }
+        .fire-button {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            bottom: 160px;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid;
+            pointer-events: all;
+            user-select: none;
+            cursor: pointer;
+        }
+        .fire-button.left {
+            left: 50px;
+            background: rgba(6, 182, 212, 0.5);
+            border-color: #06b6d4;
+            color: #06b6d4;
+        }
+        .fire-button.right {
+            right: 50px;
+            background: rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .fire-button:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -126,6 +208,25 @@
         <div style="text-align: center; margin-top: 20px;">
             <button id="resetBtn" class="btn">New Game</button>
             <button onclick="window.location.href='index.html#multiplayer'" class="btn">Back to Games</button>
+        </div>
+    </div>
+    
+    <!-- Touch Controls -->
+    <div class="touch-controls">
+        <!-- Player 1 controls (left side) -->
+        <div class="fire-button left">🔥</div>
+        <div class="joystick-container left">
+            <div class="joystick-base">
+                <div class="joystick-knob" id="knob1"></div>
+            </div>
+        </div>
+        
+        <!-- Player 2 controls (right side) -->
+        <div class="fire-button right">🔥</div>
+        <div class="joystick-container right">
+            <div class="joystick-base">
+                <div class="joystick-knob" id="knob2"></div>
+            </div>
         </div>
     </div>
     

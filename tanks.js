@@ -453,6 +453,152 @@ document.addEventListener('DOMContentLoaded', function() {
     
     resetBtn.addEventListener('click', resetGame);
     
+    // Touch controls for mobile
+    function setupTouchControls() {
+        const leftJoystick = document.querySelector('.joystick-container.left');
+        const rightJoystick = document.querySelector('.joystick-container.right');
+        const leftFire = document.querySelector('.fire-button.left');
+        const rightFire = document.querySelector('.fire-button.right');
+        const knob1 = document.getElementById('knob1');
+        const knob2 = document.getElementById('knob2');
+        
+        if (!leftJoystick || !rightJoystick) return;
+        
+        let touch1 = null;
+        let touch2 = null;
+        
+        function handleJoystick(element, knob, player, touch) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = touch.clientX - centerX;
+            const deltaY = touch.clientY - centerY;
+            
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxDistance = rect.width / 2 - 30;
+            
+            const clampedDistance = Math.min(distance, maxDistance);
+            const angle = Math.atan2(deltaY, deltaX);
+            
+            const knobX = Math.cos(angle) * clampedDistance;
+            const knobY = Math.sin(angle) * clampedDistance;
+            
+            knob.style.transform = `translate(calc(-50% + ${knobX}px), calc(-50% + ${knobY}px))`;
+            
+            // Update player controls based on joystick position
+            const threshold = 20;
+            
+            // Forward/backward based on Y
+            if (deltaY < -threshold) {
+                player.keys.up = true;
+                player.keys.down = false;
+            } else if (deltaY > threshold) {
+                player.keys.down = true;
+                player.keys.up = false;
+            } else {
+                player.keys.up = false;
+                player.keys.down = false;
+            }
+            
+            // Left/right rotation based on X
+            if (deltaX < -threshold) {
+                player.keys.left = true;
+                player.keys.right = false;
+            } else if (deltaX > threshold) {
+                player.keys.right = true;
+                player.keys.left = false;
+            } else {
+                player.keys.left = false;
+                player.keys.right = false;
+            }
+        }
+        
+        function resetJoystick(knob, player) {
+            knob.style.transform = 'translate(-50%, -50%)';
+            player.keys.up = false;
+            player.keys.down = false;
+            player.keys.left = false;
+            player.keys.right = false;
+        }
+        
+        // Player 1 joystick
+        leftJoystick.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            touch1 = e.touches[0];
+            handleJoystick(leftJoystick, knob1, player1, touch1);
+        });
+        
+        leftJoystick.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (touch1) {
+                for (let i = 0; i < e.touches.length; i++) {
+                    if (e.touches[i].identifier === touch1.identifier) {
+                        touch1 = e.touches[i];
+                        handleJoystick(leftJoystick, knob1, player1, touch1);
+                        break;
+                    }
+                }
+            }
+        });
+        
+        leftJoystick.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            touch1 = null;
+            resetJoystick(knob1, player1);
+        });
+        
+        // Player 2 joystick
+        rightJoystick.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            touch2 = e.touches[0];
+            handleJoystick(rightJoystick, knob2, player2, touch2);
+        });
+        
+        rightJoystick.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (touch2) {
+                for (let i = 0; i < e.touches.length; i++) {
+                    if (e.touches[i].identifier === touch2.identifier) {
+                        touch2 = e.touches[i];
+                        handleJoystick(rightJoystick, knob2, player2, touch2);
+                        break;
+                    }
+                }
+            }
+        });
+        
+        rightJoystick.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            touch2 = null;
+            resetJoystick(knob2, player2);
+        });
+        
+        // Fire buttons
+        leftFire.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            player1.keys.fire = true;
+        });
+        
+        leftFire.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            player1.keys.fire = false;
+        });
+        
+        rightFire.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            player2.keys.fire = true;
+        });
+        
+        rightFire.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            player2.keys.fire = false;
+        });
+    }
+    
+    // Initialize touch controls
+    setupTouchControls();
+    
     // Start game loop
     gameLoop();
 });
