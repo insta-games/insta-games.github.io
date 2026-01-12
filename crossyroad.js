@@ -376,7 +376,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function movePlayer(dx, dy) {
-    if (!gameStarted || gameOver || player.moveDelay > 0) return;
+    if (gameOver) return;
+    if (gameStarted && player.moveDelay > 0) return;
     
     const newX = player.x + dx;
     const newY = player.y + dy;
