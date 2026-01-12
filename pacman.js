@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
     y: 23,
     dir: { x: 0, y: 0 },
     nextDir: { x: 0, y: 0 },
-    mouthOpen: 0
+    mouthOpen: 0,
+    speed: 0.15
   };
 
   // Ghosts
@@ -309,10 +310,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Move Pac-Man
-    const newX = pacman.x + pacman.dir.x;
-    const newY = pacman.y + pacman.dir.y;
+    const newX = pacman.x + pacman.dir.x * pacman.speed;
+    const newY = pacman.y + pacman.dir.y * pacman.speed;
     
-    if (canMove(newX, newY)) {
+    if (canMove(Math.floor(newX), Math.floor(newY))) {
       pacman.x = newX;
       pacman.y = newY;
       
@@ -390,8 +391,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      const newGX = ghost.x + ghost.dir.x * 0.2;
-      const newGY = ghost.y + ghost.dir.y * 0.2;
+      const newGX = ghost.x + ghost.dir.x * 0.3;
+      const newGY = ghost.y + ghost.dir.y * 0.3;
       
       if (canMove(Math.floor(newGX), Math.floor(newGY))) {
         ghost.x = newGX;
