@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const x = Math.random() * (WIDTH - 200) + 100; // More centered spawn (x=100 to x=600)
         const y = HEIGHT + 20;
         const vx = (Math.random() - 0.5) * 3; // Reduced from 5 to 3 for less horizontal drift
-        const vy = -(Math.random() * 6 + 15); // Increased from (5 + 11) to (6 + 15) for higher launch
+        const vy = -(Math.random() * 8 + 22); // Increased to reach at least 75% screen height
         
         let obj;
         if (isBomb) {
