@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         draw() {
-            ctx.fillStyle = '#535353';
+            ctx.fillStyle = '#06b6d4'; // Cyan theme color
             
             if (this.type === 'bird') {
                 // Draw pterodactyl
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function drawDino() {
-        ctx.fillStyle = '#535353';
+        ctx.fillStyle = '#06b6d4'; // Cyan theme color
         
         const y = dino.y - (dino.isDucking ? 25 : dino.height);
         const height = dino.isDucking ? 25 : dino.height;
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Eye
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(dino.x + 15, y + 5, 3, 3);
-            ctx.fillStyle = '#535353';
+            ctx.fillStyle = '#06b6d4';
             
             // Arms
             ctx.fillRect(dino.x + 28, y + 25, 6, 8);
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function drawGround() {
-        ctx.strokeStyle = '#535353';
+        ctx.strokeStyle = '#06b6d4'; // Cyan theme color
         ctx.lineWidth = 2;
         
         // Moving ground line
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function drawClouds() {
-        ctx.fillStyle = '#c5c5c5';
+        ctx.fillStyle = '#374151'; // Darker clouds for dark theme
         
         clouds.forEach(cloud => {
             // Simple cloud shape
@@ -323,8 +323,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function draw() {
-        // Clear canvas
-        ctx.fillStyle = gameState === 'gameover' ? '#d1d5db' : '#f7f7f7';
+        // Clear canvas with dark gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, HEIGHT);
+        gradient.addColorStop(0, '#0a0e1a');
+        gradient.addColorStop(1, '#1a1f35');
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
         
         drawClouds();
@@ -334,11 +337,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Draw game over text
         if (gameState === 'gameover') {
-            ctx.fillStyle = '#535353';
+            ctx.fillStyle = '#06b6d4';
             ctx.font = 'bold 24px Arial';
             ctx.textAlign = 'center';
             ctx.fillText('GAME OVER', WIDTH / 2, 60);
             ctx.font = '16px Arial';
+            ctx.fillStyle = '#d1d5db';
             ctx.fillText('Press SPACE to restart', WIDTH / 2, 90);
         }
     }
