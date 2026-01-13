@@ -35,7 +35,6 @@ const AD_CONFIG = {
  */
 function initAds() {
   if (!AD_CONFIG.enabled) {
-    console.log('Ads are disabled. Set AD_CONFIG.enabled = true to enable ads.');
     return;
   }
   
