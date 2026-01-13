@@ -149,8 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function canMove(x, y) {
-    if (y < 0 || y >= rows || x < 0 || x >= cols) return false;
-    return maze[y][x] !== 1;
+    const floorX = Math.floor(x);
+    const floorY = Math.floor(y);
+    if (floorY < 0 || floorY >= rows || floorX < 0 || floorX >= cols) return false;
+    return maze[floorY][floorX] !== 1;
   }
 
   function drawMaze() {
@@ -303,8 +305,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Try to change direction
-    const nextX = pacman.x + pacman.nextDir.x;
-    const nextY = pacman.y + pacman.nextDir.y;
+    const nextX = pacman.x + pacman.nextDir.x * pacman.speed;
+    const nextY = pacman.y + pacman.nextDir.y * pacman.speed;
     if (canMove(nextX, nextY)) {
       pacman.dir = { ...pacman.nextDir };
     }
@@ -313,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newX = pacman.x + pacman.dir.x * pacman.speed;
     const newY = pacman.y + pacman.dir.y * pacman.speed;
     
-    if (canMove(Math.floor(newX), Math.floor(newY))) {
+    if (canMove(newX, newY)) {
       pacman.x = newX;
       pacman.y = newY;
       
@@ -412,10 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newGX = ghost.x + ghost.dir.x * 0.15;
       const newGY = ghost.y + ghost.dir.y * 0.15;
       
-      const checkX = Math.floor(newGX);
-      const checkY = Math.floor(newGY);
-      
-      if (checkY >= 0 && checkY < rows && checkX >= 0 && checkX < cols && canMove(checkX, checkY)) {
+      if (canMove(newGX, newGY)) {
         ghost.x = newGX;
         ghost.y = newGY;
         
