@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const GRAVITY = 0.6;
     const JUMP_FORCE = -12;
     
+    // Clear canvas immediately with dark background
+    const gradient = ctx.createLinearGradient(0, 0, 0, HEIGHT);
+    gradient.addColorStop(0, '#0a0e1a');
+    gradient.addColorStop(1, '#1a1f35');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+    
     let gameState = 'ready'; // ready, playing, gameover
     let score = 0;
     let highScore = parseInt(localStorage.getItem('dino-highscore')) || 0;
