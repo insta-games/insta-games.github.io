@@ -421,5 +421,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Start game loop
+    draw(); // Initial draw to show dark background
     gameLoop();
 });
