@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const WIDTH = 800;
     const HEIGHT = 600;
-    const GRAVITY = 0.5;
+    const GRAVITY = 0.3; // Reduced from 0.5 for better trajectories
     
     let gameState = 'ready'; // ready, playing, gameover
     let score = 0;
@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const isBomb = Math.random() < 0.15; // 15% chance for bomb
         const x = Math.random() * (WIDTH - 200) + 100; // More centered spawn (x=100 to x=600)
         const y = HEIGHT + 20;
-        const vx = (Math.random() - 0.5) * 3; // Reduced from 5 to 3 for less horizontal drift
-        const vy = -(Math.random() * 8 + 22); // Increased to reach at least 75% screen height
+        const vx = (Math.random() - 0.5) * 4; // Horizontal velocity
+        const vy = -(Math.random() * 10 + 18); // Strong upward velocity: -18 to -28
         
         let obj;
         if (isBomb) {
