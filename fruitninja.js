@@ -244,11 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const obj = objects[i];
             obj.update();
             
-            // Remove if off screen
+            // Remove if off screen (no life penalty for missing fruits)
             if (obj.isOffScreen()) {
-                if (!obj.sliced && !obj.isBomb) {
-                    loseLife();
-                }
                 objects.splice(i, 1);
             }
         }
