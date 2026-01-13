@@ -322,9 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pacman.x >= cols) pacman.x = 0;
       
       // Eat dots
-      const cell = maze[pacman.y][pacman.x];
+      const cellX = Math.floor(pacman.x);
+      const cellY = Math.floor(pacman.y);
+      if (cellY >= 0 && cellY < rows && cellX >= 0 && cellX < cols) {
+        const cell = maze[cellY][cellX];
       if (cell === 2) {
-        maze[pacman.y][pacman.x] = 0;
+        maze[cellY][cellX] = 0;
         score += 10;
         dotsEaten++;
         updateScore();
@@ -343,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       } else if (cell === 3) {
-        maze[pacman.y][pacman.x] = 0;
+        maze[cellY][cellX] = 0;
         score += 50;
         dotsEaten++;
         powerMode = true;
@@ -363,8 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           }
         }
-      }
-    }
+      }      }    }
     
     // Move ghosts
     ghosts.forEach(ghost => {
@@ -407,10 +409,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      const newGX = ghost.x + ghost.dir.x * 0.3;
-      const newGY = ghost.y + ghost.dir.y * 0.3;
+      const newGX = ghost.x + ghost.dir.x * 0.15;
+      const newGY = ghost.y + ghost.dir.y * 0.15;
       
-      if (canMove(Math.floor(newGX), Math.floor(newGY))) {
+      const checkX = Math.floor(newGX);
+      const checkY = Math.floor(newGY);
+      
+      if (checkY >= 0 && checkY < rows && checkX >= 0 && checkX < cols && canMove(checkX, checkY)) {
         ghost.x = newGX;
         ghost.y = newGY;
         
@@ -422,8 +427,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check collision with ghosts
     ghosts.forEach((ghost, index) => {
-      const dist = Math.abs(pacman.x - ghost.x) + Math.abs(pacman.y - ghost.y);
-      if (dist < 0.6) {
+      const dx = Math.abs(pacman.x - ghost.x);
+      const dy = Math.abs(pacman.y - ghost.y);
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 0.5) {
         if (powerMode) {
           // Eat ghost
           score += 200;
