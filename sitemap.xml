@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://insta-games.github.io/</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/about.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/privacy.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/terms.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/feedback.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -34,85 +34,85 @@
   <!-- Single Player Games -->
   <url>
     <loc>https://insta-games.github.io/snake.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/tetris.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/pong.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/breakout.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/invaders.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/flappy.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/memory.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/simon.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/minesweeper.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/whack.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/racing.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/sliding-puzzle.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/blockpuzzle.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/match3.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -120,49 +120,49 @@
   <!-- Multiplayer Games -->
   <url>
     <loc>https://insta-games.github.io/pong-multi.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/tictactoe-multi.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/connect4-multi.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/checkers-multi.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/snakeduel.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/pingpong.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/tanks.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://insta-games.github.io/hockey.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2025-01-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
