@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let gameState = 'ready'; // ready, playing, gameover
     let score = 0;
-    let lives = 3;
+    let lives = 5;
     let combo = 0;
     let comboTimer = 0;
     let highScore = parseInt(localStorage.getItem('fruitninja-highscore')) || 0;
@@ -299,8 +299,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const obj = objects[i];
             obj.update();
             
-            // Remove if off screen (no life penalty for missing fruits)
+            // Remove if off screen
             if (obj.isOffScreen()) {
+                // Lose a life if a fruit (not bomb) was missed
+                if (!obj.isBomb && !obj.sliced) {
+                    loseLife();
+                }
                 objects.splice(i, 1);
             }
         }
@@ -367,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function startGame() {
         gameState = 'playing';
         score = 0;
-        lives = 3;
+        lives = 5;
         combo = 0;
         comboTimer = 0;
         objects = [];
@@ -396,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetGame() {
         gameState = 'ready';
         score = 0;
-        lives = 3;
+        lives = 5;
         combo = 0;
         objects = [];
         particles = [];
@@ -446,9 +450,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     obj.sliced = true;
                     
                     if (obj.isBomb) {
-                        // Hit bomb - lose life
-                        loseLife();
+                        // Hit bomb - instant death
                         createSliceParticles(obj.x, obj.y, '#ef4444');
+                        gameOver();
                         combo = 0;
                         comboEl.textContent = '0x';
                     } else {
