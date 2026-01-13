@@ -164,9 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function spawnObject() {
         const isBomb = Math.random() < 0.15; // 15% chance for bomb
-        const x = Math.random() * (WIDTH - 100) + 50;
+        const x = Math.random() * (WIDTH - 200) + 100; // More centered spawn (x=100 to x=600)
         const y = HEIGHT + 20;
-        const vx = (Math.random() - 0.5) * 5; // Reduced from 8 to 5 (37% slower horizontal)
+        const vx = (Math.random() - 0.5) * 3; // Reduced from 5 to 3 for less horizontal drift
         const vy = -(Math.random() * 5 + 11); // Reduced from (8 + 15) to (5 + 11) (31% slower vertical)
         
         let obj;
