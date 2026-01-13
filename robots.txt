@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sanjith-esp32.github.io/sitemap.xml
+Sitemap: https://insta-games.github.io/sitemap.xml
