@@ -166,8 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const isBomb = Math.random() < 0.15; // 15% chance for bomb
         const x = Math.random() * (WIDTH - 100) + 50;
         const y = HEIGHT + 20;
-        const vx = (Math.random() - 0.5) * 8;
-        const vy = -(Math.random() * 8 + 15); // Launch upward
+        const vx = (Math.random() - 0.5) * 5; // Reduced from 8 to 5 (37% slower horizontal)
+        const vy = -(Math.random() * 5 + 11); // Reduced from (8 + 15) to (5 + 11) (31% slower vertical)
         
         let obj;
         if (isBomb) {
