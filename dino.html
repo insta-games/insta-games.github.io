@@ -19,6 +19,26 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816" crossorigin="anonymous"></script>
     
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://sanjith-esp32.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Dino Run"
+        }
+      ]
+    }
+    </script>
+    
     <link rel="stylesheet" href="styles.css">
     <style>
         #gameCanvas {
@@ -68,13 +88,24 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">🏠 Home</a>
-        <a href="index.html#games">🎮 All Games</a>
-    </nav>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Insta-Games</span>
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
+          <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </header>
 
-    <div class="container">
-        <h1>🦖 Dino Run</h1>
+    <main class="container">
+        <h1>Dino Run</h1>
         
         <div class="game-info">
             <div id="status">Press SPACE to Start</div>
@@ -92,8 +123,10 @@
             <p>🦅 <strong>DOWN Arrow</strong> - Duck under flying birds</p>
             <p>📈 Survive as long as possible and beat your high score!</p>
         </div>
-    </div>
+    </main>
 
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games</small></div></footer>
+    <script src="script.js" defer></script>
     <script src="dino.js"></script>
 </body>
 </html>
