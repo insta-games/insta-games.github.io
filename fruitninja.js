@@ -29,17 +29,60 @@ document.addEventListener('DOMContentLoaded', function() {
     // Particles for slice effects
     let particles = [];
     
-    // Fruit types
+    // Image loading
+    let imagesLoaded = 0;
+    let totalImages = 0;
+    const images = {};
+    
+    // Fruit types with image sources
     const fruitTypes = [
-        { emoji: '🍎', color: '#ef4444', points: 1 },
-        { emoji: '🍊', color: '#f97316', points: 1 },
-        { emoji: '🍋', color: '#fbbf24', points: 1 },
-        { emoji: '🍉', color: '#10b981', points: 2 },
-        { emoji: '🍇', color: '#8b5cf6', points: 1 },
-        { emoji: '🍓', color: '#ec4899', points: 1 },
-        { emoji: '🍌', color: '#fbbf24', points: 1 },
-        { emoji: '🥝', color: '#10b981', points: 1 }
+        { name: 'apple', emoji: '🍎', color: '#ef4444', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/red-apple_1f34e.png' },
+        { name: 'orange', emoji: '🍊', color: '#f97316', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/tangerine_1f34a.png' },
+        { name: 'lemon', emoji: '🍋', color: '#fbbf24', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/lemon_1f34b.png' },
+        { name: 'watermelon', emoji: '🍉', color: '#10b981', points: 2, src: 'https://em-content.zobj.net/source/twitter/376/watermelon_1f349.png' },
+        { name: 'grapes', emoji: '🍇', color: '#8b5cf6', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/grapes_1f347.png' },
+        { name: 'strawberry', emoji: '🍓', color: '#ec4899', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/strawberry_1f353.png' },
+        { name: 'banana', emoji: '🍌', color: '#fbbf24', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/banana_1f34c.png' },
+        { name: 'kiwi', emoji: '🥝', color: '#10b981', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/kiwi-fruit_1f95d.png' }
     ];
+    const bombType = { name: 'bomb', emoji: '💣', color: '#1a1f35', src: 'https://em-content.zobj.net/source/twitter/376/bomb_1f4a3.png' };
+    
+    // Preload images
+    function preloadImages() {
+        totalImages = fruitTypes.length + 1; // fruits + bomb
+        
+        fruitTypes.forEach(fruit => {
+            const img = new Image();
+            img.onload = () => {
+                imagesLoaded++;
+                if (imagesLoaded === totalImages) {
+                    statusEl.textContent = 'Hover to Slice!';
+                }
+            };
+            img.onerror = () => {
+                imagesLoaded++;
+                console.error(`Failed to load image: ${fruit.src}`);
+            };
+            img.src = fruit.src;
+            images[fruit.name] = img;
+        });
+        
+        const bombImg = new Image();
+        bombImg.onload = () => {
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) {
+                statusEl.textContent = 'Hover to Slice!';
+            }
+        };
+        bombImg.onerror = () => {
+            imagesLoaded++;
+            console.error(`Failed to load bomb image`);
+        };
+        bombImg.src = bombType.src;
+        images['bomb'] = bombImg;
+    }
+    
+    preloadImages();
     
     class GameObject {
         constructor(x, y, vx, vy, type, isBomb = false) {
@@ -47,20 +90,23 @@ document.addEventListener('DOMContentLoaded', function() {
             this.y = y;
             this.vx = vx;
             this.vy = vy;
-            this.size = 40;
+            this.size = 60; // Increased for better visibility with images
             this.rotation = 0;
             this.rotationSpeed = (Math.random() - 0.5) * 0.2;
             this.isBomb = isBomb;
             this.sliced = false;
             
             if (isBomb) {
+                this.type = bombType;
                 this.emoji = '💣';
                 this.color = '#1a1f35';
+                this.image = images['bomb'];
             } else {
                 this.type = type;
                 this.emoji = type.emoji;
                 this.color = type.color;
                 this.points = type.points;
+                this.image = images[type.name];
             }
         }
         
@@ -84,11 +130,16 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.shadowOffsetX = 2;
             ctx.shadowOffsetY = 2;
             
-            // Draw emoji
-            ctx.font = `${this.size}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(this.emoji, 0, 0);
+            // Draw image if loaded, otherwise draw emoji as fallback
+            if (this.image && this.image.complete) {
+                ctx.drawImage(this.image, -this.size/2, -this.size/2, this.size, this.size);
+            } else {
+                // Fallback to emoji
+                ctx.font = `${this.size * 0.7}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.emoji, 0, 0);
+            }
             
             // Reset shadow to prevent it from affecting other elements
             ctx.shadowBlur = 0;
