@@ -36,16 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fruit types with image sources
     const fruitTypes = [
-        { name: 'apple', emoji: '🍎', color: '#ef4444', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/red-apple_1f34e.png' },
-        { name: 'orange', emoji: '🍊', color: '#f97316', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/tangerine_1f34a.png' },
-        { name: 'lemon', emoji: '🍋', color: '#fbbf24', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/lemon_1f34b.png' },
-        { name: 'watermelon', emoji: '🍉', color: '#10b981', points: 2, src: 'https://em-content.zobj.net/source/twitter/376/watermelon_1f349.png' },
-        { name: 'grapes', emoji: '🍇', color: '#8b5cf6', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/grapes_1f347.png' },
-        { name: 'strawberry', emoji: '🍓', color: '#ec4899', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/strawberry_1f353.png' },
-        { name: 'banana', emoji: '🍌', color: '#fbbf24', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/banana_1f34c.png' },
-        { name: 'kiwi', emoji: '🥝', color: '#10b981', points: 1, src: 'https://em-content.zobj.net/source/twitter/376/kiwi-fruit_1f95d.png' }
+        { name: 'apple', emoji: '🍎', color: '#ef4444', points: 1, src: 'assets/apple.png' },
+        { name: 'orange', emoji: '🍊', color: '#f97316', points: 1, src: 'assets/orange.png' },
+        { name: 'lemon', emoji: '🍋', color: '#fbbf24', points: 1, src: 'assets/lemon.png' },
+        { name: 'watermelon', emoji: '🍉', color: '#10b981', points: 2, src: 'assets/watermelon.png' },
+        { name: 'grapes', emoji: '🍇', color: '#8b5cf6', points: 1, src: 'assets/grapes.png' },
+        { name: 'strawberry', emoji: '🍓', color: '#ec4899', points: 1, src: 'assets/strawberry.png' },
+        { name: 'banana', emoji: '🍌', color: '#fbbf24', points: 1, src: 'assets/banana.png' },
+        { name: 'kiwi', emoji: '🥝', color: '#10b981', points: 1, src: 'assets/kiwi.png' }
     ];
-    const bombType = { name: 'bomb', emoji: '💣', color: '#1a1f35', src: 'https://em-content.zobj.net/source/twitter/376/bomb_1f4a3.png' };
+    const bombType = { name: 'bomb', emoji: '💣', color: '#1a1f35', src: 'assets/bomb.png' };
     
     // Preload images
     function preloadImages() {
