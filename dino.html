@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Run - Insta Games</title>
+    <meta name="description" content="Play the classic Chrome dinosaur game. Jump over cacti and duck under birds in this endless runner!">
+    <meta name="google-site-verification" content="PeFHh3gl8chFqHsSJYKe2bxWc52j9jxK0UoRtRhuPfI">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q293MVMDY4');
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #gameCanvas {
+            border: 2px solid #525252;
+            border-radius: 8px;
+            background: linear-gradient(to bottom, #f7f7f7, #e5e5e5);
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            color: #d1d5db;
+            font-size: 18px;
+        }
+        
+        #status {
+            font-size: 20px;
+            color: #06b6d4;
+            font-weight: bold;
+        }
+        
+        .controls {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(26, 31, 53, 0.5);
+            border-radius: 8px;
+            color: #d1d5db;
+        }
+        
+        .controls h3 {
+            color: #06b6d4;
+            margin-top: 0;
+        }
+        
+        .controls p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">🏠 Home</a>
+        <a href="index.html#games">🎮 All Games</a>
+    </nav>
+
+    <div class="container">
+        <h1>🦖 Dino Run</h1>
+        
+        <div class="game-info">
+            <div id="status">Press SPACE to Start</div>
+            <div>
+                <div>Score: <span id="score">0</span></div>
+                <div>High Score: <span id="highscore">0</span></div>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="800" height="200"></canvas>
+
+        <div class="controls">
+            <h3>How to Play</h3>
+            <p>🦖 <strong>SPACE or UP Arrow</strong> - Jump over cacti</p>
+            <p>🦅 <strong>DOWN Arrow</strong> - Duck under flying birds</p>
+            <p>📈 Survive as long as possible and beat your high score!</p>
+        </div>
+    </div>
+
+    <script src="dino.js"></script>
+</body>
+</html>
