@@ -330,29 +330,36 @@ function setupTouchControls() {
 
 // Start game loop
 function startGameLoop() {
-    gameLoop = setInterval(updateGame, UPDATE_RATE);
+    gameLoop = requestAnimationFrame(gameLoopFunction);
     firebaseUpdateLoop = setInterval(updateFirebase, FIREBASE_UPDATE_RATE);
 }
 
+// Main game loop using requestAnimationFrame
+function gameLoopFunction() {
+    updateGame();
+    draw();
+    if (gameLoop !== null) {
+        gameLoop = requestAnimationFrame(gameLoopFunction);
+    }
+}
+
 // Update Firebase separately at lower rate
-async function updateFirebase() {
+function updateFirebase() {
     if (!myPlayerId || !players[myPlayerId] || !players[myPlayerId].alive) return;
     
     const mySnake = players[myPlayerId].segments;
-    const head = mySnake[0];
     
-    await update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
+    update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
         segments: mySnake,
         angle: players[myPlayerId].angle || 0,
         score: myScore,
         lastUpdate: Date.now()
-    });
+    }).catch(err => console.error('Firebase update error:', err));
 }
 
 // Update game
-async function updateGame() {
+function updateGame() {
     if (!myPlayerId || !players[myPlayerId] || !players[myPlayerId].alive) {
-        draw();
         return;
     }
     
@@ -388,9 +395,10 @@ async function updateGame() {
             const checkLength = Math.min(30, otherSnake.length);
             for (let i = 0; i < checkLength; i++) {
                 const segment = otherSnake[i];
-                const dist = Math.hypot(newHead.x - segment.x, newHead.y - segment.y);
-                if (dist < SEGMENT_SIZE) {
-                    await handleDeath();
+                const dx = newHead.x - segment.x;
+                const dy = newHead.y - segment.y;
+                if (dx * dx + dy * dy < SEGMENT_SIZE * SEGMENT_SIZE) {
+                    handleDeath();
                     return;
                 }
             }
@@ -400,22 +408,20 @@ async function updateGame() {
     // Add new head
     mySnake.unshift(newHead);
     
-    // Check food collisions
+    // Check food collisions - optimized
     let ate = false;
+    const eatRadius = SEGMENT_SIZE + FOOD_SIZE;
+    const eatRadiusSq = eatRadius * eatRadius;
     for (let i = foods.length - 1; i >= 0; i--) {
         const food = foods[i];
-        const dist = Math.hypot(newHead.x - food.x, newHead.y - food.y);
-        if (dist < SEGMENT_SIZE + FOOD_SIZE) {
+        const dx = newHead.x - food.x;
+        const dy = newHead.y - food.y;
+        if (dx * dx + dy * dy < eatRadiusSq) {
             myScore += 1;
             scoreEl.textContent = myScore;
             ate = true;
-            // Remove food from database
-            const foodKeys = Object.keys((await get(ref(database, `snake-rooms/${currentRoom}/foods`))).val() || {});
-            if (foodKeys[i]) {
-                await remove(ref(database, `snake-rooms/${currentRoom}/foods/${foodKeys[i]}`));
-            }
-            // Spawn new food
-            await spawnFood(Math.random() * WORLD_SIZE, Math.random() * WORLD_SIZE);
+            // Remove from local array immediately
+            foods.splice(i, 1);
             break;
         }
     }
@@ -430,18 +436,19 @@ async function updateGame() {
         }
     }
     
-    // Maintain segments spacing
+    // Maintain segments spacing - optimized
     for (let i = 1; i < mySnake.length; i++) {
         const prev = mySnake[i - 1];
         const curr = mySnake[i];
         const dx = prev.x - curr.x;
         const dy = prev.y - curr.y;
-        const dist = Math.hypot(dx, dy);
+        const distSq = dx * dx + dy * dy;
         
-        if (dist > SEGMENT_SPACING) {
-            const angle = Math.atan2(dy, dx);
-            curr.x = prev.x - Math.cos(angle) * SEGMENT_SPACING;
-            curr.y = prev.y - Math.sin(angle) * SEGMENT_SPACING;
+        if (distSq > SEGMENT_SPACING * SEGMENT_SPACING) {
+            const dist = Math.sqrt(distSq);
+            const ratio = SEGMENT_SPACING / dist;
+            curr.x = prev.x - dx * ratio;
+            curr.y = prev.y - dy * ratio;
         }
     }
     
@@ -449,24 +456,22 @@ async function updateGame() {
     if (players[myPlayerId]) {
         players[myPlayerId].angle = targetAngle;
     }
-    
-    draw();
 }
 
 // Handle player death
-async function handleDeath() {
-    // Drop food where snake died
+function handleDeath() {
+    // Drop food where snake died (non-blocking)
     const mySnake = players[myPlayerId].segments;
     for (let i = 0; i < mySnake.length; i += 3) {
-        await spawnFood(mySnake[i].x, mySnake[i].y);
+        spawnFood(mySnake[i].x, mySnake[i].y);
     }
     
-    await update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
+    update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
         alive: false
-    });
+    }).catch(err => console.error('Death update error:', err));
+    
     statusEl.textContent = 'You died! 💀';
     respawnPanel.style.display = 'block';
-    draw();
 }
 
 // Respawn player
@@ -677,7 +682,7 @@ function drawMinimap() {
 // Leave game
 async function leaveGame() {
     if (gameLoop) {
-        clearInterval(gameLoop);
+        cancelAnimationFrame(gameLoop);
         gameLoop = null;
     }
     
@@ -693,7 +698,7 @@ async function leaveGame() {
     myPlayerId = null;
     currentRoom = null;
     players = {};
-    food = null;
+    foods = [];
     myScore = 0;
     
     gamePanel.style.display = 'none';
