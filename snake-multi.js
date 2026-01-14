@@ -487,9 +487,7 @@ async function respawnPlayer() {
 
 // Draw game
 function draw() {
-    ctx.save();
-    
-    // Clear canvas
+    // Clear canvas first (before any transforms)
     ctx.fillStyle = '#0a0e1a';
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     
@@ -500,11 +498,11 @@ function draw() {
         camera.y = head.y;
     }
     
-    // Apply camera transform to center on player with zoom
-    const offsetX = canvasWidth / 2 - camera.x * camera.zoom;
-    const offsetY = canvasHeight / 2 - camera.y * camera.zoom;
-    ctx.translate(offsetX, offsetY);
+    ctx.save();
+    // Apply transforms: translate to center, scale, then offset by camera
+    ctx.translate(canvasWidth / 2, canvasHeight / 2);
     ctx.scale(camera.zoom, camera.zoom);
+    ctx.translate(-camera.x, -camera.y);
     
     // Draw world boundary
     ctx.strokeStyle = '#2a3f5f';
