@@ -41,7 +41,7 @@ let gameLoop = null;
 let mouseX = 0;
 let mouseY = 0;
 let isBoosting = false;
-let camera = { x: 0, y: 0 };
+let camera = { x: 0, y: 0, zoom: 0.6 };
 
 // Colors for different players
 const PLAYER_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
@@ -188,8 +188,8 @@ async function joinGame(roomCode) {
         players[myPlayerId] = playerData;
         
         // Initialize camera position
-        camera.x = startX - canvasWidth / 2;
-        camera.y = startY - canvasHeight / 2;
+        camera.x = startX - (canvasWidth / camera.zoom) / 2;
+        camera.y = startY - (canvasHeight / camera.zoom) / 2;
         
         // Initialize foods if needed
         const foodSnapshot = await get(ref(database, `snake-rooms/${currentRoom}/foods`));
@@ -467,8 +467,8 @@ async function respawnPlayer() {
     }
     
     // Initialize camera position
-    camera.x = startX - canvasWidth / 2;
-    camera.y = startY - canvasHeight / 2;
+    camera.x = startX - (canvasWidth / camera.zoom) / 2;
+    camera.y = startY - (canvasHeight / camera.zoom) / 2;
     
     await update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
         segments: segments,
@@ -494,11 +494,14 @@ function draw() {
     // Update camera to keep player centered
     if (myPlayerId && players[myPlayerId] && players[myPlayerId].alive && players[myPlayerId].segments[0]) {
         const head = players[myPlayerId].segments[0];
-        camera.x = head.x - canvasWidth / 2;
-        camera.y = head.y - canvasHeight / 2;
+        camera.x = head.x - (canvasWidth / camera.zoom) / 2;
+        camera.y = head.y - (canvasHeight / camera.zoom) / 2;
     }
     
     ctx.save();
+    ctx.translate(canvasWidth / 2, canvasHeight / 2);
+    ctx.scale(camera.zoom, camera.zoom);
+    ctx.translate(-canvasWidth / 2, -canvasHeight / 2);
     ctx.translate(-camera.x, -camera.y);
     
     // Draw world boundary
