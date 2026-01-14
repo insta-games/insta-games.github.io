@@ -238,6 +238,12 @@ function setupGameListeners() {
     onValue(ref(database, `snake-rooms/${currentRoom}/foods`), (snapshot) => {
         if (snapshot.exists()) {
             foods = Object.values(snapshot.val());
+            // Ensure minimum food count
+            ensureMinimumFood();
+        } else {
+            foods = [];
+            // No food at all, initialize
+            initializeFoods();
         }
     });
 }
@@ -269,6 +275,17 @@ async function initializeFoods() {
         };
     }
     await set(ref(database, `snake-rooms/${currentRoom}/foods`), foodData);
+}
+
+// Ensure minimum food count
+function ensureMinimumFood() {
+    const minFood = FOOD_COUNT * 0.5; // Keep at least 50% of target food count
+    if (foods.length < minFood) {
+        const needed = Math.ceil(minFood - foods.length);
+        for (let i = 0; i < needed; i++) {
+            spawnFood(Math.random() * WORLD_SIZE, Math.random() * WORLD_SIZE);
+        }
+    }
 }
 
 // Spawn food at position
