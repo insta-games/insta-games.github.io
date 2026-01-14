@@ -25,8 +25,9 @@ const SEGMENT_SIZE = 10;
 const SEGMENT_SPACING = 8;
 const FOOD_SIZE = 6;
 const INITIAL_LENGTH = 10;
-const FOOD_COUNT = 200;
+const FOOD_COUNT = 100; // Reduced from 200
 const UPDATE_RATE = 1000 / 60; // 60 FPS
+const FIREBASE_UPDATE_RATE = 1000 / 15; // Update Firebase only 15 times per second
 
 // Game State
 let canvas, ctx;
@@ -38,6 +39,8 @@ let players = {};
 let foods = [];
 let myScore = 0;
 let gameLoop = null;
+let firebaseUpdateLoop = null;
+let lastFirebaseUpdate = 0;
 let mouseX = 0;
 let mouseY = 0;
 let isBoosting = false;
@@ -328,6 +331,22 @@ function setupTouchControls() {
 // Start game loop
 function startGameLoop() {
     gameLoop = setInterval(updateGame, UPDATE_RATE);
+    firebaseUpdateLoop = setInterval(updateFirebase, FIREBASE_UPDATE_RATE);
+}
+
+// Update Firebase separately at lower rate
+async function updateFirebase() {
+    if (!myPlayerId || !players[myPlayerId] || !players[myPlayerId].alive) return;
+    
+    const mySnake = players[myPlayerId].segments;
+    const head = mySnake[0];
+    
+    await update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
+        segments: mySnake,
+        angle: players[myPlayerId].angle || 0,
+        score: myScore,
+        lastUpdate: Date.now()
+    });
 }
 
 // Update game
@@ -360,12 +379,14 @@ async function updateGame() {
     if (newHead.y < 0) newHead.y = WORLD_SIZE;
     if (newHead.y > WORLD_SIZE) newHead.y = 0;
     
-    // Check collision with other snakes (not self)
+    // Check collision with other snakes (not self) - optimized
     for (const playerId in players) {
         if (playerId === myPlayerId || !players[playerId].alive) continue;
         const otherSnake = players[playerId].segments;
-        if (otherSnake) {
-            for (let i = 0; i < otherSnake.length; i++) {
+        if (otherSnake && otherSnake.length > 0) {
+            // Only check first 30 segments for performance
+            const checkLength = Math.min(30, otherSnake.length);
+            for (let i = 0; i < checkLength; i++) {
                 const segment = otherSnake[i];
                 const dist = Math.hypot(newHead.x - segment.x, newHead.y - segment.y);
                 if (dist < SEGMENT_SIZE) {
@@ -424,13 +445,10 @@ async function updateGame() {
         }
     }
     
-    // Update Firebase
-    await update(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), {
-        segments: mySnake,
-        angle: targetAngle,
-        score: myScore,
-        lastUpdate: Date.now()
-    });
+    // Store angle locally for Firebase update
+    if (players[myPlayerId]) {
+        players[myPlayerId].angle = targetAngle;
+    }
     
     draw();
 }
@@ -518,20 +536,25 @@ function draw() {
     ctx.lineWidth = 6;
     ctx.strokeRect(0, 0, WORLD_SIZE, WORLD_SIZE);
     
-    // Draw subtle grid
+    // Draw grid (only visible portion for performance)
     ctx.strokeStyle = 'rgba(26, 31, 53, 0.3)';
     ctx.lineWidth = 0.5;
     const gridSize = 100;
-    for (let x = 0; x <= WORLD_SIZE; x += gridSize) {
+    const startX = Math.max(0, Math.floor((camera.x - canvasWidth / camera.zoom / 2) / gridSize) * gridSize);
+    const endX = Math.min(WORLD_SIZE, Math.ceil((camera.x + canvasWidth / camera.zoom / 2) / gridSize) * gridSize);
+    const startY = Math.max(0, Math.floor((camera.y - canvasHeight / camera.zoom / 2) / gridSize) * gridSize);
+    const endY = Math.min(WORLD_SIZE, Math.ceil((camera.y + canvasHeight / camera.zoom / 2) / gridSize) * gridSize);
+    
+    for (let x = startX; x <= endX; x += gridSize) {
         ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, WORLD_SIZE);
+        ctx.moveTo(x, startY);
+        ctx.lineTo(x, endY);
         ctx.stroke();
     }
-    for (let y = 0; y <= WORLD_SIZE; y += gridSize) {
+    for (let y = startY; y <= endY; y += gridSize) {
         ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(WORLD_SIZE, y);
+        ctx.moveTo(startX, y);
+        ctx.lineTo(endX, y);
         ctx.stroke();
     }
     
@@ -656,6 +679,11 @@ async function leaveGame() {
     if (gameLoop) {
         clearInterval(gameLoop);
         gameLoop = null;
+    }
+    
+    if (firebaseUpdateLoop) {
+        clearInterval(firebaseUpdateLoop);
+        firebaseUpdateLoop = null;
     }
     
     if (myPlayerId && currentRoom) {
