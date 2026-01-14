@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Game Lobby — Insta-Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Join the game lobby, see who's online, and start a new game." />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Insta-Games</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap">
+        <h1>Online Lobby</h1>
+        
+        <div id="name-entry" style="text-align: center; margin-bottom: 2rem;">
+          <input type="text" id="name-input" placeholder="Enter your name" maxlength="20" style="padding: 0.5rem; width: 200px;"/>
+          <button id="join-lobby" class="btn">Join Lobby</button>
+        </div>
+
+        <div id="lobby-main" style="display: none;">
+          <div class="lobby-section">
+            <h2 style="text-align:center;">Open Games</h2>
+            <ul id="game-list" class="lobby-list" style="list-style: none; padding: 0; text-align: center;">
+              <!-- Open games will be injected here -->
+            </ul>
+            <div style="text-align: center; margin-top: 1rem;">
+              <button id="create-game" class="btn">Create New Tic-Tac-Toe Game</button>
+            </div>
+          </div>
+
+          <hr style="margin: 2rem 0;">
+
+          <div class="lobby-section">
+            <h2 style="text-align:center;">Players Online</h2>
+            <ul id="player-list" class="lobby-list" style="list-style: none; padding: 0; text-align: center;">
+              <!-- Player names will be injected here -->
+            </ul>
+          </div>
+        </div>
+        
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games</small></div></footer>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <script src="lobby.js" defer></script>
+  </body>
+</html>
