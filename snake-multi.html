@@ -156,11 +156,16 @@
             border-radius: 6px;
             color: #d1d5db;
             font-size: 16px;
+            -webkit-appearance: none;
+            -webkit-user-select: text;
+            user-select: text;
+            touch-action: manipulation;
         }
         
         .join-panel input:focus {
             outline: none;
             border-color: #06b6d4;
+            background: #24293f;
         }
         
         .join-panel button {
@@ -204,8 +209,29 @@
 <body>
     <div id="joinPanel" class="join-panel">
         <h3 style="color: #06b6d4; text-align: center; margin-top: 0;">🐍 Multiplayer Snake</h3>
-        <input type="text" id="nameInput" placeholder="Enter your name" maxlength="15" />
-        <input type="text" id="roomInput" placeholder="Room code (optional)" maxlength="6" style="text-transform: uppercase;" />
+        <input 
+            type="text" 
+            id="nameInput" 
+            placeholder="Enter your name" 
+            maxlength="15"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            inputmode="text"
+        />
+        <input 
+            type="text" 
+            id="roomInput" 
+            placeholder="Room code (optional)" 
+            maxlength="6" 
+            style="text-transform: uppercase;"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            inputmode="text"
+        />
         <button class="btn" id="joinBtn">Join Game</button>
         <button class="btn" id="quickPlayBtn">Quick Play</button>
     </div>

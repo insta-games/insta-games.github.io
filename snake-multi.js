@@ -71,6 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
+    // Mobile input fix - ensure keyboard appears
+    nameInput.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        nameInput.focus();
+    });
+    
+    roomInput.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        roomInput.focus();
+    });
+    
     joinBtn.addEventListener('click', () => {
         const roomCode = roomInput.value.trim().toUpperCase();
         if (roomCode) {
