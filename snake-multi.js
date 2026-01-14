@@ -18,7 +18,6 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Game Constants
-const CANVAS_SIZE = 600;
 const WORLD_SIZE = 3000;
 const SNAKE_SPEED = 3;
 const BOOST_SPEED = 6;
@@ -31,6 +30,7 @@ const UPDATE_RATE = 1000 / 60; // 60 FPS
 
 // Game State
 let canvas, ctx;
+let canvasWidth, canvasHeight;
 let myPlayerId = null;
 let myPlayerName = '';
 let currentRoom = null;
@@ -38,8 +38,8 @@ let players = {};
 let foods = [];
 let myScore = 0;
 let gameLoop = null;
-let mouseX = CANVAS_SIZE / 2;
-let mouseY = CANVAS_SIZE / 2;
+let mouseX = 0;
+let mouseY = 0;
 let isBoosting = false;
 let camera = { x: 0, y: 0 };
 
@@ -67,6 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
     
+    // Set canvas to fullscreen
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
     joinBtn.addEventListener('click', () => joinGame(roomInput.value.toUpperCase()));
     quickPlayBtn.addEventListener('click', () => findOrCreateRoom());
     leaveBtn.addEventListener('click', leaveGame);
@@ -75,6 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMouseControls();
     setupTouchControls();
 });
+
+// Resize canvas to fullscreen
+function resizeCanvas() {
+    canvasWidth = window.innerWidth;
+    canvasHeight = window.innerHeight;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    mouseX = canvasWidth / 2;
+    mouseY = canvasHeight / 2;
+}
 
 // Generate unique player ID
 function generatePlayerId() {
@@ -242,40 +256,38 @@ function updatePlayersList() {
 
 // Setup mouse controls
 function setupMouseControls() {
-    canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
     
-    canvas.addEventListener('mousedown', () => {
+    document.addEventListener('mousedown', () => {
         isBoosting = true;
     });
     
-    canvas.addEventListener('mouseup', () => {
+    document.addEventListener('mouseup', () => {
         isBoosting = false;
     });
 }
 
 // Setup touch controls
 function setupTouchControls() {
-    canvas.addEventListener('touchmove', (e) => {
+    document.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
         const touch = e.touches[0];
-        mouseX = touch.clientX - rect.left;
-        mouseY = touch.clientY - rect.top;
-    });
+        mouseX = touch.clientX;
+        mouseY = touch.clientY;
+    }, { passive: false });
     
-    canvas.addEventListener('touchstart', (e) => {
+    document.addEventListener('touchstart', (e) => {
         e.preventDefault();
         isBoosting = true;
-    });
+    }, { passive: false });
     
-    canvas.addEventListener('touchend', (e) => {
+    document.addEventListener('touchend', (e) => {
         e.preventDefault();
         isBoosting = false;
-    });
+    }, { passive: false });
 }
 
 // Start game loop
@@ -293,9 +305,9 @@ async function updateGame() {
     const mySnake = players[myPlayerId].segments;
     const head = mySnake[0];
     
-    // Calculate angle to mouse
-    const dx = mouseX - CANVAS_SIZE / 2;
-    const dy = mouseY - CANVAS_SIZE / 2;
+    // Calculate angle to mouse (relative to center of screen)
+    const dx = mouseX - canvasWidth / 2;
+    const dy = mouseY - canvasHeight / 2;
     const targetAngle = Math.atan2(dy, dx);
     
     // Move speed
@@ -436,13 +448,13 @@ async function respawnPlayer() {
 function draw() {
     // Clear canvas
     ctx.fillStyle = '#0a0e1a';
-    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     
-    // Update camera to follow player
+    // Update camera to keep player centered
     if (myPlayerId && players[myPlayerId] && players[myPlayerId].alive && players[myPlayerId].segments[0]) {
         const head = players[myPlayerId].segments[0];
-        camera.x = head.x - CANVAS_SIZE / 2;
-        camera.y = head.y - CANVAS_SIZE / 2;
+        camera.x = head.x - canvasWidth / 2;
+        camera.y = head.y - canvasHeight / 2;
     }
     
     ctx.save();
@@ -542,9 +554,9 @@ function draw() {
 
 // Draw minimap
 function drawMinimap() {
-    const minimapSize = 120;
-    const minimapX = CANVAS_SIZE - minimapSize - 10;
-    const minimapY = 10;
+    const minimapSize = Math.min(150, canvasWidth * 0.2, canvasHeight * 0.2);
+    const minimapX = canvasWidth - minimapSize - 20;
+    const minimapY = canvasHeight - minimapSize - 80;
     const scale = minimapSize / WORLD_SIZE;
     
     // Background
