@@ -57,6 +57,7 @@ const roomInput = document.getElementById('roomInput');
 const joinBtn = document.getElementById('joinBtn');
 const quickPlayBtn = document.getElementById('quickPlayBtn');
 const leaveBtn = document.getElementById('leaveBtn');
+const boostBtn = document.getElementById('boostBtn');
 const respawnBtn = document.getElementById('respawnBtn');
 const respawnPanel = document.getElementById('respawnPanel');
 const roomCodeEl = document.getElementById('roomCode');
@@ -334,6 +335,7 @@ function setupMouseControls() {
 
 // Setup touch controls
 function setupTouchControls() {
+    // Touch movement - only for direction, no boosting
     document.addEventListener('touchmove', (e) => {
         // Only prevent default if game is active (join panel hidden)
         if (joinPanel.style.display === 'none') {
@@ -344,21 +346,25 @@ function setupTouchControls() {
         }
     }, { passive: false });
     
-    document.addEventListener('touchstart', (e) => {
-        // Only prevent default if game is active (join panel hidden)
-        if (joinPanel.style.display === 'none') {
+    // Boost button for touch devices
+    if (boostBtn) {
+        boostBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             isBoosting = true;
-        }
-    }, { passive: false });
-    
-    document.addEventListener('touchend', (e) => {
-        // Only prevent default if game is active (join panel hidden)
-        if (joinPanel.style.display === 'none') {
+        }, { passive: false });
+        
+        boostBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            isBoosting = false;
+        }, { passive: false });
+        
+        boostBtn.addEventListener('touchcancel', (e) => {
             e.preventDefault();
             isBoosting = false;
-        }
-    }, { passive: false });
+        }, { passive: false });
+    }
 }
 
 // Start game loop
