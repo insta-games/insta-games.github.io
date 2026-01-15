@@ -418,6 +418,12 @@ function updateGame() {
             players[myPlayerId].trail = [];
             players[myPlayerId].territory = Array.from(myTerritory);
         }
+        
+        // Immediately update Firebase to sync trail clearing
+        update(ref(database, `paper-rooms/${currentRoom}/players/${myPlayerId}`), {
+            trail: [],
+            territory: Array.from(myTerritory)
+        }).catch(err => console.error('Trail clear update error:', err));
     } else if (!onOwnTerritory) {
         // Outside territory - add to trail
         if (myTrail.length === 0 || myTrail[myTrail.length - 1] !== gridKey) {
