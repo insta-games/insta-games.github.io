@@ -95,6 +95,24 @@ document.addEventListener('DOMContentLoaded', () => {
     leaveBtn.addEventListener('click', leaveGame);
     respawnBtn.addEventListener('click', respawnPlayer);
     
+    // Visibility change detection
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            pauseGame();
+        } else {
+            unpauseGame();
+        }
+    });
+
+    // Also handle window blur/focus as backup
+    window.addEventListener('blur', () => {
+        pauseGame();
+    });
+
+    window.addEventListener('focus', () => {
+        unpauseGame();
+    });
+    
     setupMouseControls();
     setupTouchControls();
 });
@@ -403,24 +421,6 @@ function unpauseGame() {
         }).catch(err => console.error('Unpause update error:', err));
     }
 }
-
-// Visibility change detection
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        pauseGame();
-    } else {
-        unpauseGame();
-    }
-});
-
-// Also handle window blur/focus as backup
-window.addEventListener('blur', () => {
-    pauseGame();
-});
-
-window.addEventListener('focus', () => {
-    unpauseGame();
-});
 
 // Start game loop
 function startGameLoop() {
