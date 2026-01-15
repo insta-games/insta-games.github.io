@@ -44,6 +44,7 @@ let lastFirebaseUpdate = 0;
 let mouseX = 0;
 let mouseY = 0;
 let isBoosting = false;
+let boostFrameCounter = 0;
 let camera = { x: 0, y: 0, zoom: 1.5 };
 
 // Colors for different players
@@ -466,6 +467,19 @@ function updateGame() {
     // Remove tail if didn't eat
     if (!ate) {
         mySnake.pop();
+        
+        // Boost penalty: lose extra segment every 30 frames of boosting
+        if (isBoosting) {
+            boostFrameCounter++;
+            if (boostFrameCounter >= 30 && mySnake.length > INITIAL_LENGTH) {
+                mySnake.pop();
+                boostFrameCounter = 0;
+            }
+        } else {
+            boostFrameCounter = 0;
+        }
+    } else {
+        boostFrameCounter = 0;
     }
     
     // Update score to reflect snake length
