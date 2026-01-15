@@ -1,6 +1,6 @@
 // Firebase Configuration
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getDatabase, ref, set, onValue, update, remove, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { getDatabase, ref, set, onValue, update, remove, get, onDisconnect } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8cQdWyNNVVPKNn_B_wlE6q0OmqWJFMbA",
@@ -212,6 +212,10 @@ async function joinGame(roomCode) {
     try {
         await set(ref(database, `paper-rooms/${currentRoom}/players/${myPlayerId}`), playerData);
         
+        // Setup auto-cleanup on disconnect
+        const playerRef = ref(database, `paper-rooms/${currentRoom}/players/${myPlayerId}`);
+        onDisconnect(playerRef).remove();
+        
         players[myPlayerId] = playerData;
         camera.x = myPosition.x;
         camera.y = myPosition.y;
@@ -254,6 +258,12 @@ function cleanupInactivePlayers() {
         if (player.lastUpdate && (now - player.lastUpdate) > timeout) {
             remove(ref(database, `paper-rooms/${currentRoom}/players/${playerId}`));
         }
+    }
+    
+    // Clean up empty room
+    if (Object.keys(players).length === 0 && currentRoom) {
+        remove(ref(database, `paper-rooms/${currentRoom}`))
+            .catch(err => console.error('Error removing empty room:', err));
     }
 }
 

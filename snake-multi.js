@@ -1,6 +1,6 @@
 // Firebase Configuration
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getDatabase, ref, set, onValue, update, remove, push, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { getDatabase, ref, set, onValue, update, remove, push, get, onDisconnect } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8cQdWyNNVVPKNn_B_wlE6q0OmqWJFMbA",
@@ -215,6 +215,10 @@ async function joinGame(roomCode) {
         // Add player to room
         await set(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`), playerData);
         
+        // Setup auto-cleanup on disconnect
+        const playerRef = ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`);
+        onDisconnect(playerRef).remove();
+        
         // Immediately add to local players object for instant rendering
         players[myPlayerId] = playerData;
         
@@ -292,6 +296,12 @@ function cleanupInactivePlayers() {
             remove(ref(database, `snake-rooms/${currentRoom}/players/${playerId}`))
                 .catch(err => console.error('Error removing inactive player:', err));
         }
+    }
+    
+    // Clean up empty room
+    if (Object.keys(players).length === 0 && currentRoom) {
+        remove(ref(database, `snake-rooms/${currentRoom}`))
+            .catch(err => console.error('Error removing empty room:', err));
     }
 }
 
