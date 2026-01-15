@@ -470,6 +470,11 @@ function updateGame() {
         if (isBoosting && mySnake.length > INITIAL_LENGTH) {
             mySnake.pop();
             mySnake.pop(); // Lose length when boosting
+            // Lose points when boosting
+            if (myScore > 0) {
+                myScore -= 1;
+                scoreEl.textContent = myScore;
+            }
         } else {
             mySnake.pop();
         }
