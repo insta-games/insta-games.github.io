@@ -398,13 +398,17 @@ function updateGame() {
     // Check if on own territory
     const onOwnTerritory = myTerritory.has(gridKey);
     
-    if (onOwnTerritory) {
+    if (onOwnTerritory && myTrail.length > 0) {
         // Returned to territory - capture trail area
-        if (myTrail.length > 0) {
-            captureTrailArea();
-            myTrail = [];
+        captureTrailArea();
+        myTrail = [];
+        
+        // Update local player immediately
+        if (players[myPlayerId]) {
+            players[myPlayerId].trail = [];
+            players[myPlayerId].territory = Array.from(myTerritory);
         }
-    } else {
+    } else if (!onOwnTerritory) {
         // Outside territory - add to trail
         if (myTrail.length === 0 || myTrail[myTrail.length - 1] !== gridKey) {
             myTrail.push(gridKey);
@@ -459,27 +463,76 @@ function updateGame() {
 }
 
 function captureTrailArea() {
-    if (myTrail.length < 3) return;
+    if (myTrail.length < 3) {
+        // Even small trails add their cells to territory
+        myTrail.forEach(key => myTerritory.add(key));
+        return;
+    }
     
-    // Use flood fill to capture the area
-    const trailSet = new Set(myTrail);
-    const minX = Math.min(...myTrail.map(k => parseInt(k.split(',')[0])));
-    const maxX = Math.max(...myTrail.map(k => parseInt(k.split(',')[0])));
-    const minY = Math.min(...myTrail.map(k => parseInt(k.split(',')[1])));
-    const maxY = Math.max(...myTrail.map(k => parseInt(k.split(',')[1])));
-    
-    // Add trail to territory
+    // Add all trail cells to territory first
     myTrail.forEach(key => myTerritory.add(key));
     
-    // Fill the enclosed area
+    // Find bounding box
+    const trailCoords = myTrail.map(k => {
+        const parts = k.split(',');
+        return { x: parseInt(parts[0]), y: parseInt(parts[1]) };
+    });
+    
+    const minX = Math.min(...trailCoords.map(c => c.x));
+    const maxX = Math.max(...trailCoords.map(c => c.x));
+    const minY = Math.min(...trailCoords.map(c => c.y));
+    const maxY = Math.max(...trailCoords.map(c => c.y));
+    
+    // Create a set for faster lookup
+    const trailSet = new Set(myTrail);
+    const territorySet = new Set(Array.from(myTerritory));
+    
+    // Simple flood fill from edges to find enclosed areas
+    const toFill = [];
+    
     for (let x = minX; x <= maxX; x++) {
         for (let y = minY; y <= maxY; y++) {
             const key = `${x},${y}`;
-            if (!myTerritory.has(key) && isInsideTrail(x, y, trailSet)) {
-                myTerritory.add(key);
+            if (!territorySet.has(key)) {
+                // Check if this point is surrounded
+                let surrounded = true;
+                
+                // Check in 4 directions - if we hit boundary before hitting non-territory, not enclosed
+                const directions = [
+                    [1, 0], [-1, 0], [0, 1], [0, -1]
+                ];
+                
+                for (const [dx, dy] of directions) {
+                    let checkX = x + dx;
+                    let checkY = y + dy;
+                    let hitTerritory = false;
+                    
+                    while (checkX >= minX - 5 && checkX <= maxX + 5 && 
+                           checkY >= minY - 5 && checkY <= maxY + 5) {
+                        const checkKey = `${checkX},${checkY}`;
+                        if (territorySet.has(checkKey) || trailSet.has(checkKey)) {
+                            hitTerritory = true;
+                            break;
+                        }
+                        checkX += dx;
+                        checkY += dy;
+                    }
+                    
+                    if (!hitTerritory) {
+                        surrounded = false;
+                        break;
+                    }
+                }
+                
+                if (surrounded) {
+                    toFill.push(key);
+                }
             }
         }
     }
+    
+    // Add all enclosed cells to territory
+    toFill.forEach(key => myTerritory.add(key));
 }
 
 function isInsideTrail(x, y, trailSet) {
