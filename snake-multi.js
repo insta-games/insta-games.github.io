@@ -603,6 +603,7 @@ async function respawnPlayer() {
         players[myPlayerId].alive = true;
         players[myPlayerId].score = 0;
         players[myPlayerId].angle = 0;
+        players[myPlayerId].visible = true;
     }
     
     // Initialize camera position
@@ -614,6 +615,9 @@ async function respawnPlayer() {
         alive: true,
         score: 0,
         angle: 0,
+        name: myPlayerName,
+        color: players[myPlayerId].color,
+        visible: true,
         lastUpdate: Date.now()
     });
     
