@@ -19,8 +19,8 @@ const database = getDatabase(app);
 
 // Game Constants
 const WORLD_SIZE = 3000;
-const SNAKE_SPEED = 3;
-const BOOST_SPEED = 6;
+const SNAKE_SPEED = 2;
+const BOOST_SPEED = 4;
 const SEGMENT_SIZE = 10;
 const SEGMENT_SPACING = 8;
 const FOOD_SIZE = 6;
