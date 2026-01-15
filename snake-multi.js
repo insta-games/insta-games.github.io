@@ -52,26 +52,31 @@ let isPaused = false;
 // Colors for different players
 const PLAYER_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
 
-// DOM Elements
-const joinPanel = document.getElementById('joinPanel');
-const gamePanel = document.getElementById('gamePanel');
-const nameInput = document.getElementById('nameInput');
-const roomInput = document.getElementById('roomInput');
-const joinBtn = document.getElementById('joinBtn');
-const quickPlayBtn = document.getElementById('quickPlayBtn');
-const leaveBtn = document.getElementById('leaveBtn');
-const boostBtn = document.getElementById('boostBtn');
-const respawnBtn = document.getElementById('respawnBtn');
-const respawnPanel = document.getElementById('respawnPanel');
-const roomCodeEl = document.getElementById('roomCode');
-const statusEl = document.getElementById('status');
-const scoreEl = document.getElementById('score');
-const playerCountEl = document.getElementById('playerCount');
-const playersListEl = document.getElementById('playersList');
-const pauseScreen = document.getElementById('pauseScreen');
+// DOM Elements - will be initialized after DOMContentLoaded
+let joinPanel, gamePanel, nameInput, roomInput, joinBtn, quickPlayBtn;
+let leaveBtn, boostBtn, respawnBtn, respawnPanel;
+let roomCodeEl, statusEl, scoreEl, playerCountEl, playersListEl, pauseScreen;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize DOM elements
+    joinPanel = document.getElementById('joinPanel');
+    gamePanel = document.getElementById('gamePanel');
+    nameInput = document.getElementById('nameInput');
+    roomInput = document.getElementById('roomInput');
+    joinBtn = document.getElementById('joinBtn');
+    quickPlayBtn = document.getElementById('quickPlayBtn');
+    leaveBtn = document.getElementById('leaveBtn');
+    boostBtn = document.getElementById('boostBtn');
+    respawnBtn = document.getElementById('respawnBtn');
+    respawnPanel = document.getElementById('respawnPanel');
+    roomCodeEl = document.getElementById('roomCode');
+    statusEl = document.getElementById('status');
+    scoreEl = document.getElementById('score');
+    playerCountEl = document.getElementById('playerCount');
+    playersListEl = document.getElementById('playersList');
+    pauseScreen = document.getElementById('pauseScreen');
+    
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
     
