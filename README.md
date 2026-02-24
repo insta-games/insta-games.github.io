@@ -74,7 +74,7 @@ const firebaseConfig = {
    ```
 
 2. **Open Your Browser**
-   Navigate to: `http://localhost:8000/menu.html`
+  Navigate to: `http://localhost:8000/index.html`
 
 3. **Setup Firebase Database** (First Time Only)
    - Go to: `http://localhost:8000/index.html`
@@ -112,7 +112,7 @@ const firebaseConfig = {
 ## 🎮 Games Overview
 
 ### 1. 🚁 Copter.io - PvP Helicopter Combat
-**URL**: `http://localhost:8000/copter-game.html`
+**URL**: `http://localhost:8000/lobby.html`
 
 **Game Type**: Multiplayer PvP Shooter
 
@@ -164,7 +164,7 @@ copter-rooms/
 ---
 
 ### 2. 🚶 Roaming Game - Shared World
-**URL**: `http://localhost:8000/roam-game.html`
+**URL**: `http://localhost:8000/lobby.html`
 
 **Game Type**: Casual Multiplayer Exploration
 
@@ -199,7 +199,7 @@ game-rooms/
 ---
 
 ### 3. 🎯 Room System Template
-**URL**: `http://localhost:8000/game.html`
+**URL**: `http://localhost:8000/lobby.html`
 
 **Game Type**: Room Management System
 
@@ -264,7 +264,7 @@ Math.random().toString(36).substr(2, 6).toUpperCase()
 
 **Method 2: URL Sharing**
 - Games support `?room=CODE` parameter
-- Example: `http://localhost:8000/copter-game.html?room=ABC123`
+- Example: `http://localhost:8000/lobby.html?room=ABC123`
 - Code auto-fills when opened
 
 **Method 3: Copy Button**
@@ -539,7 +539,7 @@ const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
 
 **Copter.io Settings**:
 ```javascript
-// In copter-game.html
+// In your multiplayer game file
 const COPTER = {
   size: 25,              // Helicopter size
   gravity: 0.5,          // Falling speed
@@ -558,7 +558,7 @@ const BULLET = {
 
 **Roaming Game Settings**:
 ```javascript
-// In roam-game.html
+// In your multiplayer game file
 const PLAYER_SIZE = 30;     // Player circle size
 const MOVE_SPEED = 5;        // Movement speed
 ```
@@ -641,11 +641,11 @@ firebase deploy
 ### File Structure
 ```
 /home/sanjith/test/
-├── menu.html              # Main menu / hub
-├── copter-game.html       # Copter.io PvP game
-├── roam-game.html         # Roaming game
-├── game.html              # Room system template
-└── index.html             # Firebase test page
+├── index.html             # Main menu / hub
+├── lobby.html             # Online multiplayer lobby
+├── connect4-multi.html    # Example multiplayer game
+├── checkers-multi.html    # Example multiplayer game
+└── lobby.js               # Lobby realtime logic
 ```
 
 ---
