@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.max(46, Math.floor(90 - regularProgress * 0.25 - extremeProgress * 0.35));
   }
 
+  function getDistortionIntensity() {
+    const level = getLevel();
+    return Math.min(0.22 + (level - 1) / 24, 1);
+  }
+
   function getDynamicThemeColors() {
     const level = getLevel();
     const intensity = Math.min((level - 1) / 28, 1);
@@ -85,8 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function applyColorDistortion() {
-    const level = getLevel();
-    const intensity = Math.min(0.22 + (level - 1) / 24, 1);
+    const intensity = getDistortionIntensity();
     const hueRange = 14 + intensity * 58;
     const hueShift = Math.sin(frameCount * 0.18) * hueRange;
     const jitterX = Math.sin(frameCount * 0.42) * (2.4 + intensity * 8.5);
@@ -123,6 +127,21 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillRect(0, y, canvas.width, 1);
     }
     ctx.restore();
+  }
+
+  function applyPageDistortion() {
+    const intensity = getDistortionIntensity();
+    const phase = frameCount * 0.21;
+    const offsetX = Math.sin(phase * 1.37) * (0.7 + intensity * 4.2);
+    const offsetY = Math.cos(phase * 1.11) * (0.5 + intensity * 3.1);
+    const skewX = Math.sin(phase * 0.92) * (0.08 + intensity * 0.62);
+    const skewY = Math.cos(phase * 1.24) * (0.06 + intensity * 0.44);
+    const hueShift = Math.sin(phase * 0.64) * (3 + intensity * 14);
+
+    document.documentElement.style.willChange = 'transform, filter';
+    document.documentElement.style.transformOrigin = 'center center';
+    document.documentElement.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) skew(${skewX}deg, ${skewY}deg)`;
+    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${1.08 + intensity * 0.55}) contrast(${1.04 + intensity * 0.32}) blur(${0.12 + intensity * 0.9}px)`;
   }
 
   function createPipe() {
@@ -242,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText(score.toString(), canvas.width / 2, 50);
     }
 
+    applyPageDistortion();
     applyColorDistortion();
   }
 
