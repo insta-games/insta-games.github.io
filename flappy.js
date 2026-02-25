@@ -86,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyColorDistortion() {
     const level = getLevel();
-    const intensity = Math.min((level - 1) / 28, 1);
+    const intensity = Math.min(0.22 + (level - 1) / 24, 1);
     const hueRange = 14 + intensity * 58;
     const hueShift = Math.sin(frameCount * 0.18) * hueRange;
-    const jitterX = Math.sin(frameCount * 0.42) * (1.6 + intensity * 6.5);
-    const jitterY = Math.cos(frameCount * 0.31) * (1 + intensity * 3.2);
+    const jitterX = Math.sin(frameCount * 0.42) * (2.4 + intensity * 8.5);
+    const jitterY = Math.cos(frameCount * 0.31) * (1.6 + intensity * 4.4);
 
     distortionCtx.clearRect(0, 0, canvas.width, canvas.height);
     distortionCtx.drawImage(canvas, 0, 0);
@@ -99,6 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.save();
     ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.35 + intensity * 2.3}) contrast(${1.12 + intensity * 0.9})`;
     ctx.drawImage(distortionBuffer, jitterX, jitterY, canvas.width, canvas.height);
+    ctx.restore();
+
+    const channelOffset = 1 + intensity * 6;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = 0.1 + intensity * 0.2;
+    ctx.drawImage(distortionBuffer, channelOffset, 0, canvas.width, canvas.height);
+    ctx.globalAlpha = 0.08 + intensity * 0.18;
+    ctx.drawImage(distortionBuffer, -channelOffset, 0, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
