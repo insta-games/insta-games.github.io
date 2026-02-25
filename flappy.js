@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let pipeGap = basePipeGap;
   let pipeSpeed = basePipeSpeed;
   let frameCount = 0;
+  let visualFrameCount = 0;
   let score = 0;
   let highScore = localStorage.getItem('flappyHighScore') || 0;
   let gameStarted = false;
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function getDynamicThemeColors() {
     const level = getLevel();
     const intensity = Math.min((level - 1) / 28, 1);
-    const phase = frameCount * (0.14 + intensity * 0.12);
+    const phase = visualFrameCount * (0.14 + intensity * 0.12);
 
     const birdHue = (190 + Math.sin(phase) * (55 + intensity * 85) + 360) % 360;
     const birdHueSecondary = (birdHue + 70 + intensity * 55) % 360;
@@ -91,9 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyColorDistortion() {
     const intensity = getDistortionIntensity();
     const hueRange = 42 + intensity * 174;
-    const hueShift = Math.sin(frameCount * 0.18) * hueRange;
-    const jitterX = Math.sin(frameCount * 0.42) * (7.2 + intensity * 25.5);
-    const jitterY = Math.cos(frameCount * 0.31) * (4.8 + intensity * 13.2);
+    const hueShift = Math.sin(visualFrameCount * 0.18) * hueRange;
+    const jitterX = Math.sin(visualFrameCount * 0.42) * (7.2 + intensity * 25.5);
+    const jitterY = Math.cos(visualFrameCount * 0.31) * (4.8 + intensity * 13.2);
 
     distortionCtx.clearRect(0, 0, canvas.width, canvas.height);
     distortionCtx.drawImage(canvas, 0, 0);
@@ -130,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyPageDistortion() {
     const intensity = getDistortionIntensity();
-    const phase = frameCount * 0.21;
+    const phase = visualFrameCount * 0.21;
     const offsetX = Math.sin(phase * 1.37) * (8 + intensity * 20);
     const offsetY = Math.cos(phase * 1.11) * (6 + intensity * 16);
     const skewX = Math.sin(phase * 0.92) * (1.2 + intensity * 3.2);
@@ -138,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const rotate = Math.sin(phase * 1.73) * (2.5 + intensity * 8);
     const scale = 0.88 + Math.abs(Math.sin(phase * 1.95)) * (0.12 + intensity * 0.22);
     const hueShift = Math.sin(phase * 0.64) * (40 + intensity * 140);
-    const strobe = frameCount % 6 < 2 ? 1 : 0;
-    const flash = frameCount % 12 === 0 ? 1 : 0;
+    const strobe = visualFrameCount % 6 < 2 ? 1 : 0;
+    const flash = visualFrameCount % 12 === 0 ? 1 : 0;
     const brightness = 0.55 + Math.abs(Math.sin(phase * 2.7)) * 1.05 + flash * 0.65;
     const blurPx = 1.6 + Math.abs(Math.cos(phase * 2.15)) * 3.6;
     const invertAmount = (0.22 + intensity * 0.58) * strobe;
@@ -184,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function draw() {
     // Clear with transparency to show game-wrap background
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    visualFrameCount++;
     const dynamicColors = getDynamicThemeColors();
 
     // Pipes
