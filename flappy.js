@@ -49,50 +49,50 @@ document.addEventListener('DOMContentLoaded', () => {
     pipeSpeed =
       basePipeSpeed +
       Math.min(regularProgress * 0.03, 1.8) +
-      Math.min(extremeProgress * 0.02, 1.2);
+      Math.min(extremeProgress * 0.035, 2.2);
 
     pipeGap =
       basePipeGap -
       Math.min(regularProgress * 0.45, 32) -
-      Math.min(extremeProgress * 0.35, 18);
+      Math.min(extremeProgress * 0.55, 28);
   }
 
   function getPipeSpawnInterval() {
     const level = getLevel();
     const regularProgress = Math.max(0, level - 1);
     const extremeProgress = Math.max(0, level - 14);
-    return Math.max(52, Math.floor(90 - regularProgress * 0.25 - extremeProgress * 0.22));
+    return Math.max(46, Math.floor(90 - regularProgress * 0.25 - extremeProgress * 0.35));
   }
 
   function applyColorDistortion() {
     const level = getLevel();
     if (level < 15) return;
 
-    const intensity = Math.min((level - 14) / 40, 1);
-    const hueRange = 8 + intensity * 44;
+    const intensity = Math.min((level - 14) / 28, 1);
+    const hueRange = 14 + intensity * 58;
     const hueShift = Math.sin(frameCount * 0.18) * hueRange;
-    const jitterX = Math.sin(frameCount * 0.42) * (1 + intensity * 4);
-    const jitterY = Math.cos(frameCount * 0.31) * (0.6 + intensity * 2.2);
+    const jitterX = Math.sin(frameCount * 0.42) * (1.6 + intensity * 6.5);
+    const jitterY = Math.cos(frameCount * 0.31) * (1 + intensity * 3.2);
 
     distortionCtx.clearRect(0, 0, canvas.width, canvas.height);
     distortionCtx.drawImage(canvas, 0, 0);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
-    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.15 + intensity * 1.6}) contrast(${1.05 + intensity * 0.55})`;
+    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.35 + intensity * 2.3}) contrast(${1.12 + intensity * 0.9})`;
     ctx.drawImage(distortionBuffer, jitterX, jitterY, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = `rgba(${110 + Math.floor(90 * intensity)}, 50, ${130 + Math.floor(90 * intensity)}, ${0.05 + intensity * 0.14})`;
+    ctx.fillStyle = `rgba(${125 + Math.floor(110 * intensity)}, 35, ${145 + Math.floor(105 * intensity)}, ${0.07 + intensity * 0.2})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
-    ctx.globalAlpha = 0.04 + intensity * 0.1;
-    for (let y = 0; y < canvas.height; y += 4) {
-      ctx.fillStyle = y % 8 === 0 ? 'rgba(255,0,90,0.5)' : 'rgba(0,190,255,0.45)';
+    ctx.globalAlpha = 0.07 + intensity * 0.17;
+    for (let y = 0; y < canvas.height; y += 3) {
+      ctx.fillStyle = y % 6 === 0 ? 'rgba(255,20,110,0.65)' : 'rgba(0,220,255,0.58)';
       ctx.fillRect(0, y, canvas.width, 1);
     }
     ctx.restore();
