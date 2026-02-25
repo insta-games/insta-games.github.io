@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateDifficulty() {
     const level = getLevel();
     const regularProgress = Math.max(0, level - 1);
-    const extremeProgress = Math.max(0, level - 100);
+    const extremeProgress = Math.max(0, level - 15);
 
     pipeSpeed =
       basePipeSpeed +
@@ -60,15 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function getPipeSpawnInterval() {
     const level = getLevel();
     const regularProgress = Math.max(0, level - 1);
-    const extremeProgress = Math.max(0, level - 100);
+    const extremeProgress = Math.max(0, level - 15);
     return Math.max(52, Math.floor(90 - regularProgress * 0.25 - extremeProgress * 0.22));
   }
 
   function applyColorDistortion() {
     const level = getLevel();
-    if (level < 100) return;
+    if (level < 15) return;
 
-    const intensity = Math.min((level - 100) / 40, 1);
+    const intensity = Math.min((level - 15) / 40, 1);
     const hueRange = 8 + intensity * 44;
     const hueShift = Math.sin(frameCount * 0.18) * hueRange;
     const jitterX = Math.sin(frameCount * 0.42) * (1 + intensity * 4);
