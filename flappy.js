@@ -64,11 +64,29 @@ document.addEventListener('DOMContentLoaded', () => {
     return Math.max(46, Math.floor(90 - regularProgress * 0.25 - extremeProgress * 0.35));
   }
 
+  function getDynamicThemeColors() {
+    const level = getLevel();
+    const intensity = Math.min((level - 1) / 28, 1);
+    const phase = frameCount * (0.14 + intensity * 0.12);
+
+    const birdHue = (190 + Math.sin(phase) * (55 + intensity * 85) + 360) % 360;
+    const birdHueSecondary = (birdHue + 70 + intensity * 55) % 360;
+    const pipeHue = (220 + Math.cos(phase * 0.8) * (45 + intensity * 75) + 360) % 360;
+    const borderHue = (pipeHue + 28 + intensity * 18) % 360;
+    const groundHue = (birdHue + 22) % 360;
+
+    return {
+      birdPrimary: `hsl(${birdHue}, ${78 + intensity * 20}%, ${54 + intensity * 8}%)`,
+      birdSecondary: `hsl(${birdHueSecondary}, ${76 + intensity * 20}%, ${50 + intensity * 8}%)`,
+      pipeFill: `hsl(${pipeHue}, ${55 + intensity * 30}%, ${24 + intensity * 14}%)`,
+      pipeBorder: `hsl(${borderHue}, ${62 + intensity * 28}%, ${35 + intensity * 14}%)`,
+      groundLine: `hsla(${groundHue}, ${85 + intensity * 12}%, ${58 + intensity * 10}%, ${0.35 + intensity * 0.35})`
+    };
+  }
+
   function applyColorDistortion() {
     const level = getLevel();
-    if (level < 15) return;
-
-    const intensity = Math.min((level - 14) / 28, 1);
+    const intensity = Math.min((level - 1) / 28, 1);
     const hueRange = 14 + intensity * 58;
     const hueShift = Math.sin(frameCount * 0.18) * hueRange;
     const jitterX = Math.sin(frameCount * 0.42) * (1.6 + intensity * 6.5);
@@ -131,9 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function draw() {
     // Clear with transparency to show game-wrap background
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const dynamicColors = getDynamicThemeColors();
 
     // Pipes
-    ctx.fillStyle = pipeColor;
+    ctx.fillStyle = dynamicColors.pipeFill;
     pipes.forEach(pipe => {
       // Top pipe
       ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
@@ -141,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillRect(pipe.x, pipe.bottomY, pipeWidth, canvas.height - pipe.bottomY - 100);
       
       // Pipe borders with theme color
-      ctx.strokeStyle = pipeBorderColor;
+      ctx.strokeStyle = dynamicColors.pipeBorder;
       ctx.lineWidth = 2;
       ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.topHeight);
       ctx.strokeRect(pipe.x, pipe.bottomY, pipeWidth, canvas.height - pipe.bottomY - 100);
@@ -149,8 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Bird with gradient effect
     const gradient = ctx.createLinearGradient(bird.x, bird.y, bird.x + bird.width, bird.y + bird.height);
-    gradient.addColorStop(0, birdColor);
-    gradient.addColorStop(1, birdAccentColor);
+    gradient.addColorStop(0, dynamicColors.birdPrimary);
+    gradient.addColorStop(1, dynamicColors.birdSecondary);
     ctx.fillStyle = gradient;
     ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
     
@@ -165,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fill();
 
     // Ground line indicator
-    ctx.strokeStyle = 'rgba(6, 182, 212, 0.3)'; // cyan accent with transparency
+    ctx.strokeStyle = dynamicColors.groundLine;
     ctx.lineWidth = 2;
     ctx.setLineDash([5, 5]);
     ctx.beginPath();
