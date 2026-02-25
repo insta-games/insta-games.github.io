@@ -47,6 +47,12 @@ let isBoosting = false;
 let boostFrameCounter = 0;
 let camera = { x: 0, y: 0, zoom: 1.5 };
 let isPaused = false;
+let playersListDirty = false;
+let lastPlayersListUpdate = 0;
+let lastCleanupCheck = 0;
+
+const PLAYERS_LIST_UPDATE_RATE = 250;
+const CLEANUP_CHECK_RATE = 5000;
 
 // Colors for different players
 const PLAYER_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
@@ -263,10 +269,34 @@ function setupGameListeners() {
     // Listen to players
     onValue(ref(database, `snake-rooms/${currentRoom}/players`), (snapshot) => {
         if (snapshot.exists()) {
-            players = snapshot.val();
-            cleanupInactivePlayers();
-            updatePlayersList();
+            const remotePlayers = snapshot.val();
+
+            // Keep local player movement authoritative between Firebase updates
+            if (myPlayerId && players[myPlayerId] && remotePlayers[myPlayerId]) {
+                remotePlayers[myPlayerId] = {
+                    ...remotePlayers[myPlayerId],
+                    segments: players[myPlayerId].segments,
+                    angle: players[myPlayerId].angle,
+                    score: myScore,
+                    alive: players[myPlayerId].alive,
+                    visible: players[myPlayerId].visible
+                };
+            }
+
+            players = remotePlayers;
+
+            const now = Date.now();
+            if ((now - lastCleanupCheck) >= CLEANUP_CHECK_RATE) {
+                cleanupInactivePlayers();
+                lastCleanupCheck = now;
+            }
+
+            playersListDirty = true;
             playerCountEl.textContent = Object.keys(players).length;
+        } else {
+            players = {};
+            playersListDirty = true;
+            playerCountEl.textContent = '0';
         }
     });
     
@@ -453,9 +483,21 @@ function startGameLoop() {
 function gameLoopFunction() {
     updateGame();
     draw();
+    updatePlayersListIfNeeded();
     if (gameLoop !== null) {
         gameLoop = requestAnimationFrame(gameLoopFunction);
     }
+}
+
+function updatePlayersListIfNeeded() {
+    if (!playersListDirty) return;
+
+    const now = Date.now();
+    if ((now - lastPlayersListUpdate) < PLAYERS_LIST_UPDATE_RATE) return;
+
+    updatePlayersList();
+    playersListDirty = false;
+    lastPlayersListUpdate = now;
 }
 
 // Update Firebase separately at lower rate
@@ -847,6 +889,9 @@ async function leaveGame() {
     players = {};
     foods = [];
     myScore = 0;
+    playersListDirty = false;
+    lastPlayersListUpdate = 0;
+    lastCleanupCheck = 0;
     
     // Show header/footer again
     document.body.classList.remove('game-active');
