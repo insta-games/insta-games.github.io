@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getDistortionIntensity() {
     const level = getLevel();
-    return Math.min(0.22 + (level - 1) / 24, 1);
+    return Math.min(0.66 + (level - 1) / 8, 1);
   }
 
   function getDynamicThemeColors() {
@@ -91,38 +91,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyColorDistortion() {
     const intensity = getDistortionIntensity();
-    const hueRange = 14 + intensity * 58;
+    const hueRange = 42 + intensity * 174;
     const hueShift = Math.sin(frameCount * 0.18) * hueRange;
-    const jitterX = Math.sin(frameCount * 0.42) * (2.4 + intensity * 8.5);
-    const jitterY = Math.cos(frameCount * 0.31) * (1.6 + intensity * 4.4);
+    const jitterX = Math.sin(frameCount * 0.42) * (7.2 + intensity * 25.5);
+    const jitterY = Math.cos(frameCount * 0.31) * (4.8 + intensity * 13.2);
 
     distortionCtx.clearRect(0, 0, canvas.width, canvas.height);
     distortionCtx.drawImage(canvas, 0, 0);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
-    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.35 + intensity * 2.3}) contrast(${1.12 + intensity * 0.9})`;
+    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.95 + intensity * 4.2}) contrast(${1.45 + intensity * 1.7})`;
     ctx.drawImage(distortionBuffer, jitterX, jitterY, canvas.width, canvas.height);
     ctx.restore();
 
-    const channelOffset = 1 + intensity * 6;
+    const channelOffset = 3 + intensity * 18;
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    ctx.globalAlpha = 0.1 + intensity * 0.2;
+    ctx.globalAlpha = 0.3 + intensity * 0.45;
     ctx.drawImage(distortionBuffer, channelOffset, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = 0.08 + intensity * 0.18;
+    ctx.globalAlpha = 0.24 + intensity * 0.42;
     ctx.drawImage(distortionBuffer, -channelOffset, 0, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = `rgba(${125 + Math.floor(110 * intensity)}, 35, ${145 + Math.floor(105 * intensity)}, ${0.07 + intensity * 0.2})`;
+    ctx.fillStyle = `rgba(${150 + Math.floor(105 * intensity)}, 25, ${170 + Math.floor(85 * intensity)}, ${0.21 + intensity * 0.45})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
-    ctx.globalAlpha = 0.07 + intensity * 0.17;
-    for (let y = 0; y < canvas.height; y += 3) {
+    ctx.globalAlpha = 0.22 + intensity * 0.48;
+    for (let y = 0; y < canvas.height; y += 2) {
       ctx.fillStyle = y % 6 === 0 ? 'rgba(255,20,110,0.65)' : 'rgba(0,220,255,0.58)';
       ctx.fillRect(0, y, canvas.width, 1);
     }
@@ -132,16 +132,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyPageDistortion() {
     const intensity = getDistortionIntensity();
     const phase = frameCount * 0.21;
-    const offsetX = Math.sin(phase * 1.37) * (0.7 + intensity * 4.2);
-    const offsetY = Math.cos(phase * 1.11) * (0.5 + intensity * 3.1);
-    const skewX = Math.sin(phase * 0.92) * (0.08 + intensity * 0.62);
-    const skewY = Math.cos(phase * 1.24) * (0.06 + intensity * 0.44);
-    const hueShift = Math.sin(phase * 0.64) * (3 + intensity * 14);
+    const offsetX = Math.sin(phase * 1.37) * (2.1 + intensity * 12.6);
+    const offsetY = Math.cos(phase * 1.11) * (1.5 + intensity * 9.3);
+    const skewX = Math.sin(phase * 0.92) * (0.24 + intensity * 1.86);
+    const skewY = Math.cos(phase * 1.24) * (0.18 + intensity * 1.32);
+    const hueShift = Math.sin(phase * 0.64) * (9 + intensity * 42);
 
     document.documentElement.style.willChange = 'transform, filter';
     document.documentElement.style.transformOrigin = 'center center';
     document.documentElement.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) skew(${skewX}deg, ${skewY}deg)`;
-    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${1.08 + intensity * 0.55}) contrast(${1.04 + intensity * 0.32}) blur(${0.12 + intensity * 0.9}px)`;
+    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${1.3 + intensity * 1.65}) contrast(${1.12 + intensity * 0.96}) blur(${0.36 + intensity * 2.7}px)`;
   }
 
   function createPipe() {
