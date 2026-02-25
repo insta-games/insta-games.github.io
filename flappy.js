@@ -16,19 +16,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let pipes = [];
   let pipeWidth = 60;
-  let pipeGap = 150;
-  let pipeSpeed = 2;
+  const basePipeGap = 150;
+  const basePipeSpeed = 2;
+  let pipeGap = basePipeGap;
+  let pipeSpeed = basePipeSpeed;
   let frameCount = 0;
   let score = 0;
   let highScore = localStorage.getItem('flappyHighScore') || 0;
   let gameStarted = false;
   let gameOver = false;
 
+  const distortionBuffer = document.createElement('canvas');
+  distortionBuffer.width = canvas.width;
+  distortionBuffer.height = canvas.height;
+  const distortionCtx = distortionBuffer.getContext('2d');
+
   // Colors - matching website theme
   const birdColor = '#06b6d4'; // cyan accent
   const birdAccentColor = '#3b82f6'; // blue accent
   const pipeColor = '#1e293b'; // dark slate
   const pipeBorderColor = '#334155'; // lighter slate
+
+  function getLevel() {
+    return Math.floor(score / 10) + 1;
+  }
+
+  function updateDifficulty() {
+    const level = getLevel();
+    const regularProgress = Math.max(0, level - 1);
+    const extremeProgress = Math.max(0, level - 100);
+
+    pipeSpeed =
+      basePipeSpeed +
+      Math.min(regularProgress * 0.03, 1.8) +
+      Math.min(extremeProgress * 0.02, 1.2);
+
+    pipeGap =
+      basePipeGap -
+      Math.min(regularProgress * 0.45, 32) -
+      Math.min(extremeProgress * 0.35, 18);
+  }
+
+  function getPipeSpawnInterval() {
+    const level = getLevel();
+    const regularProgress = Math.max(0, level - 1);
+    const extremeProgress = Math.max(0, level - 100);
+    return Math.max(52, Math.floor(90 - regularProgress * 0.25 - extremeProgress * 0.22));
+  }
+
+  function applyColorDistortion() {
+    const level = getLevel();
+    if (level < 100) return;
+
+    const intensity = Math.min((level - 100) / 40, 1);
+    const hueRange = 8 + intensity * 44;
+    const hueShift = Math.sin(frameCount * 0.18) * hueRange;
+    const jitterX = Math.sin(frameCount * 0.42) * (1 + intensity * 4);
+    const jitterY = Math.cos(frameCount * 0.31) * (0.6 + intensity * 2.2);
+
+    distortionCtx.clearRect(0, 0, canvas.width, canvas.height);
+    distortionCtx.drawImage(canvas, 0, 0);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.15 + intensity * 1.6}) contrast(${1.05 + intensity * 0.55})`;
+    ctx.drawImage(distortionBuffer, jitterX, jitterY, canvas.width, canvas.height);
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = `rgba(${110 + Math.floor(90 * intensity)}, 50, ${130 + Math.floor(90 * intensity)}, ${0.05 + intensity * 0.14})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.04 + intensity * 0.1;
+    for (let y = 0; y < canvas.height; y += 4) {
+      ctx.fillStyle = y % 8 === 0 ? 'rgba(255,0,90,0.5)' : 'rgba(0,190,255,0.45)';
+      ctx.fillRect(0, y, canvas.width, 1);
+    }
+    ctx.restore();
+  }
 
   function createPipe() {
     const minHeight = 50;
@@ -49,13 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
     pipes = [];
     frameCount = 0;
     score = 0;
+    pipeGap = basePipeGap;
+    pipeSpeed = basePipeSpeed;
     gameOver = false;
     gameStarted = false;
     updateStatus();
   }
 
   function updateStatus() {
-    statusEl.textContent = `Score: ${score} | High Score: ${highScore}`;
+    statusEl.textContent = `Score: ${score} | Level: ${getLevel()} | High Score: ${highScore}`;
   }
 
   function draw() {
@@ -143,10 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.strokeText(score.toString(), canvas.width / 2, 50);
       ctx.fillText(score.toString(), canvas.width / 2, 50);
     }
+
+    applyColorDistortion();
   }
 
   function update() {
     if (!gameStarted || gameOver) return;
+
+    updateDifficulty();
 
     // Update bird
     bird.velocity += bird.gravity;
@@ -177,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create new pipes
     frameCount++;
-    if (frameCount % 90 === 0) {
+    if (frameCount % getPipeSpawnInterval() === 0) {
       createPipe();
     }
 
