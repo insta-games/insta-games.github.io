@@ -1,6 +1,6 @@
 // Firebase Configuration
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getDatabase, ref, set, onValue, update, remove, push, get, onDisconnect } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import { getDatabase, ref, set, onValue, onChildAdded, onChildChanged, onChildRemoved, update, remove, push, get, onDisconnect } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyC8cQdWyNNVVPKNn_B_wlE6q0OmqWJFMbA",
@@ -49,7 +49,8 @@ let camera = { x: 0, y: 0, zoom: 1.5 };
 let isPaused = false;
 let playersListDirty = false;
 let lastPlayersListUpdate = 0;
-let lastCleanupCheck = 0;
+let cleanupLoop = null;
+let gameUnsubscribers = [];
 
 const PLAYERS_LIST_UPDATE_RATE = 250;
 const CLEANUP_CHECK_RATE = 5000;
@@ -266,42 +267,57 @@ async function joinGame(roomCode) {
 
 // Setup Firebase listeners
 function setupGameListeners() {
-    // Listen to players
-    onValue(ref(database, `snake-rooms/${currentRoom}/players`), (snapshot) => {
-        if (snapshot.exists()) {
-            const remotePlayers = snapshot.val();
+    clearGameListeners();
 
-            // Keep local player movement authoritative between Firebase updates
-            if (myPlayerId && players[myPlayerId] && remotePlayers[myPlayerId]) {
-                remotePlayers[myPlayerId] = {
-                    ...remotePlayers[myPlayerId],
-                    segments: players[myPlayerId].segments,
-                    angle: players[myPlayerId].angle,
-                    score: myScore,
-                    alive: players[myPlayerId].alive,
-                    visible: players[myPlayerId].visible
-                };
-            }
+    const playersRef = ref(database, `snake-rooms/${currentRoom}/players`);
 
-            players = remotePlayers;
+    const mergeLocalPlayerState = (remotePlayer) => {
+        if (!myPlayerId || !players[myPlayerId]) return remotePlayer;
+        return {
+            ...remotePlayer,
+            segments: players[myPlayerId].segments,
+            angle: players[myPlayerId].angle,
+            score: myScore,
+            alive: players[myPlayerId].alive,
+            visible: players[myPlayerId].visible
+        };
+    };
 
-            const now = Date.now();
-            if ((now - lastCleanupCheck) >= CLEANUP_CHECK_RATE) {
-                cleanupInactivePlayers();
-                lastCleanupCheck = now;
-            }
+    gameUnsubscribers.push(onChildAdded(playersRef, (snapshot) => {
+        const playerId = snapshot.key;
+        if (!playerId) return;
 
-            playersListDirty = true;
-            playerCountEl.textContent = Object.keys(players).length;
-        } else {
-            players = {};
-            playersListDirty = true;
-            playerCountEl.textContent = '0';
-        }
-    });
+        const remotePlayer = snapshot.val();
+        players[playerId] = (playerId === myPlayerId) ? mergeLocalPlayerState(remotePlayer) : remotePlayer;
+
+        playersListDirty = true;
+        playerCountEl.textContent = Object.keys(players).length;
+    }));
+
+    gameUnsubscribers.push(onChildChanged(playersRef, (snapshot) => {
+        const playerId = snapshot.key;
+        if (!playerId) return;
+
+        const remotePlayer = snapshot.val();
+        players[playerId] = (playerId === myPlayerId) ? mergeLocalPlayerState(remotePlayer) : remotePlayer;
+
+        playersListDirty = true;
+    }));
+
+    gameUnsubscribers.push(onChildRemoved(playersRef, (snapshot) => {
+        const playerId = snapshot.key;
+        if (!playerId) return;
+
+        delete players[playerId];
+        playersListDirty = true;
+        playerCountEl.textContent = Object.keys(players).length;
+    }));
+
+    if (cleanupLoop) clearInterval(cleanupLoop);
+    cleanupLoop = setInterval(cleanupInactivePlayers, CLEANUP_CHECK_RATE);
     
     // Listen to foods
-    onValue(ref(database, `snake-rooms/${currentRoom}/foods`), (snapshot) => {
+    gameUnsubscribers.push(onValue(ref(database, `snake-rooms/${currentRoom}/foods`), (snapshot) => {
         if (snapshot.exists()) {
             const foodData = snapshot.val();
             foods = [];
@@ -311,7 +327,21 @@ function setupGameListeners() {
         } else {
             foods = [];
         }
-    });
+    }));
+}
+
+function clearGameListeners() {
+    if (gameUnsubscribers.length > 0) {
+        gameUnsubscribers.forEach(unsubscribe => {
+            if (typeof unsubscribe === 'function') unsubscribe();
+        });
+        gameUnsubscribers = [];
+    }
+
+    if (cleanupLoop) {
+        clearInterval(cleanupLoop);
+        cleanupLoop = null;
+    }
 }
 
 // Clean up inactive players
@@ -879,6 +909,8 @@ async function leaveGame() {
         clearInterval(foodCheckInterval);
         foodCheckInterval = null;
     }
+
+    clearGameListeners();
     
     if (myPlayerId && currentRoom) {
         await remove(ref(database, `snake-rooms/${currentRoom}/players/${myPlayerId}`));
@@ -891,7 +923,6 @@ async function leaveGame() {
     myScore = 0;
     playersListDirty = false;
     lastPlayersListUpdate = 0;
-    lastCleanupCheck = 0;
     
     // Show header/footer again
     document.body.classList.remove('game-active');
