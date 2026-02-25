@@ -65,8 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getDistortionIntensity() {
-    const level = getLevel();
-    return Math.min(0.66 + (level - 1) / 8, 1);
+    return 1;
   }
 
   function getDynamicThemeColors() {
@@ -132,16 +131,24 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyPageDistortion() {
     const intensity = getDistortionIntensity();
     const phase = frameCount * 0.21;
-    const offsetX = Math.sin(phase * 1.37) * (2.1 + intensity * 12.6);
-    const offsetY = Math.cos(phase * 1.11) * (1.5 + intensity * 9.3);
-    const skewX = Math.sin(phase * 0.92) * (0.24 + intensity * 1.86);
-    const skewY = Math.cos(phase * 1.24) * (0.18 + intensity * 1.32);
-    const hueShift = Math.sin(phase * 0.64) * (9 + intensity * 42);
+    const offsetX = Math.sin(phase * 1.37) * (8 + intensity * 20);
+    const offsetY = Math.cos(phase * 1.11) * (6 + intensity * 16);
+    const skewX = Math.sin(phase * 0.92) * (1.2 + intensity * 3.2);
+    const skewY = Math.cos(phase * 1.24) * (0.9 + intensity * 2.5);
+    const rotate = Math.sin(phase * 1.73) * (2.5 + intensity * 8);
+    const scale = 0.88 + Math.abs(Math.sin(phase * 1.95)) * (0.12 + intensity * 0.22);
+    const hueShift = Math.sin(phase * 0.64) * (40 + intensity * 140);
+    const strobe = frameCount % 6 < 2 ? 1 : 0;
+    const flash = frameCount % 12 === 0 ? 1 : 0;
+    const brightness = 0.55 + Math.abs(Math.sin(phase * 2.7)) * 1.05 + flash * 0.65;
+    const blurPx = 1.6 + Math.abs(Math.cos(phase * 2.15)) * 3.6;
+    const invertAmount = (0.22 + intensity * 0.58) * strobe;
+    const sepiaAmount = (0.18 + intensity * 0.62) * (1 - strobe * 0.45);
 
     document.documentElement.style.willChange = 'transform, filter';
     document.documentElement.style.transformOrigin = 'center center';
-    document.documentElement.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) skew(${skewX}deg, ${skewY}deg)`;
-    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${1.3 + intensity * 1.65}) contrast(${1.12 + intensity * 0.96}) blur(${0.36 + intensity * 2.7}px)`;
+    document.documentElement.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) skew(${skewX}deg, ${skewY}deg) rotate(${rotate}deg) scale(${scale})`;
+    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${2.6 + intensity * 3.5}) contrast(${1.8 + intensity * 1.4}) blur(${blurPx}px) invert(${invertAmount}) sepia(${sepiaAmount}) brightness(${brightness})`;
   }
 
   function createPipe() {
