@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getDistortionIntensity() {
-    return 1;
+    const level = getLevel();
+    return Math.min(0.08 + (level - 1) / 40, 0.55);
   }
 
   function getDynamicThemeColors() {
@@ -91,39 +92,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyColorDistortion() {
     const intensity = getDistortionIntensity();
-    const hueRange = 42 + intensity * 174;
+    const hueRange = 10 + intensity * 46;
     const hueShift = Math.sin(visualFrameCount * 0.18) * hueRange;
-    const jitterX = Math.sin(visualFrameCount * 0.42) * (7.2 + intensity * 25.5);
-    const jitterY = Math.cos(visualFrameCount * 0.31) * (4.8 + intensity * 13.2);
+    const jitterX = Math.sin(visualFrameCount * 0.42) * (0.8 + intensity * 3.2);
+    const jitterY = Math.cos(visualFrameCount * 0.31) * (0.6 + intensity * 2.4);
 
     distortionCtx.clearRect(0, 0, canvas.width, canvas.height);
     distortionCtx.drawImage(canvas, 0, 0);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
-    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.95 + intensity * 4.2}) contrast(${1.45 + intensity * 1.7})`;
+    ctx.filter = `hue-rotate(${hueShift}deg) saturate(${1.12 + intensity * 0.85}) contrast(${1.05 + intensity * 0.4})`;
     ctx.drawImage(distortionBuffer, jitterX, jitterY, canvas.width, canvas.height);
     ctx.restore();
 
-    const channelOffset = 3 + intensity * 18;
+    const channelOffset = 0.6 + intensity * 3.2;
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    ctx.globalAlpha = 0.3 + intensity * 0.45;
+    ctx.globalAlpha = 0.04 + intensity * 0.08;
     ctx.drawImage(distortionBuffer, channelOffset, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = 0.24 + intensity * 0.42;
+    ctx.globalAlpha = 0.03 + intensity * 0.07;
     ctx.drawImage(distortionBuffer, -channelOffset, 0, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = `rgba(${150 + Math.floor(105 * intensity)}, 25, ${170 + Math.floor(85 * intensity)}, ${0.21 + intensity * 0.45})`;
+    ctx.fillStyle = `rgba(${105 + Math.floor(70 * intensity)}, 45, ${120 + Math.floor(70 * intensity)}, ${0.03 + intensity * 0.08})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
 
     ctx.save();
-    ctx.globalAlpha = 0.22 + intensity * 0.48;
-    for (let y = 0; y < canvas.height; y += 2) {
-      ctx.fillStyle = y % 6 === 0 ? 'rgba(255,20,110,0.65)' : 'rgba(0,220,255,0.58)';
+    ctx.globalAlpha = 0.015 + intensity * 0.05;
+    for (let y = 0; y < canvas.height; y += 5) {
+      ctx.fillStyle = y % 10 === 0 ? 'rgba(140,120,255,0.34)' : 'rgba(80,200,255,0.28)';
       ctx.fillRect(0, y, canvas.width, 1);
     }
     ctx.restore();
@@ -132,24 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyPageDistortion() {
     const intensity = getDistortionIntensity();
     const phase = visualFrameCount * 0.21;
-    const offsetX = Math.sin(phase * 1.37) * (8 + intensity * 20);
-    const offsetY = Math.cos(phase * 1.11) * (6 + intensity * 16);
-    const skewX = Math.sin(phase * 0.92) * (1.2 + intensity * 3.2);
-    const skewY = Math.cos(phase * 1.24) * (0.9 + intensity * 2.5);
-    const rotate = Math.sin(phase * 1.73) * (2.5 + intensity * 8);
-    const scale = 0.88 + Math.abs(Math.sin(phase * 1.95)) * (0.12 + intensity * 0.22);
-    const hueShift = Math.sin(phase * 0.64) * (40 + intensity * 140);
-    const strobe = visualFrameCount % 6 < 2 ? 1 : 0;
-    const flash = visualFrameCount % 12 === 0 ? 1 : 0;
-    const brightness = 0.55 + Math.abs(Math.sin(phase * 2.7)) * 1.05 + flash * 0.65;
-    const blurPx = 1.6 + Math.abs(Math.cos(phase * 2.15)) * 3.6;
-    const invertAmount = (0.22 + intensity * 0.58) * strobe;
-    const sepiaAmount = (0.18 + intensity * 0.62) * (1 - strobe * 0.45);
+    const offsetX = Math.sin(phase * 1.37) * (0.8 + intensity * 2.4);
+    const offsetY = Math.cos(phase * 1.11) * (0.6 + intensity * 1.8);
+    const skewX = Math.sin(phase * 0.92) * (0.06 + intensity * 0.22);
+    const skewY = Math.cos(phase * 1.24) * (0.05 + intensity * 0.18);
+    const rotate = Math.sin(phase * 1.73) * (0.12 + intensity * 0.55);
+    const scale = 1 + Math.sin(phase * 1.95) * (0.003 + intensity * 0.012);
+    const hueShift = Math.sin(phase * 0.64) * (4 + intensity * 10);
+    const brightness = 1 + Math.sin(phase * 2.1) * (0.01 + intensity * 0.03);
+    const blurPx = 0.06 + Math.abs(Math.cos(phase * 2.15)) * (0.12 + intensity * 0.32);
 
     document.documentElement.style.willChange = 'transform, filter';
     document.documentElement.style.transformOrigin = 'center center';
     document.documentElement.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) skew(${skewX}deg, ${skewY}deg) rotate(${rotate}deg) scale(${scale})`;
-    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${2.6 + intensity * 3.5}) contrast(${1.8 + intensity * 1.4}) blur(${blurPx}px) invert(${invertAmount}) sepia(${sepiaAmount}) brightness(${brightness})`;
+    document.documentElement.style.filter = `hue-rotate(${hueShift}deg) saturate(${1.02 + intensity * 0.28}) contrast(${1.02 + intensity * 0.18}) blur(${blurPx}px) brightness(${brightness})`;
   }
 
   function createPipe() {
