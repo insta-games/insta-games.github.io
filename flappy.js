@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
   const statusEl = document.getElementById('flappy-status');
 
+  // Disable image smoothing for crisp pixel-perfect rendering
+  ctx.imageSmoothingEnabled = false;
+
   // Game state
   let bird = {
     x: 80,
@@ -185,39 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
     visualFrameCount++;
     const dynamicColors = getDynamicThemeColors();
 
-    // Pipes
-    ctx.fillStyle = dynamicColors.pipeFill;
-    pipes.forEach(pipe => {
-      // Top pipe
-      ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
-      // Bottom pipe
-      ctx.fillRect(pipe.x, pipe.bottomY, pipeWidth, canvas.height - pipe.bottomY - 100);
-      
-      // Pipe borders with theme color
-      ctx.strokeStyle = dynamicColors.pipeBorder;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.topHeight);
-      ctx.strokeRect(pipe.x, pipe.bottomY, pipeWidth, canvas.height - pipe.bottomY - 100);
-    });
-
-    // Bird with gradient effect
-    const gradient = ctx.createLinearGradient(bird.x, bird.y, bird.x + bird.width, bird.y + bird.height);
-    gradient.addColorStop(0, dynamicColors.birdPrimary);
-    gradient.addColorStop(1, dynamicColors.birdSecondary);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
-    
-    // Bird eye
-    ctx.fillStyle = '#fff';
-    ctx.beginPath();
-    ctx.arc(bird.x + 26, bird.y + 10, 3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.arc(bird.x + 27, bird.y + 10, 1.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Ground line indicator
+    // Ground line indicator (drawn first, with state management)
+    ctx.save();
     ctx.strokeStyle = dynamicColors.groundLine;
     ctx.lineWidth = 2;
     ctx.setLineDash([5, 5]);
@@ -225,10 +197,50 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.moveTo(0, canvas.height - 100);
     ctx.lineTo(canvas.width, canvas.height - 100);
     ctx.stroke();
-    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Pipes (using rounded coordinates for crisp rendering)
+    ctx.fillStyle = dynamicColors.pipeFill;
+    pipes.forEach(pipe => {
+      const pipeX = Math.round(pipe.x);
+      const topHeight = Math.round(pipe.topHeight);
+      const bottomY = Math.round(pipe.bottomY);
+      const bottomPipeHeight = canvas.height - 100 - bottomY;
+      
+      // Top pipe
+      ctx.fillRect(pipeX, 0, pipeWidth, topHeight);
+      // Bottom pipe - fixed to go to ground line
+      ctx.fillRect(pipeX, bottomY, pipeWidth, bottomPipeHeight);
+      
+      // Pipe borders with theme color
+      ctx.strokeStyle = dynamicColors.pipeBorder;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(pipeX, 0, pipeWidth, topHeight);
+      ctx.strokeRect(pipeX, bottomY, pipeWidth, bottomPipeHeight);
+    });
+
+    // Bird with gradient effect (using rounded coordinates)
+    const birdX = Math.round(bird.x);
+    const birdY = Math.round(bird.y);
+    const gradient = ctx.createLinearGradient(birdX, birdY, birdX + bird.width, birdY + bird.height);
+    gradient.addColorStop(0, dynamicColors.birdPrimary);
+    gradient.addColorStop(1, dynamicColors.birdSecondary);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(birdX, birdY, bird.width, bird.height);
+    
+    // Bird eye
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(birdX + 26, birdY + 10, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(birdX + 27, birdY + 10, 1.5, 0, Math.PI * 2);
+    ctx.fill();
 
     // Instructions or game over
     if (!gameStarted && !gameOver) {
+      ctx.save();
       ctx.fillStyle = 'rgba(0,0,0,0.7)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#fff';
@@ -239,9 +251,11 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.font = '18px Arial, sans-serif';
       ctx.fillText('Press SPACE or tap to start', canvas.width / 2, canvas.height / 2 + 10);
       ctx.fillText('Tap/SPACE to flap', canvas.width / 2, canvas.height / 2 + 40);
+      ctx.restore();
     }
 
     if (gameOver) {
+      ctx.save();
       ctx.fillStyle = 'rgba(0,0,0,0.7)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#ef4444';
@@ -254,21 +268,26 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / 2);
       ctx.font = '16px Arial, sans-serif';
       ctx.fillText('Press SPACE or tap to restart', canvas.width / 2, canvas.height / 2 + 40);
+      ctx.restore();
     }
 
     // Score display during game
     if (gameStarted && !gameOver) {
+      ctx.save();
       ctx.fillStyle = '#fff';
       ctx.strokeStyle = '#000';
       ctx.lineWidth = 3;
       ctx.font = 'bold 36px Arial, sans-serif';
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
       ctx.strokeText(score.toString(), canvas.width / 2, 50);
       ctx.fillText(score.toString(), canvas.width / 2, 50);
+      ctx.restore();
     }
 
-    applyPageDistortion();
-    applyColorDistortion();
+    // Remove distortion effects for clean rendering
+    // applyPageDistortion();
+    // applyColorDistortion();
   }
 
   function update() {
@@ -373,6 +392,12 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     flap();
   }, { passive: false });
+
+  // Reset button
+  const resetBtn = document.getElementById('reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', reset);
+  }
 
   // Game loop
   function gameLoop() {
