@@ -74,22 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getDynamicThemeColors() {
-    const level = getLevel();
-    const intensity = Math.min((level - 1) / 28, 1);
-    const phase = visualFrameCount * (0.14 + intensity * 0.12);
-
-    const birdHue = (190 + Math.sin(phase) * (55 + intensity * 85) + 360) % 360;
-    const birdHueSecondary = (birdHue + 70 + intensity * 55) % 360;
-    const pipeHue = (220 + Math.cos(phase * 0.8) * (45 + intensity * 75) + 360) % 360;
-    const borderHue = (pipeHue + 28 + intensity * 18) % 360;
-    const groundHue = (birdHue + 22) % 360;
-
+    // Return static blue theme colors instead of dynamic rainbow colors
     return {
-      birdPrimary: `hsl(${birdHue}, ${78 + intensity * 20}%, ${54 + intensity * 8}%)`,
-      birdSecondary: `hsl(${birdHueSecondary}, ${76 + intensity * 20}%, ${50 + intensity * 8}%)`,
-      pipeFill: `hsl(${pipeHue}, ${55 + intensity * 30}%, ${24 + intensity * 14}%)`,
-      pipeBorder: `hsl(${borderHue}, ${62 + intensity * 28}%, ${35 + intensity * 14}%)`,
-      groundLine: `hsla(${groundHue}, ${85 + intensity * 12}%, ${58 + intensity * 10}%, ${0.35 + intensity * 0.35})`
+      birdPrimary: birdColor,        // #06b6d4 - cyan/blue
+      birdSecondary: birdAccentColor, // #3b82f6 - blue
+      pipeFill: pipeColor,           // #1e293b - dark slate
+      pipeBorder: pipeBorderColor,   // #334155 - lighter slate
+      groundLine: 'rgba(6, 182, 212, 0.3)' // cyan with transparency
     };
   }
 
