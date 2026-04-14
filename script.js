@@ -3,11 +3,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Section switching for Single Player / Local Multiplayer
+  // Section switching for Single Player / Local Multiplayer / Online Multiplayer
   const navSingleplayer = document.getElementById('nav-singleplayer');
   const navLocalMultiplayer = document.getElementById('nav-local-multiplayer');
+  const navOnlineMultiplayer = document.getElementById('nav-online-multiplayer');
   const sectionSingleplayer = document.getElementById('section-singleplayer');
   const sectionLocalMultiplayer = document.getElementById('section-local-multiplayer');
+  const sectionOnlineMultiplayer = document.getElementById('section-online-multiplayer');
   
   // Check if we're on the index page with sections or on a game page
   const isIndexPage = sectionSingleplayer && sectionLocalMultiplayer;
@@ -24,6 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         window.location.href = 'index.html#local-multiplayer';
       });
+
+      if (navOnlineMultiplayer) {
+        navOnlineMultiplayer.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.location.href = 'index.html#online-multiplayer';
+        });
+      }
     }
     // If on index page with sections, use section switching
     else if (isIndexPage) {
@@ -32,12 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function hideAllSections() {
       sectionSingleplayer.style.display = 'none';
       sectionLocalMultiplayer.style.display = 'none';
+      if (sectionOnlineMultiplayer) sectionOnlineMultiplayer.style.display = 'none';
     }
     
     // Function to remove all active classes
     function removeAllActive() {
       navSingleplayer.classList.remove('active');
       navLocalMultiplayer.classList.remove('active');
+      if (navOnlineMultiplayer) navOnlineMultiplayer.classList.remove('active');
     }
     
     // Check URL hash on page load
@@ -48,6 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (window.location.hash === '#local-multiplayer') {
         sectionLocalMultiplayer.style.display = 'block';
         navLocalMultiplayer.classList.add('active');
+      } else if (window.location.hash === '#online-multiplayer' && sectionOnlineMultiplayer && navOnlineMultiplayer) {
+        sectionOnlineMultiplayer.style.display = 'block';
+        navOnlineMultiplayer.classList.add('active');
       } else {
         sectionSingleplayer.style.display = 'block';
         navSingleplayer.classList.add('active');
@@ -81,6 +95,19 @@ document.addEventListener('DOMContentLoaded', function () {
       const siteNav = document.getElementById('site-nav');
       if (window.innerWidth <= 640 && siteNav) siteNav.style.display = 'none';
     });
+
+    if (navOnlineMultiplayer && sectionOnlineMultiplayer) {
+      navOnlineMultiplayer.addEventListener('click', function (e) {
+        window.location.hash = 'online-multiplayer';
+        hideAllSections();
+        removeAllActive();
+        sectionOnlineMultiplayer.style.display = 'block';
+        navOnlineMultiplayer.classList.add('active');
+        // close mobile nav
+        const siteNav = document.getElementById('site-nav');
+        if (window.innerWidth <= 640 && siteNav) siteNav.style.display = 'none';
+      });
+    }
     } // end isIndexPage
   } // end navigation check
 
