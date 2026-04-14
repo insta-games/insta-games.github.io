@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q293MVMDY4');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
+         crossorigin="anonymous"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="google-adsense-account" content="ca-pub-9609292028680816">
+    <title>2048 Game - Play Free Online | Insta-Games</title>
+    <meta name="description" content="Play 2048 online for free. Slide matching tiles together, build bigger numbers, and reach the 2048 tile in your browser." />
+    <meta name="keywords" content="2048 game, 2048 online, puzzle game, browser game, free 2048" />
+    <link rel="canonical" href="https://insta-games.github.io/2048.html" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "2048",
+      "description": "Classic 2048 puzzle game where matching tiles merge into larger numbers.",
+      "url": "https://insta-games.github.io/2048.html",
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "Game",
+      "genre": "Puzzle",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "operatingSystem": "Any",
+      "keywords": "2048, puzzle game, number merging, browser game, free game",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Insta-Games"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://insta-games.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "2048"
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Insta-Games</span>
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
+          <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>2048</h1>
+        <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Use arrow keys, WASD, or swipe to slide tiles. Merge matching numbers to build bigger values.</p>
+
+        <div class="game-2048-hud" style="margin-bottom:1rem;">
+          <div class="game-2048-stat">Score: <strong id="score-2048">0</strong></div>
+          <div class="game-2048-stat">Best: <strong id="best-2048">0</strong></div>
+        </div>
+
+        <div id="game-status-2048" class="game-2048-status" aria-live="polite"></div>
+
+        <div id="board-2048" class="game-2048-board" tabindex="0" aria-label="2048 game board"></div>
+
+        <div class="controls" style="justify-content:center;">
+          <button id="newGameBtn" class="btn">New Game</button>
+        </div>
+
+        <p class="game-2048-instructions">Tiles slide as far as they can in the chosen direction. Matching tiles merge once per move. Reach 2048 to win, then keep going if you want a higher score.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="about.html" style="color: var(--accent); text-decoration: none;">About</a> | <a href="feedback.html" style="color: var(--accent); text-decoration: none;">Feedback</a></small></div></footer>
+    <script src="script.js" defer></script>
+    <script src="2048.js" defer></script>
+  </body>
+</html>

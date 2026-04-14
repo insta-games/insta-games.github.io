@@ -176,7 +176,9 @@ document.addEventListener('DOMContentLoaded', function () {
     setText('whack-time', '30');
 
     // 2048
-    setText('status-2048', 'Score: 0');
+    setText('score-2048', '0');
+    setText('best-2048', '0');
+    setText('game-status-2048', 'Use arrow keys or swipe to combine tiles.');
 
   // Memory Match - don't reset level here; memory level is persisted per-game
   setText('mem-moves', '0');
