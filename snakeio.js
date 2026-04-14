@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const MAX_PER_ROOM = 4;
   const ROOM_SCAN_LIMIT = 30;
   const ROOM_PREFIX = 'snakeio-room-';
+  const JOIN_TIMEOUT_MS = 2200;
+  const PEER_OPEN_TIMEOUT_MS = 9000;
   const CELL = 20;
   const COLS = Math.floor(canvas.width / CELL);
   const ROWS = Math.floor(canvas.height / CELL);
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let lastSentDir = { x: 1, y: 0 };
   let latestState = null;
   let loop = null;
+  let connectAttempt = 0;
 
   const hostState = {
     players: {},
@@ -363,7 +366,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function attachHostConnection(conn) {
-    conn.on('open', function () {
+    let joined = false;
+
+    function acceptJoin() {
+      if (joined) return;
+      joined = true;
       const slot = firstOpenSlot();
       if (slot < 0) {
         conn.send({ type: 'join-deny', reason: 'full' });
@@ -378,6 +385,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
       conn.send({ type: 'join-ok', roomId: roomId, playerId: conn.peer, max: MAX_PER_ROOM });
       broadcastState();
+    }
+
+    if (conn.open) {
+      acceptJoin();
+    }
+
+    conn.on('open', function () {
+      acceptJoin();
     });
 
     conn.on('data', function (data) {
@@ -473,48 +488,66 @@ document.addEventListener('DOMContentLoaded', function () {
   async function tryJoinRoom(basePeer, room, name) {
     return new Promise(function (resolve) {
       let settled = false;
+      let joined = false;
       const conn = basePeer.connect(room, { reliable: true, metadata: { name: name } });
 
-      const timer = setTimeout(function () {
+      function finish(result) {
         if (settled) return;
         settled = true;
+        clearTimeout(timer);
+        resolve(result);
+      }
+
+      const timer = setTimeout(function () {
+        if (joined) return;
         try { conn.close(); } catch (e) {}
-        resolve({ ok: false, reason: 'timeout' });
-      }, 1200);
+        finish({ ok: false, reason: 'timeout' });
+      }, JOIN_TIMEOUT_MS);
 
       conn.on('open', function () {
-        hostConn = conn;
-        attachClientConnection(conn);
-        if (!settled) {
-          settled = true;
-          clearTimeout(timer);
-          resolve({ ok: true });
+        setStatus('Found room ' + room + '. Joining...');
+      });
+
+      conn.on('data', function (data) {
+        if (!data || typeof data !== 'object') return;
+        if (data.type === 'join-ok') {
+          joined = true;
+          hostConn = conn;
+          roomId = data.roomId || room;
+          localId = data.playerId || localId;
+          setRoomLabel();
+          setStatus('Connected. Room auto-assigned successfully.');
+          attachClientConnection(conn);
+          finish({ ok: true });
+          return;
+        }
+
+        if (data.type === 'join-deny') {
+          try { conn.close(); } catch (e) {}
+          finish({ ok: false, reason: data.reason || 'denied' });
         }
       });
 
       conn.on('error', function () {
-        if (!settled) {
-          settled = true;
-          clearTimeout(timer);
-          resolve({ ok: false, reason: 'error' });
+        finish({ ok: false, reason: 'error' });
+      });
+
+      conn.on('close', function () {
+        if (!joined) {
+          finish({ ok: false, reason: 'closed' });
         }
       });
     });
   }
 
   async function findOrCreateRoom(basePeer, myName) {
-    let firstAvailableRoom = ROOM_PREFIX + '1';
-
     for (let i = 1; i <= ROOM_SCAN_LIMIT; i += 1) {
       const candidate = ROOM_PREFIX + i;
+      setStatus('Searching room ' + i + '/' + ROOM_SCAN_LIMIT + '...');
       const result = await tryJoinRoom(basePeer, candidate, myName);
       if (result.ok) {
-        roomId = candidate;
-        setRoomLabel();
         return true;
       }
-
-      if (i === 1) firstAvailableRoom = candidate;
       await delay(120);
     }
 
@@ -524,6 +557,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (let i = 1; i <= ROOM_SCAN_LIMIT; i += 1) {
       const candidate = ROOM_PREFIX + i;
+      setStatus('No open room found. Creating room ' + i + '/' + ROOM_SCAN_LIMIT + '...');
       try {
         await runAsHost(candidate, myName);
         return true;
@@ -536,6 +570,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   async function startNetworking() {
+    const attemptId = ++connectAttempt;
     cleanupNet();
     setStatus('Connecting to matchmaking...');
 
@@ -549,7 +584,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     peer = new Peer(id);
 
+    const openTimer = setTimeout(function () {
+      if (attemptId !== connectAttempt) return;
+      setStatus('Connection is taking too long. Retrying...');
+      startNetworking();
+    }, PEER_OPEN_TIMEOUT_MS);
+
     peer.on('open', async function (peerId) {
+      if (attemptId !== connectAttempt) return;
+      clearTimeout(openTimer);
       localId = peerId;
       const ok = await findOrCreateRoom(peer, myName);
       if (!ok) {
@@ -558,11 +601,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     peer.on('error', function () {
+      if (attemptId !== connectAttempt) return;
+      clearTimeout(openTimer);
       setStatus('Peer error. Reconnecting...');
       setTimeout(startNetworking, 800);
     });
 
     peer.on('disconnected', function () {
+      if (attemptId !== connectAttempt) return;
+      clearTimeout(openTimer);
       setStatus('Peer disconnected. Reconnecting...');
       setTimeout(startNetworking, 800);
     });
