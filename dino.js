@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         collidesWith(dino) {
+            const obstacleTop = this.type === 'bird' ? this.y : this.y - this.height;
             const dinoBox = {
                 x: dino.x + 5,
                 y: dino.isDucking ? dino.y - 25 : dino.y - dino.height,
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const obstacleBox = {
                 x: this.x + 5,
-                y: this.y - this.height,
+                y: obstacleTop,
                 width: this.width - 10,
                 height: this.height
             };
@@ -154,60 +155,62 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const y = dino.y - (dino.isDucking ? 25 : dino.height);
         const height = dino.isDucking ? 25 : dino.height;
+        const spriteRightX = dino.x + dino.width;
+        const mirrorX = (offsetX, boxWidth) => spriteRightX - offsetX - boxWidth;
         
         if (dino.isDucking) {
             // Ducking dino
             // Body
-            ctx.fillRect(dino.x + 10, y + 10, 30, 15);
+            ctx.fillRect(mirrorX(10, 30), y + 10, 30, 15);
             // Head
-            ctx.fillRect(dino.x + 5, y, 20, 12);
+            ctx.fillRect(mirrorX(5, 20), y, 20, 12);
             // Neck
-            ctx.fillRect(dino.x + 10, y + 8, 10, 7);
+            ctx.fillRect(mirrorX(10, 10), y + 8, 10, 7);
             // Legs
             const legFrame = Math.floor(frameCount / 6) % 2;
             if (legFrame === 0) {
-                ctx.fillRect(dino.x + 15, y + 20, 6, 5);
-                ctx.fillRect(dino.x + 30, y + 20, 6, 5);
+                ctx.fillRect(mirrorX(15, 6), y + 20, 6, 5);
+                ctx.fillRect(mirrorX(30, 6), y + 20, 6, 5);
             } else {
-                ctx.fillRect(dino.x + 18, y + 20, 6, 5);
-                ctx.fillRect(dino.x + 27, y + 20, 6, 5);
+                ctx.fillRect(mirrorX(18, 6), y + 20, 6, 5);
+                ctx.fillRect(mirrorX(27, 6), y + 20, 6, 5);
             }
         } else {
             // Standing/Running dino
             // Body
-            ctx.fillRect(dino.x + 10, y + 20, 24, 18);
+            ctx.fillRect(mirrorX(10, 24), y + 20, 24, 18);
             
             // Head
-            ctx.fillRect(dino.x + 5, y, 20, 20);
+            ctx.fillRect(mirrorX(5, 20), y, 20, 20);
             
             // Neck
-            ctx.fillRect(dino.x + 10, y + 15, 15, 10);
+            ctx.fillRect(mirrorX(10, 15), y + 15, 15, 10);
             
             // Eye
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(dino.x + 15, y + 5, 3, 3);
+            ctx.fillRect(mirrorX(15, 3), y + 5, 3, 3);
             ctx.fillStyle = '#06b6d4';
             
             // Arms
-            ctx.fillRect(dino.x + 28, y + 25, 6, 8);
+            ctx.fillRect(mirrorX(28, 6), y + 25, 6, 8);
             
             // Legs (animated when running)
             if (!dino.isJumping) {
                 const legFrame = Math.floor(frameCount / 6) % 2;
                 if (legFrame === 0) {
-                    ctx.fillRect(dino.x + 12, y + 38, 6, 9);
-                    ctx.fillRect(dino.x + 22, y + 38, 6, 9);
+                    ctx.fillRect(mirrorX(12, 6), y + 38, 6, 9);
+                    ctx.fillRect(mirrorX(22, 6), y + 38, 6, 9);
                 } else {
-                    ctx.fillRect(dino.x + 10, y + 38, 6, 9);
-                    ctx.fillRect(dino.x + 24, y + 38, 6, 9);
+                    ctx.fillRect(mirrorX(10, 6), y + 38, 6, 9);
+                    ctx.fillRect(mirrorX(24, 6), y + 38, 6, 9);
                 }
             } else {
-                ctx.fillRect(dino.x + 12, y + 38, 6, 9);
-                ctx.fillRect(dino.x + 22, y + 38, 6, 9);
+                ctx.fillRect(mirrorX(12, 6), y + 38, 6, 9);
+                ctx.fillRect(mirrorX(22, 6), y + 38, 6, 9);
             }
             
             // Tail
-            ctx.fillRect(dino.x + 34, y + 22, 10, 6);
+            ctx.fillRect(mirrorX(34, 10), y + 22, 10, 6);
         }
     }
     
