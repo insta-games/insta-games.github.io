@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cols = 21;
   const rows = 21;
   const tickMs = 180;
+  const ticksPerSecond = Math.max(1, Math.round(1000 / tickMs));
   const multiRoundTicks = Math.round(120000 / tickMs);
   const highScoreKey = 'pacman-highscore';
 
@@ -26,11 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const ghostSpawnMulti = { name: 'blinky', color: '#ef4444', x: 10, y: 7, scatterTarget: { x: cols - 1, y: 0 } };
 
   const ghostPhaseSchedule = [
-    { mode: 'scatter', ticks: 50 },
-    { mode: 'chase', ticks: 120 },
-    { mode: 'scatter', ticks: 40 },
-    { mode: 'chase', ticks: 120 },
-    { mode: 'scatter', ticks: 30 },
+    { mode: 'scatter', ticks: 7 * ticksPerSecond },
+    { mode: 'chase', ticks: 20 * ticksPerSecond },
+    { mode: 'scatter', ticks: 7 * ticksPerSecond },
+    { mode: 'chase', ticks: 20 * ticksPerSecond },
+    { mode: 'scatter', ticks: 5 * ticksPerSecond },
+    { mode: 'chase', ticks: 20 * ticksPerSecond },
+    { mode: 'scatter', ticks: 5 * ticksPerSecond },
     { mode: 'chase', ticks: Infinity }
   ];
 
@@ -40,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'left', x: -1, y: 0 },
     { name: 'right', x: 1, y: 0 }
   ];
+  const tieBreakOrder = ['up', 'left', 'down', 'right'];
 
   canvas.width = cols * tileSize;
   canvas.height = rows * tileSize;
@@ -65,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let ghostPhaseIndex = 0;
   let ghostPhaseTicks = ghostPhaseSchedule[0].ticks;
   let extraLifeAwarded = false;
+  let pelletsTotal = 0;
+  let ghostComboCount = 0;
 
   function buildLayout() {
     const grid = Array.from({ length: rows }, (_, y) => Array.from({ length: cols }, (_, x) => {
@@ -185,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     pelletsLeft = count;
+    pelletsTotal = count;
   }
 
   function createPacman() {
@@ -207,10 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
       name: spawn.name,
       color: spawn.color,
       scatterTarget: spawn.scatterTarget,
+      state: 'normal',
       dir: { x: 0, y: -1 },
       nextDir: { x: 0, y: -1 },
       released: spawn.name === 'blinky',
-      releaseDelay: spawn.name === 'blinky' ? 0 : 10 + Math.floor(Math.random() * 25)
+      releasePellets: spawn.name === 'blinky' ? 0 : (spawn.name === 'pinky' ? 0 : (spawn.name === 'inky' ? 30 : 60)),
+      moveCooldown: 0
     }));
   }
 
@@ -228,7 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
       scatterTarget: ghostSpawnMulti.scatterTarget,
       controlled: true,
       released: true,
-      releaseDelay: 0
+      releasePellets: 0,
+      state: 'normal',
+      moveCooldown: 0
     }];
   }
 
@@ -236,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pacman = createPacman();
     ghosts = mode === 'single' ? createSingleGhosts() : createMultiGhost();
     powerTicks = 0;
+    ghostComboCount = 0;
     ghostPhaseIndex = 0;
     ghostPhaseTicks = ghostPhaseSchedule[0].ticks;
   }
@@ -300,8 +312,12 @@ document.addEventListener('DOMContentLoaded', () => {
       maze[y][x] = ' ';
       pelletsLeft -= 1;
       addScore(50);
-      powerTicks = 50;
+      powerTicks = 6 * ticksPerSecond;
+      ghostComboCount = 0;
       ghosts.forEach((ghost) => {
+        if (ghost.state !== 'eyes') {
+          ghost.state = 'frightened';
+        }
         ghost.dir = oppositeDirection(ghost.dir);
         ghost.nextDir = ghost.dir;
       });
@@ -330,10 +346,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function getPacmanAheadTile(distance) {
+  function getPacmanAheadTile(distance, emulateOriginalUpBug = false) {
+    let offsetX = pacman.dir.x * distance;
+    let offsetY = pacman.dir.y * distance;
+    if (emulateOriginalUpBug && pacman.dir.y === -1) {
+      offsetX -= distance;
+    }
     return {
-      x: clamp(pacman.x + pacman.dir.x * distance, 1, cols - 2),
-      y: clamp(pacman.y + pacman.dir.y * distance, 1, rows - 2)
+      x: clamp(pacman.x + offsetX, 1, cols - 2),
+      y: clamp(pacman.y + offsetY, 1, rows - 2)
     };
   }
 
@@ -350,13 +371,19 @@ document.addEventListener('DOMContentLoaded', () => {
       ghostPhaseIndex += 1;
       ghostPhaseTicks = ghostPhaseSchedule[ghostPhaseIndex].ticks;
       ghosts.forEach((ghost) => {
-        ghost.dir = oppositeDirection(ghost.dir);
-        ghost.nextDir = ghost.dir;
+        if (ghost.state !== 'eyes') {
+          ghost.dir = oppositeDirection(ghost.dir);
+          ghost.nextDir = ghost.dir;
+        }
       });
     }
   }
 
   function getGhostTarget(ghost) {
+    if (ghost.state === 'eyes') {
+      return { x: 10, y: ghostHouse.top };
+    }
+
     const phase = getGhostPhase().mode;
 
     if (phase === 'scatter') {
@@ -368,11 +395,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (ghost.name === 'pinky') {
-      return getPacmanAheadTile(4);
+      return getPacmanAheadTile(4, true);
     }
 
     if (ghost.name === 'inky') {
-      const ahead = getPacmanAheadTile(2);
+      const ahead = getPacmanAheadTile(2, true);
       const blinky = ghosts.find((item) => item.name === 'blinky') || ghosts[0];
       return {
         x: clamp(ahead.x + (ahead.x - blinky.x), 0, cols - 1),
@@ -395,22 +422,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const options = directions.filter((dir) => canMoveFrom(ghost.x, ghost.y, dir, 'ghost'));
     if (!options.length) return ghost.dir;
 
-    if (powerTicks > 0) {
-      let safestDir = options[0];
-      let safestScore = -Infinity;
-      options.forEach((dir) => {
-        const nx = ghost.x + dir.x;
-        const ny = ghost.y + dir.y;
-        const scoreAway = Math.abs(nx - pacman.x) + Math.abs(ny - pacman.y);
-        if (scoreAway > safestScore) {
-          safestScore = scoreAway;
-          safestDir = dir;
-        }
-      });
-      return safestDir;
+    const reversed = oppositeDirection(ghost.dir);
+
+    if (ghost.state === 'frightened') {
+      let frightenedOptions = options.filter((dir) => !sameDirection(dir, reversed));
+      if (!frightenedOptions.length) frightenedOptions = options;
+      return frightenedOptions[Math.floor(Math.random() * frightenedOptions.length)];
     }
 
-    const reversed = oppositeDirection(ghost.dir);
     let candidates = options.filter((dir) => !sameDirection(dir, reversed));
     if (!candidates.length) candidates = options;
 
@@ -422,8 +441,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const nx = ghost.x + dir.x;
       const ny = ghost.y + dir.y;
       let scoreToTarget = manhattan({ x: nx, y: ny }, target);
-      if (sameDirection(dir, ghost.dir)) scoreToTarget -= 0.2;
-      scoreToTarget += Math.random() * 0.35;
+      if (sameDirection(dir, ghost.dir)) scoreToTarget -= 0.1;
+      scoreToTarget += tieBreakOrder.indexOf(dir.name) * 0.01;
       if (scoreToTarget < bestScore) {
         bestScore = scoreToTarget;
         bestDir = dir;
@@ -436,17 +455,65 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGhost(ghost) {
     ghost.x = ghost.homeX;
     ghost.y = ghost.homeY;
+    ghost.state = 'normal';
     ghost.dir = { x: 0, y: -1 };
     ghost.nextDir = { x: 0, y: -1 };
     ghost.released = true;
+    ghost.moveCooldown = 0;
+  }
+
+  function getEatenGhostScore() {
+    const values = [200, 400, 800, 1600];
+    const points = values[Math.min(values.length - 1, ghostComboCount)];
+    ghostComboCount += 1;
+    return points;
+  }
+
+  function canGhostMoveThisTick(ghost) {
+    if (mode !== 'single') return true;
+
+    let interval = 2;
+    if (ghost.state === 'frightened') interval = 3;
+    if (ghost.state === 'eyes') interval = 1;
+    if (ghost.y === tunnelRow && ghost.state !== 'eyes') interval = Math.max(interval, 3);
+
+    if (ghost.moveCooldown > 0) {
+      ghost.moveCooldown -= 1;
+      return false;
+    }
+
+    ghost.moveCooldown = interval - 1;
+    return true;
+  }
+
+  function updateGhostStates() {
+    if (mode !== 'single') return;
+    if (powerTicks <= 0) {
+      ghosts.forEach((ghost) => {
+        if (ghost.state === 'frightened') ghost.state = 'normal';
+      });
+      ghostComboCount = 0;
+    }
+  }
+
+  function updateGhostReleaseByPellets() {
+    if (mode !== 'single') return;
+    const eaten = pelletsTotal - pelletsLeft;
+    ghosts.forEach((ghost) => {
+      if (!ghost.released && eaten >= ghost.releasePellets) {
+        ghost.released = true;
+      }
+    });
   }
 
   function handleCollision(ghost) {
+    if (ghost.state === 'eyes') return false;
     if (ghost.x !== pacman.x || ghost.y !== pacman.y) return false;
 
     if (powerTicks > 0) {
-      addScore(200);
-      resetGhost(ghost);
+      addScore(getEatenGhostScore());
+      ghost.state = 'eyes';
+      ghost.moveCooldown = 0;
       return false;
     }
 
@@ -499,25 +566,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (powerTicks > 0) powerTicks -= 1;
+    updateGhostStates();
+    updateGhostReleaseByPellets();
     if (mode === 'single') advanceGhostPhase();
 
     moveEntity(pacman);
     eatPelletAt(pacman.x, pacman.y);
 
     ghosts.forEach((ghost) => {
-      if (mode === 'single' && ghost.released) {
+      if (mode === 'single' && !ghost.released) {
+        return;
+      }
+      if (!canGhostMoveThisTick(ghost)) {
+        return;
+      }
+      if (mode === 'single') {
         ghost.nextDir = chooseGhostDirection(ghost);
-      } else if (mode === 'single' && !ghost.released) {
-        if (ghost.releaseDelay > 0) {
-          ghost.releaseDelay -= 1;
-        } else {
-          ghost.released = true;
-        }
-        if (ghost.released) {
-          ghost.nextDir = chooseGhostDirection(ghost);
-        }
       }
       moveEntity(ghost);
+      if (ghost.state === 'eyes' && ghost.x === ghost.homeX && ghost.y === ghost.homeY) {
+        resetGhost(ghost);
+      }
     });
 
     for (const ghost of ghosts) {
@@ -601,18 +670,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function drawGhost(ghost) {
     const px = ghost.x * tileSize + tileSize / 2;
     const py = ghost.y * tileSize + tileSize / 2;
-    const bodyColor = powerTicks > 0 ? '#2563eb' : ghost.color;
+    const showBody = ghost.state !== 'eyes';
+    const bodyColor = ghost.state === 'frightened' ? '#2563eb' : ghost.color;
 
-    ctx.fillStyle = bodyColor;
-    ctx.beginPath();
-    ctx.arc(px, py - 2, tileSize * 0.38, Math.PI, 0, false);
-    ctx.lineTo(px + tileSize * 0.38, py + tileSize * 0.3);
-    ctx.lineTo(px + tileSize * 0.22, py + tileSize * 0.18);
-    ctx.lineTo(px, py + tileSize * 0.3);
-    ctx.lineTo(px - tileSize * 0.22, py + tileSize * 0.18);
-    ctx.lineTo(px - tileSize * 0.38, py + tileSize * 0.3);
-    ctx.closePath();
-    ctx.fill();
+    if (showBody) {
+      ctx.fillStyle = bodyColor;
+      ctx.beginPath();
+      ctx.arc(px, py - 2, tileSize * 0.38, Math.PI, 0, false);
+      ctx.lineTo(px + tileSize * 0.38, py + tileSize * 0.3);
+      ctx.lineTo(px + tileSize * 0.22, py + tileSize * 0.18);
+      ctx.lineTo(px, py + tileSize * 0.3);
+      ctx.lineTo(px - tileSize * 0.22, py + tileSize * 0.18);
+      ctx.lineTo(px - tileSize * 0.38, py + tileSize * 0.3);
+      ctx.closePath();
+      ctx.fill();
+    }
 
     const eyeOffsetX = ghost.dir.x === -1 ? -2 : ghost.dir.x === 1 ? 2 : 0;
     const eyeOffsetY = ghost.dir.y === -1 ? -2 : ghost.dir.y === 1 ? 2 : 0;
