@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let latestState = null;
   let loop = null;
   let connectAttempt = 0;
+  let intentionalPeerTeardown = false;
 
   const hostState = {
     players: {},
@@ -326,11 +327,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (peer) {
+      intentionalPeerTeardown = true;
       try { peer.destroy(); } catch (e) {}
       peer = null;
     }
 
     if (hostPeer && hostPeer !== peer) {
+      intentionalPeerTeardown = true;
       try { hostPeer.destroy(); } catch (e) {}
       hostPeer = null;
     }
@@ -552,6 +555,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     try {
+      intentionalPeerTeardown = true;
       basePeer.destroy();
     } catch (e) {}
 
@@ -560,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setStatus('No open room found. Creating room ' + i + '/' + ROOM_SCAN_LIMIT + '...');
       try {
         await runAsHost(candidate, myName);
+        intentionalPeerTeardown = false;
         return true;
       } catch (e) {
         continue;
@@ -572,6 +577,7 @@ document.addEventListener('DOMContentLoaded', function () {
   async function startNetworking() {
     const attemptId = ++connectAttempt;
     cleanupNet();
+    intentionalPeerTeardown = false;
     setStatus('Connecting to matchmaking...');
 
     if (typeof Peer === 'undefined') {
@@ -602,6 +608,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     peer.on('error', function () {
       if (attemptId !== connectAttempt) return;
+      if (intentionalPeerTeardown) return;
       clearTimeout(openTimer);
       setStatus('Peer error. Reconnecting...');
       setTimeout(startNetworking, 800);
@@ -609,6 +616,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     peer.on('disconnected', function () {
       if (attemptId !== connectAttempt) return;
+      if (intentionalPeerTeardown) return;
       clearTimeout(openTimer);
       setStatus('Peer disconnected. Reconnecting...');
       setTimeout(startNetworking, 800);
