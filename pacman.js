@@ -10,18 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const tileSize = 24;
   const cols = 21;
   const rows = 21;
-  const tickMs = 160;
-  const totalTimeTicks = 750;
+  const tickMs = 180;
+  const multiRoundTicks = Math.round(120000 / tickMs);
   const highScoreKey = 'pacman-highscore';
 
-  const pacmanSpawn = { x: 1, y: 10 };
+  const tunnelRow = 10;
+  const ghostHouse = { left: 8, right: 12, top: 8, bottom: 12 };
+  const pacmanSpawn = { x: 1, y: tunnelRow };
   const ghostSpawnsSingle = [
-    { x: 19, y: 10 },
-    { x: 19, y: 1 },
-    { x: 19, y: 19 },
-    { x: 10, y: 1 }
+    { name: 'blinky', color: '#ef4444', x: 10, y: 7, scatterTarget: { x: cols - 1, y: 0 } },
+    { name: 'pinky', color: '#f472b6', x: 9, y: 10, scatterTarget: { x: 0, y: 0 } },
+    { name: 'inky', color: '#22d3ee', x: 10, y: 10, scatterTarget: { x: cols - 1, y: rows - 1 } },
+    { name: 'clyde', color: '#f97316', x: 11, y: 10, scatterTarget: { x: 0, y: rows - 1 } }
   ];
-  const ghostSpawnMulti = { x: 19, y: 10 };
+  const ghostSpawnMulti = { name: 'blinky', color: '#ef4444', x: 10, y: 7, scatterTarget: { x: cols - 1, y: 0 } };
+
+  const ghostPhaseSchedule = [
+    { mode: 'scatter', ticks: 50 },
+    { mode: 'chase', ticks: 120 },
+    { mode: 'scatter', ticks: 40 },
+    { mode: 'chase', ticks: 120 },
+    { mode: 'scatter', ticks: 30 },
+    { mode: 'chase', ticks: Infinity }
+  ];
 
   const directions = [
     { name: 'up', x: 0, y: -1 },
@@ -47,10 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameOver = false;
   let levelCleared = false;
   let powerTicks = 0;
-  let timeRemainingTicks = totalTimeTicks;
+  let timeRemainingTicks = multiRoundTicks;
   let tickCount = 0;
   let intervalId = null;
   let message = 'Press an arrow key or click the board to start.';
+  let ghostPhaseIndex = 0;
+  let ghostPhaseTicks = ghostPhaseSchedule[0].ticks;
+  let extraLifeAwarded = false;
 
   function buildLayout() {
     const grid = Array.from({ length: rows }, (_, y) => Array.from({ length: cols }, (_, x) => {
@@ -80,6 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
     markHorizontal(12, [[2, 8], [12, 18]]);
     markHorizontal(16, [[2, 4], [6, 14], [16, 18]]);
 
+    for (let y = ghostHouse.top; y <= ghostHouse.bottom; y += 1) {
+      for (let x = ghostHouse.left; x <= ghostHouse.right; x += 1) {
+        const isBorder = y === ghostHouse.top || y === ghostHouse.bottom || x === ghostHouse.left || x === ghostHouse.right;
+        grid[y][x] = isBorder ? '#' : ' ';
+      }
+    }
+    grid[ghostHouse.top][10] = 'G';
+
+    grid[tunnelRow][0] = ' ';
+    grid[tunnelRow][cols - 1] = ' ';
+
     [[1, 1], [19, 1], [1, 19], [19, 19]].forEach(([x, y]) => {
       grid[y][x] = 'o';
     });
@@ -103,13 +128,25 @@ document.addEventListener('DOMContentLoaded', () => {
     return { x: -dir.x, y: -dir.y };
   }
 
-  function isWalkable(x, y) {
-    return y >= 0 && y < rows && x >= 0 && x < cols && maze[y][x] !== '#';
+  function isWalkable(x, y, kind = 'pacman') {
+    if (x < 0 || y < 0 || y >= rows) return false;
+    if (x >= cols) return false;
+    const cell = maze[y][x];
+    if (cell === '#') return false;
+    if (kind === 'pacman' && cell === 'G') return false;
+    return true;
   }
 
-  function canMoveFrom(x, y, dir) {
+  function canMoveFrom(x, y, dir, kind = 'pacman') {
     if (!dir || (dir.x === 0 && dir.y === 0)) return false;
-    return isWalkable(x + dir.x, y + dir.y);
+    const nextX = x + dir.x;
+    const nextY = y + dir.y;
+
+    if (y === tunnelRow && dir.x !== 0 && (nextX < 0 || nextX >= cols)) {
+      return true;
+    }
+
+    return isWalkable(nextX, nextY, kind);
   }
 
   function clamp(value, min, max) {
@@ -129,6 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addScore(points) {
     score += points;
+    if (!extraLifeAwarded && score >= 10000) {
+      lives += 1;
+      extraLifeAwarded = true;
+    }
     saveHighScore();
   }
 
@@ -150,24 +191,26 @@ document.addEventListener('DOMContentLoaded', () => {
     return {
       x: pacmanSpawn.x,
       y: pacmanSpawn.y,
+      kind: 'pacman',
       dir: { x: 1, y: 0 },
       nextDir: { x: 1, y: 0 }
     };
   }
 
   function createSingleGhosts() {
-    const palette = ['#ef4444', '#f59e0b', '#06b6d4', '#a855f7'];
-    const strategies = ['direct', 'ahead', 'flank', 'wander'];
-
-    return ghostSpawnsSingle.map((spawn, index) => ({
+    return ghostSpawnsSingle.map((spawn) => ({
       x: spawn.x,
       y: spawn.y,
       homeX: spawn.x,
       homeY: spawn.y,
-      dir: { x: -1, y: 0 },
-      nextDir: { x: -1, y: 0 },
-      color: palette[index % palette.length],
-      strategy: strategies[index % strategies.length]
+      kind: 'ghost',
+      name: spawn.name,
+      color: spawn.color,
+      scatterTarget: spawn.scatterTarget,
+      dir: { x: 0, y: -1 },
+      nextDir: { x: 0, y: -1 },
+      released: spawn.name === 'blinky',
+      releaseDelay: spawn.name === 'blinky' ? 0 : 10 + Math.floor(Math.random() * 25)
     }));
   }
 
@@ -177,10 +220,15 @@ document.addEventListener('DOMContentLoaded', () => {
       y: ghostSpawnMulti.y,
       homeX: ghostSpawnMulti.x,
       homeY: ghostSpawnMulti.y,
+      kind: 'ghost',
+      name: ghostSpawnMulti.name,
       dir: { x: -1, y: 0 },
       nextDir: { x: -1, y: 0 },
-      color: '#ef4444',
-      controlled: true
+      color: ghostSpawnMulti.color,
+      scatterTarget: ghostSpawnMulti.scatterTarget,
+      controlled: true,
+      released: true,
+      releaseDelay: 0
     }];
   }
 
@@ -188,6 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
     pacman = createPacman();
     ghosts = mode === 'single' ? createSingleGhosts() : createMultiGhost();
     powerTicks = 0;
+    ghostPhaseIndex = 0;
+    ghostPhaseTicks = ghostPhaseSchedule[0].ticks;
   }
 
   function startLevel() {
@@ -197,11 +247,12 @@ document.addEventListener('DOMContentLoaded', () => {
     running = false;
     gameOver = false;
     levelCleared = false;
-    timeRemainingTicks = totalTimeTicks;
+    timeRemainingTicks = multiRoundTicks;
     tickCount = 0;
     if (mode === 'single' && level === 1) {
       score = 0;
       lives = 3;
+      extraLifeAwarded = false;
     }
     if (mode === 'multi') {
       score = 0;
@@ -220,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
     level = 1;
     score = 0;
     lives = mode === 'single' ? 3 : 1;
+    extraLifeAwarded = false;
     highScore = Number.parseInt(localStorage.getItem(highScoreKey), 10);
     if (!Number.isFinite(highScore)) highScore = 0;
     startLevel();
@@ -228,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateStatus() {
     if (!statusEl) return;
     if (mode === 'single') {
-      statusEl.textContent = `Score: ${score} | Lives: ${lives} | Level: ${level} | High Score: ${highScore}`;
+      statusEl.textContent = `Score: ${score} | Lives: ${lives} | High Score: ${highScore}`;
       return;
     }
 
@@ -248,21 +300,33 @@ document.addEventListener('DOMContentLoaded', () => {
       maze[y][x] = ' ';
       pelletsLeft -= 1;
       addScore(50);
-      powerTicks = 45;
+      powerTicks = 50;
+      ghosts.forEach((ghost) => {
+        ghost.dir = oppositeDirection(ghost.dir);
+        ghost.nextDir = ghost.dir;
+      });
       return true;
     }
     return false;
   }
 
   function moveEntity(entity) {
-    if (entity.nextDir && canMoveFrom(entity.x, entity.y, entity.nextDir)) {
+    if (entity.nextDir && canMoveFrom(entity.x, entity.y, entity.nextDir, entity.kind)) {
       entity.dir = { x: entity.nextDir.x, y: entity.nextDir.y };
       entity.nextDir = null;
     }
 
-    if (canMoveFrom(entity.x, entity.y, entity.dir)) {
-      entity.x += entity.dir.x;
-      entity.y += entity.dir.y;
+    const nextX = entity.x + entity.dir.x;
+    const nextY = entity.y + entity.dir.y;
+
+    if (entity.dir.x !== 0 && entity.y === tunnelRow && (nextX < 0 || nextX >= cols)) {
+      entity.x = nextX < 0 ? cols - 1 : 0;
+      return;
+    }
+
+    if (canMoveFrom(entity.x, entity.y, entity.dir, entity.kind)) {
+      entity.x = nextX;
+      entity.y = nextY;
     }
   }
 
@@ -273,35 +337,91 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  function getGhostPhase() {
+    return ghostPhaseSchedule[Math.min(ghostPhaseIndex, ghostPhaseSchedule.length - 1)];
+  }
+
+  function advanceGhostPhase() {
+    if (mode !== 'single' || powerTicks > 0) return;
+    if (ghostPhaseSchedule[ghostPhaseIndex].ticks === Infinity) return;
+
+    ghostPhaseTicks -= 1;
+    if (ghostPhaseTicks <= 0 && ghostPhaseIndex < ghostPhaseSchedule.length - 1) {
+      ghostPhaseIndex += 1;
+      ghostPhaseTicks = ghostPhaseSchedule[ghostPhaseIndex].ticks;
+      ghosts.forEach((ghost) => {
+        ghost.dir = oppositeDirection(ghost.dir);
+        ghost.nextDir = ghost.dir;
+      });
+    }
+  }
+
+  function getGhostTarget(ghost) {
+    const phase = getGhostPhase().mode;
+
+    if (phase === 'scatter') {
+      return ghost.scatterTarget;
+    }
+
+    if (ghost.name === 'blinky') {
+      return { x: pacman.x, y: pacman.y };
+    }
+
+    if (ghost.name === 'pinky') {
+      return getPacmanAheadTile(4);
+    }
+
+    if (ghost.name === 'inky') {
+      const ahead = getPacmanAheadTile(2);
+      const blinky = ghosts.find((item) => item.name === 'blinky') || ghosts[0];
+      return {
+        x: clamp(ahead.x + (ahead.x - blinky.x), 0, cols - 1),
+        y: clamp(ahead.y + (ahead.y - blinky.y), 0, rows - 1)
+      };
+    }
+
+    if (ghost.name === 'clyde') {
+      return manhattan({ x: ghost.x, y: ghost.y }, pacman) > 8 ? { x: pacman.x, y: pacman.y } : ghost.scatterTarget;
+    }
+
+    return { x: pacman.x, y: pacman.y };
+  }
+
+  function manhattan(a, b) {
+    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+  }
+
   function chooseGhostDirection(ghost) {
-    const options = directions.filter((dir) => canMoveFrom(ghost.x, ghost.y, dir));
+    const options = directions.filter((dir) => canMoveFrom(ghost.x, ghost.y, dir, 'ghost'));
     if (!options.length) return ghost.dir;
+
+    if (powerTicks > 0) {
+      let safestDir = options[0];
+      let safestScore = -Infinity;
+      options.forEach((dir) => {
+        const nx = ghost.x + dir.x;
+        const ny = ghost.y + dir.y;
+        const scoreAway = Math.abs(nx - pacman.x) + Math.abs(ny - pacman.y);
+        if (scoreAway > safestScore) {
+          safestScore = scoreAway;
+          safestDir = dir;
+        }
+      });
+      return safestDir;
+    }
 
     const reversed = oppositeDirection(ghost.dir);
     let candidates = options.filter((dir) => !sameDirection(dir, reversed));
     if (!candidates.length) candidates = options;
 
-    let target = { x: pacman.x, y: pacman.y };
-    if (ghost.strategy === 'ahead') {
-      target = getPacmanAheadTile(3);
-    } else if (ghost.strategy === 'flank') {
-      target = {
-        x: clamp(pacman.x + pacman.dir.y * 3, 1, cols - 2),
-        y: clamp(pacman.y - pacman.dir.x * 3, 1, rows - 2)
-      };
-    } else if (ghost.strategy === 'wander') {
-      target = {
-        x: Math.random() > 0.5 ? pacman.x : ghost.homeX,
-        y: Math.random() > 0.5 ? pacman.y : ghost.homeY
-      };
-    }
+    const target = getGhostTarget(ghost);
 
     let bestDir = candidates[0];
     let bestScore = Infinity;
     candidates.forEach((dir) => {
       const nx = ghost.x + dir.x;
       const ny = ghost.y + dir.y;
-      let scoreToTarget = Math.abs(nx - target.x) + Math.abs(ny - target.y);
+      let scoreToTarget = manhattan({ x: nx, y: ny }, target);
       if (sameDirection(dir, ghost.dir)) scoreToTarget -= 0.2;
       scoreToTarget += Math.random() * 0.35;
       if (scoreToTarget < bestScore) {
@@ -316,8 +436,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGhost(ghost) {
     ghost.x = ghost.homeX;
     ghost.y = ghost.homeY;
-    ghost.dir = { x: -1, y: 0 };
-    ghost.nextDir = { x: -1, y: 0 };
+    ghost.dir = { x: 0, y: -1 };
+    ghost.nextDir = { x: 0, y: -1 };
+    ghost.released = true;
   }
 
   function handleCollision(ghost) {
@@ -377,17 +498,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    if (powerTicks > 0) powerTicks -= 1;
+    if (mode === 'single') advanceGhostPhase();
+
     moveEntity(pacman);
     eatPelletAt(pacman.x, pacman.y);
 
     ghosts.forEach((ghost) => {
-      if (mode === 'single') {
+      if (mode === 'single' && ghost.released) {
         ghost.nextDir = chooseGhostDirection(ghost);
+      } else if (mode === 'single' && !ghost.released) {
+        if (ghost.releaseDelay > 0) {
+          ghost.releaseDelay -= 1;
+        } else {
+          ghost.released = true;
+        }
+        if (ghost.released) {
+          ghost.nextDir = chooseGhostDirection(ghost);
+        }
       }
       moveEntity(ghost);
     });
-
-    if (powerTicks > 0) powerTicks -= 1;
 
     for (const ghost of ghosts) {
       if (handleCollision(ghost)) {
@@ -426,6 +557,19 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.stroke();
   }
 
+  function drawGate(x, y) {
+    const px = x * tileSize;
+    const py = y * tileSize + tileSize / 2;
+    ctx.strokeStyle = '#e5e7eb';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(px + 4, py - 4);
+    ctx.lineTo(px + tileSize - 4, py - 4);
+    ctx.moveTo(px + 4, py + 4);
+    ctx.lineTo(px + tileSize - 4, py + 4);
+    ctx.stroke();
+  }
+
   function drawPellet(x, y, cell) {
     const px = x * tileSize + tileSize / 2;
     const py = y * tileSize + tileSize / 2;
@@ -457,7 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function drawGhost(ghost) {
     const px = ghost.x * tileSize + tileSize / 2;
     const py = ghost.y * tileSize + tileSize / 2;
-    const bodyColor = powerTicks > 0 && mode === 'single' ? '#60a5fa' : ghost.color;
+    const bodyColor = powerTicks > 0 ? '#2563eb' : ghost.color;
 
     ctx.fillStyle = bodyColor;
     ctx.beginPath();
@@ -535,6 +679,8 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let x = 0; x < cols; x += 1) {
         if (maze[y][x] === '#') {
           drawWall(x, y);
+        } else if (maze[y][x] === 'G') {
+          drawGate(x, y);
         } else if (maze[y][x] === '.' || maze[y][x] === 'o') {
           drawPellet(x, y, maze[y][x]);
         }
@@ -558,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!running) {
       running = true;
       setMessage(mode === 'single'
-        ? 'Eat every pellet and avoid the ghosts.'
+        ? 'Chase the pellets, use power pellets, and trap the ghosts.'
         : 'Pac-Man is running. The ghost is hunting.');
     }
 
