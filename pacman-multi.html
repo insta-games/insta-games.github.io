@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q293MVMDY4');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
+         crossorigin="anonymous"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="google-adsense-account" content="ca-pub-9609292028680816">
+    <title>Pac-Man Duel (2 Player) — Insta-Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Play Pac-Man Duel locally with a friend. Player 1 runs Pac-Man while Player 2 controls the ghost." />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">
+          <img src="assets/favicon.svg" alt="logo" class="logo" />
+          <span class="brand-text">Insta-Games</span>
+        </a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="javascript:void(0)" id="nav-singleplayer">Single Player</a>
+          <a href="javascript:void(0)" id="nav-local-multiplayer" class="active">Local Multiplayer</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>Pac-Man Duel (2 Player)</h1>
+        <p style="color:var(--muted);margin-bottom:1rem;">Player 1: Arrow keys to move Pac-Man. Player 2: WASD to move the ghost.</p>
+
+        <canvas id="pacman" class="snake-canvas" width="504" height="504"></canvas>
+        <div class="controls">
+          <button id="reset" class="btn reset-scores">Reset</button>
+          <div class="status" id="pacman-status" style="margin:0 auto;">Pac-Man: 0 | Pellets Left: 0 | Time: 120s</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games | <a href="privacy.html" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="terms.html" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="about.html" style="color: var(--accent); text-decoration: none;">About</a> | <a href="feedback.html" style="color: var(--accent); text-decoration: none;">Feedback</a></small></div></footer>
+    <script>
+      window.FORCE_MULTIPLAYER = true;
+    </script>
+    <script src="script.js" defer></script>
+    <script src="pacman.js?v=1" defer></script>
+  </body>
+</html>
