@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Section switching for Single Player / Local Multiplayer / Online Multiplayer
+  // Section switching for Single Player / Local Multiplayer
   const navSingleplayer = document.getElementById('nav-singleplayer');
   const navLocalMultiplayer = document.getElementById('nav-local-multiplayer');
   const sectionSingleplayer = document.getElementById('section-singleplayer');
