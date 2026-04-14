@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tileSize = 24;
   const cols = 21;
   const rows = 21;
-  const tickMs = 100;
-  const totalTimeTicks = 1200;
+  const tickMs = 160;
+  const totalTimeTicks = 750;
   const highScoreKey = 'pacman-highscore';
 
   const pacmanSpawn = { x: 1, y: 10 };
