@@ -152,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const [backgroundColor, textColor] = colorForValue(tile.value);
         el.textContent = tile.value;
-        el.style.setProperty('--x', tile.col);
-        el.style.setProperty('--y', tile.row);
         el.style.setProperty('--tile-bg', `linear-gradient(145deg, ${backgroundColor}, ${backgroundColor})`);
         el.style.setProperty('--tile-fg', textColor);
         el.style.fontSize = fontSizeForValue(tile.value);
+        el.style.gridColumnStart = String(tile.col + 1);
+        el.style.gridRowStart = String(tile.row + 1);
         el.classList.toggle('is-new', isNew);
         el.classList.toggle('is-merged', isMerged);
 
