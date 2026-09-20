@@ -54,6 +54,16 @@
   <link rel="stylesheet" href="styles.css" />
 
   <style>
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
     /* Full-Screen FoldText Intro Animation Overlay */
     #intro-overlay {
       position: fixed;
@@ -108,7 +118,7 @@
       will-change: opacity;
     }
 
-    /* Top Commit Bar Button */
+    /* Top Commit Banner Link */
     .commit-banner-link {
       display: flex;
       align-items: center;
@@ -152,6 +162,63 @@
       font-size: 0.8rem;
       white-space: nowrap;
     }
+
+    /* Custom Liquid Glass Status Bubble */
+    #custom-status-bubble {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 9999;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.78rem;
+      font-family: 'Inter', monospace, sans-serif;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(14, 20, 40, 0.45);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 8px 24px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+      user-select: none;
+    }
+
+    #custom-status-bubble.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #custom-status-bubble-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80vw;
+      display: block;
+    }
+
+    /* High-Performance Liquid Blur Overlay (No Black Background) */
+    .global-gradual-blur {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 7.5rem;
+      pointer-events: none;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 40%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 40%, black 100%);
+      opacity: 1;
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity;
+    }
   </style>
 </head>
 
@@ -159,6 +226,11 @@
   <!-- FoldText Intro Overlay -->
   <div id="intro-overlay">
     <div class="fold-text-container" id="fold-text">Loading...</div>
+  </div>
+
+  <!-- Custom Liquid Glass Link Preview Bubble -->
+  <div id="custom-status-bubble">
+    <span id="custom-status-bubble-text"></span>
   </div>
 
   <header class="site-header shadow">
@@ -172,7 +244,7 @@
         <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
         <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
         <a href="javascript:void(0)" id="nav-special">Special Games</a>
-        <a href="commit.html">Latest Commit</a>
+        <a href="commit.html">Commit History</a>
         <a href="about/">About</a>
         <a href="feedback/">Feedback</a>
       </nav>
@@ -190,10 +262,11 @@
       <span id="banner-commit-hash" class="commit-code"></span>
     </div>
     <div class="commit-banner-right">
-      <span>View details</span> →
+      <span>View History</span> →
     </div>
   </a>
 
+  <!-- Full Page Content -->
   <main class="container">
     <!-- Single Player Section -->
     <section class="features" id="section-singleplayer">
@@ -226,7 +299,7 @@
   <footer class="site-footer">
     <div class="container">
       <small>&copy; <span id="year"></span> Insta-Games |
-        <a href="commit.html" style="color: var(--accent); text-decoration: none;">Latest Commit</a> |
+        <a href="commit.html" style="color: var(--accent); text-decoration: none;">Commit History</a> |
         <a href="privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> |
         <a href="terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> |
         <a href="about/" style="color: var(--accent); text-decoration: none;">About</a> |
@@ -234,6 +307,9 @@
       </small>
     </div>
   </footer>
+
+  <!-- Single-Layer Liquid Blur Overlay -->
+  <div class="global-gradual-blur" id="gradual-blur"></div>
 
   <!-- GSAP Core for FoldText 3D Intro Animation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -245,7 +321,116 @@
   <script src="shared.js"></script>
 
   <script>
-    /* FoldText Intro Animation */
+    /* ==========================================================================
+       0. Fast & Smooth Momentum Scroll Engine + 150px Bottom Fade
+       ========================================================================== */
+    (function initFastSmoothScroll() {
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const blurOverlay = document.getElementById('gradual-blur');
+
+      function updateBottomBlur() {
+        if (!blurOverlay) return;
+        const totalHeight = document.documentElement.scrollHeight;
+        const currentBottom = window.scrollY + window.innerHeight;
+        const distanceToBottom = totalHeight - currentBottom;
+
+        if (distanceToBottom <= 150) {
+          const ratio = Math.max(0, distanceToBottom / 150);
+          blurOverlay.style.opacity = ratio.toFixed(3);
+        } else if (blurOverlay.style.opacity !== '1') {
+          blurOverlay.style.opacity = '1';
+        }
+      }
+
+      window.addEventListener('scroll', updateBottomBlur, { passive: true });
+      updateBottomBlur();
+
+      if (isTouch) return;
+
+      let currentScroll = window.scrollY;
+      let targetScroll = window.scrollY;
+      let isRunning = false;
+
+      // 0.16 offers fast response time with a silky glide
+      const ease = 0.16;
+
+      function renderScroll() {
+        const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+
+        const delta = targetScroll - currentScroll;
+        currentScroll += delta * ease;
+
+        window.scrollTo(0, currentScroll);
+
+        if (Math.abs(delta) > 0.4) {
+          requestAnimationFrame(renderScroll);
+        } else {
+          window.scrollTo(0, targetScroll);
+          currentScroll = targetScroll;
+          isRunning = false;
+        }
+      }
+
+      window.addEventListener('wheel', (e) => {
+        e.preventDefault();
+
+        // Direct 1:1 wheel translation with velocity flick multiplier
+        let delta = e.deltaY;
+        if (e.deltaMode === 1) delta *= 35;
+        else if (e.deltaMode === 2) delta *= 500;
+
+        // Speed scaling: faster wheel turns impart greater momentum
+        const speedMultiplier = Math.min(2.5, 1 + Math.abs(delta) * 0.0035);
+        targetScroll += delta * speedMultiplier;
+
+        const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        targetScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+
+        if (!isRunning) {
+          isRunning = true;
+          currentScroll = window.scrollY;
+          requestAnimationFrame(renderScroll);
+        }
+      }, { passive: false });
+
+      window.addEventListener('scroll', () => {
+        if (!isRunning) {
+          currentScroll = window.scrollY;
+          targetScroll = window.scrollY;
+        }
+      }, { passive: true });
+    })();
+
+    /* ==========================================================================
+       1. Custom Liquid Glass Status Bubble Logic
+       ========================================================================== */
+    const statusBubble = document.getElementById('custom-status-bubble');
+    const statusBubbleText = document.getElementById('custom-status-bubble-text');
+
+    function showStatusBubble(relativeUrl) {
+      if (!statusBubble || !statusBubbleText) return;
+      const resolved = new URL(relativeUrl, window.location.href).href;
+      statusBubbleText.textContent = resolved;
+      statusBubble.classList.add('visible');
+    }
+
+    function hideStatusBubble() {
+      if (!statusBubble) return;
+      statusBubble.classList.remove('visible');
+    }
+
+    function navigateTo(url, event) {
+      if (event && (event.ctrlKey || event.metaKey || event.button === 1)) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } else {
+        window.location.href = url;
+      }
+    }
+
+    /* ==========================================================================
+       2. FoldText Intro Animation ("Loading...")
+       ========================================================================== */
     (function runFoldTextIntro() {
       const container = document.getElementById('fold-text');
       const overlay = document.getElementById('intro-overlay');
@@ -304,6 +489,9 @@
       }, 0.1);
     })();
 
+    /* ==========================================================================
+       3. Nav Tab Controls
+       ========================================================================== */
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const navToggle = document.getElementById('nav-toggle');
@@ -333,6 +521,9 @@
       });
     });
 
+    /* ==========================================================================
+       4. Game Indexing & Button Rendering
+       ========================================================================== */
     function formatDirName(name) {
       return name.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     }
@@ -390,17 +581,38 @@
           descMap.get(title.toLowerCase()) ||
           '';
 
+        const gameUrl = `${folder}/${dir}/`;
+
         const card = document.createElement('article');
         card.className = 'card';
         card.innerHTML = `
           <h3>${title}</h3>
           <p class="desc">${desc}</p>
-          <p><a class="btn" href="${folder}/${dir}/">Play</a></p>
+          <p>
+            <button 
+              type="button" 
+              class="btn" 
+              data-target-url="${gameUrl}">
+              Play
+            </button>
+          </p>
         `;
+
+        const btn = card.querySelector('button.btn');
+        btn.addEventListener('mouseenter', () => showStatusBubble(gameUrl));
+        btn.addEventListener('mouseleave', hideStatusBubble);
+        btn.addEventListener('click', (e) => navigateTo(gameUrl, e));
+        btn.addEventListener('auxclick', (e) => {
+          if (e.button === 1) navigateTo(gameUrl, e);
+        });
+
         grid.appendChild(card);
       }
     }
 
+    /* ==========================================================================
+       5. Initialize Page
+       ========================================================================== */
     window.addEventListener('DOMContentLoaded', async () => {
       const [descMap, catalog] = await Promise.all([
         loadEpicDescriptions(),
