@@ -1,0 +1,160 @@
+< !doctype html><html lang="en"><head>< !-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script><script>window.dataLayer=window.dataLayer || [];
+
+function gtag() {
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+gtag('config', 'G-Q293MVMDY4');
+</script>< !-- Google AdSense --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
+crossorigin="anonymous"></script><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="google-site-verification" content="v6kuKQ8mKBtWUPWgPpaZ53kGCxTPkKIHPTG4aUaiDfs" /><meta name="google-adsense-account" content="ca-pub-9609292028680816"><title>Insta-Games - Play Free Browser Games Instantly</title><meta name="description"
+content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." /><meta name="keywords"
+content="browser games, free games, online games, arcade games, puzzle games, multiplayer games, no download games" /><meta name="author" content="Insta-Games" />< !-- Open Graph / Facebook --><meta property="og:type" content="website" /><meta property="og:url" content="https://insta-games.github.io/" /><meta property="og:title" content="Insta-Games - Play Free Browser Games Instantly" /><meta property="og:description"
+content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." /><meta property="og:image" content="https://insta-games.github.io/assets/favico.ico" />< !-- Twitter --><meta property="twitter:card" content="summary_large_image" /><meta property="twitter:url" content="https://insta-games.github.io/" /><meta property="twitter:title" content="Insta-Games - Play Free Browser Games Instantly" /><meta property="twitter:description"
+content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." /><meta property="twitter:image" content="https://insta-games.github.io/assets/favico.ico" /><meta name="robots" content="index, follow" /><meta name="language" content="English" /><meta name="revisit-after" content="7 days" /><link rel="canonical" href="https://insta-games.github.io/" /><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><link rel="icon" href="assets/favicon.ico" type="image/x-icon"><link rel="stylesheet" href="styles.css" /><link rel="stylesheet" href="staggered-menu.css" /></head><body>< !-- Fixed Staggered Menu Component --><div class="staggered-menu-wrapper fixed-wrapper" id="staggered-menu" data-position="right" style="--sm-accent: #06b6d4;"><div class="sm-prelayers" id="sm-prelayers" aria-hidden="true"><div class="sm-prelayer" style="background: #1e1b4b;"></div><div class="sm-prelayer" style="background: #0f172a;"></div></div><aside id="staggered-menu-panel" class="staggered-menu-panel" aria-hidden="true"><div class="sm-panel-inner"><ul class="sm-panel-list" role="list" data-numbering="true"><li class="sm-panel-itemWrap"><a class="sm-panel-item" href="javascript:void(0)" data-section="section-singleplayer" data-nav="nav-singleplayer"><span class="sm-panel-itemLabel">Single Player</span></a></li><li class="sm-panel-itemWrap"><a class="sm-panel-item" href="javascript:void(0)" data-section="section-local-multiplayer" data-nav="nav-local-multiplayer"><span class="sm-panel-itemLabel">Local Multiplayer</span></a></li><li class="sm-panel-itemWrap"><a class="sm-panel-item" href="javascript:void(0)" data-section="section-special" data-nav="nav-special"><span class="sm-panel-itemLabel">Special Games</span></a></li><li class="sm-panel-itemWrap"><a class="sm-panel-item" href="about/"><span class="sm-panel-itemLabel">About</span></a></li><li class="sm-panel-itemWrap"><a class="sm-panel-item" href="feedback/"><span class="sm-panel-itemLabel">Feedback</span></a></li></ul><div class="sm-socials" aria-label="Quick links"><h3 class="sm-socials-title">Links</h3><ul class="sm-socials-list" role="list"><li class="sm-socials-item"><a href="privacy/" class="sm-socials-link">Privacy</a></li><li class="sm-socials-item"><a href="terms/" class="sm-socials-link">Terms</a></li><li class="sm-socials-item"><a href="https://github.com/insta-games" target="_blank" rel="noopener noreferrer" class="sm-socials-link">GitHub</a></li></ul></div></div></aside></div>< !-- Header with integrated Staggered Menu Toggle --><header class="site-header shadow"><div class="container header-inner"><a class="brand" href="index.html"><img src="assets/favicon.png" alt="favico" class="favico" onerror="this.style.display='none'" /><span class="brand-text">Insta-Games</span></a>< !-- Staggered Menu Toggle Button --><button id="sm-toggle-btn" class="sm-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="staggered-menu-panel" type="button"><span class="sm-toggle-textWrap" aria-hidden="true"><span class="sm-toggle-textInner" id="sm-text-inner"><span class="sm-toggle-line">Menu</span></span></span><span class="sm-icon" id="sm-icon" aria-hidden="true"><span class="sm-icon-line" id="sm-plus-h"></span><span class="sm-icon-line sm-icon-line-v" id="sm-plus-v"></span></span></button>< !-- Fallback Desktop Nav --><nav class="site-nav" id="site-nav"><a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a><a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a><a href="javascript:void(0)" id="nav-special">Special Games</a><a href="about/">About</a><a href="feedback/">Feedback</a></nav></div></header>< !-- Header Ad Placeholder --><div class="ad-container ad-header" data-ad-placement="header" id="ad-header-top"></div><main class="container">< !-- Single Player Section --><section class="features" id="section-singleplayer"><h2 style="text-align:center;margin-bottom:2rem;">Single Player Games</h2><div class="grid" id="grid-singleplayer"><div class="empty-state">No games found.</div></div></section>< !-- Local Multiplayer Section --><section class="features" id="section-local-multiplayer" style="display:none;"><h2 style="text-align:center;margin-bottom:2rem;">Local Multiplayer Games</h2><div class="grid" id="grid-local-multiplayer"><div class="empty-state">No games found.</div></div></section>< !-- Special Games Section --><section class="features" id="section-special" style="display:none;"><h2 style="text-align:center;margin-bottom:2rem;">Special Games</h2><div class="grid" id="grid-special"><div class="empty-state">No games found.</div></div></section></main>< !-- Footer Ad Placeholder --><div class="ad-container ad-footer" data-ad-placement="footer" id="ad-footer-bottom"></div><footer class="site-footer"><div class="container"><small>&copy;
+<span id="year"></span>Insta-Games | <a href="privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a>| <a href="terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a>| <a href="about/" style="color: var(--accent); text-decoration: none;">About</a>| <a href="feedback/" style="color: var(--accent); text-decoration: none;">Feedback</a></small></div></footer>< !-- GSAP Animation Engine --><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>< !-- Visual Background & Effects --><script src="three.min.js"></script><script src="slik-bg.js"></script><script src="glass-header.js"></script><script src="shared.js"></script><script src="staggered-menu.js"></script>< !-- Dynamic Game Scanner --><script>document.getElementById('year').textContent=new Date().getFullYear();
+
+// Section Switching Logic
+const tabs=[ {
+    nav: document.getElementById('nav-singleplayer'), sec: document.getElementById('section-singleplayer')
+}
+
+,
+{
+nav: document.getElementById('nav-local-multiplayer'), sec: document.getElementById('section-local-multiplayer')
+}
+
+,
+{
+nav: document.getElementById('nav-special'), sec: document.getElementById('section-special')
+}
+
+];
+
+function activateSection(secId, navId) {
+    tabs.forEach(t=> {
+            if (t.nav) t.nav.classList.remove('active');
+            if (t.sec) t.sec.style.display='none';
+        });
+    const activeTab=tabs.find(t=> t.sec.id===secId || (t.nav && t.nav.id===navId));
+
+    if (activeTab) {
+        if (activeTab.nav) activeTab.nav.classList.add('active');
+        if (activeTab.sec) activeTab.sec.style.display='block';
+    }
+}
+
+tabs.forEach(tab=> {
+        if ( !tab.nav || !tab.sec) return;
+
+        tab.nav.addEventListener('click', ()=> {
+                activateSection(tab.sec.id, tab.nav.id);
+            });
+    });
+
+// Handle clicks inside Staggered Menu items
+document.querySelectorAll('.sm-panel-item[data-section]').forEach(item=> {
+        item.addEventListener('click', (e)=> {
+                e.preventDefault();
+                const secId=item.getAttribute('data-section');
+                const navId=item.getAttribute('data-nav');
+                activateSection(secId, navId);
+
+                if (window.StaggeredMenuController) {
+                    window.StaggeredMenuController.close();
+                }
+            });
+    });
+
+function formatDirName(name) {
+    return name.replace(/[-_]/g, ' ').replace(/\b\w/g, c=> c.toUpperCase());
+}
+
+function normalizeKey(str) {
+    return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+async function loadEpicDescriptions() {
+    const descriptions=new Map();
+
+    try {
+        const res=await fetch('./desc.epic');
+        if ( !res.ok) return descriptions;
+        const text=await res.text();
+        const regex=/["'*]([^" '*]+)["' *]\s+has\s+description\s+["'*]([^" '*]*)["' *]/gi;
+        let match;
+
+        while ((match=regex.exec(text)) !==null) {
+            const rawName=match[1].trim();
+            const desc=match[2].trim();
+            descriptions.set(normalizeKey(rawName), desc);
+            descriptions.set(rawName.toLowerCase(), desc);
+        }
+    }
+
+    catch (e) {
+        console.warn('desc.epic could not be loaded:', e);
+    }
+
+    return descriptions;
+}
+
+async function loadGamesCatalog() {
+    try {
+        const res=await fetch('./games.json');
+        if (res.ok) return await res.json();
+    }
+
+    catch (e) {}
+
+    return {
+        single: [], multi: [], special: []
+    }
+
+    ;
+}
+
+function renderCategory(dirs, folder, gridId, descMap) {
+    const grid=document.getElementById(gridId);
+    if ( !grid) return;
+
+    if ( !dirs || dirs.length===0) {
+        grid.innerHTML='<div class="empty-state">No games found.</div>';
+        return;
+    }
+
+    grid.innerHTML='';
+
+    for (const dir of dirs) {
+        const title=formatDirName(dir);
+        const desc=descMap.get(normalizeKey(dir)) || descMap.get(normalizeKey(title)) || descMap.get(dir.toLowerCase()) || descMap.get(title.toLowerCase()) || '';
+
+        const card=document.createElement('article');
+        card.className='card';
+
+        card.innerHTML=` <h3>$ {
+            title
+        }
+
+        </h3>$ {
+            desc ? `<p class="desc">$ {
+                desc
+            }
+
+            </p>` : `<p class="desc"></p>`
+        }
+
+        <p><a class="btn" href="${folder}/${dir}/">Play</a></p>`;
+        grid.appendChild(card);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', async ()=> {
+        const [descMap, catalog]=await Promise.all([ loadEpicDescriptions(),
+            loadGamesCatalog()]);
+
+        renderCategory(catalog.single || [], 'single', 'grid-singleplayer', descMap);
+        renderCategory(catalog.multi || [], 'multi', 'grid-local-multiplayer', descMap);
+        renderCategory(catalog.special || [], 'special', 'grid-special', descMap);
+    });
+</script></body></html>

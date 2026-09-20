@@ -18,7 +18,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="google-site-verification" content="v6kuKQ8mKBtWUPWgPpaZ53kGCxTPkKIHPTG4aUaiDfs" />
-  <meta name="google-adsense-account" content="ca-pub-9609292028680816">
+  <meta name="google-adsense-account" content="ca-pub-9609292028680816" />
   <title>Insta-Games - Play Free Browser Games Instantly</title>
   <meta name="description"
     content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." />
@@ -47,14 +47,120 @@
   <meta name="revisit-after" content="7 days" />
   <link rel="canonical" href="https://insta-games.github.io/" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* Full-Screen FoldText Intro Animation Overlay */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #090d1a;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: all;
+      overflow: hidden;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+    }
+
+    #intro-overlay.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .fold-text-container {
+      perspective: 700px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      max-width: 90vw;
+      user-select: none;
+    }
+
+    .fold-char-wrap {
+      display: inline-block;
+      position: relative;
+      transform-style: preserve-3d;
+      transform-origin: top center;
+      will-change: transform, opacity;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 800;
+      color: #f7f2e8;
+      line-height: 1;
+      white-space: pre;
+    }
+
+    .fold-char-shade {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0.55;
+      pointer-events: none;
+      border-radius: 4px;
+      will-change: opacity;
+    }
+
+    /* Top Commit Bar Button */
+    .commit-banner-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 820px;
+      margin: 1.5rem auto 0;
+      padding: 0.75rem 1.25rem;
+      background: rgba(14, 20, 40, 0.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.875rem;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .commit-banner-link:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(14, 20, 40, 0.65);
+      transform: translateY(-2px);
+    }
+
+    .commit-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .commit-banner-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- FoldText Intro Overlay -->
+  <div id="intro-overlay">
+    <div class="fold-text-container" id="fold-text">Launch with clarity</div>
+  </div>
+
   <header class="site-header shadow">
     <div class="container header-inner">
       <a class="brand" href="index.html">
@@ -66,6 +172,7 @@
         <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
         <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
         <a href="javascript:void(0)" id="nav-special">Special Games</a>
+        <a href="commit.html">Latest Commit</a>
         <a href="about/">About</a>
         <a href="feedback/">Feedback</a>
       </nav>
@@ -75,10 +182,22 @@
   <!-- Header Ad Placeholder -->
   <div class="ad-container ad-header" data-ad-placement="header" id="ad-header-top"></div>
 
+  <!-- Commit Link Banner -->
+  <a href="commit.html" id="commit-banner" class="commit-banner-link" style="display: none;">
+    <div class="commit-banner-left">
+      <span class="commit-dot"></span>
+      <span><strong>Latest Commit:</strong> <span id="banner-commit-name"></span></span>
+      <span id="banner-commit-hash" class="commit-code"></span>
+    </div>
+    <div class="commit-banner-right">
+      <span>View details</span> →
+    </div>
+  </a>
+
   <main class="container">
     <!-- Single Player Section -->
     <section class="features" id="section-singleplayer">
-      <h2 style="text-align:center;margin-bottom:2rem;">Single Player Games</h2>
+      <h2>Single Player Games</h2>
       <div class="grid" id="grid-singleplayer">
         <div class="empty-state">No games found.</div>
       </div>
@@ -86,7 +205,7 @@
 
     <!-- Local Multiplayer Section -->
     <section class="features" id="section-local-multiplayer" style="display:none;">
-      <h2 style="text-align:center;margin-bottom:2rem;">Local Multiplayer Games</h2>
+      <h2>Local Multiplayer Games</h2>
       <div class="grid" id="grid-local-multiplayer">
         <div class="empty-state">No games found.</div>
       </div>
@@ -94,7 +213,7 @@
 
     <!-- Special Games Section -->
     <section class="features" id="section-special" style="display:none;">
-      <h2 style="text-align:center;margin-bottom:2rem;">Special Games</h2>
+      <h2>Special Games</h2>
       <div class="grid" id="grid-special">
         <div class="empty-state">No games found.</div>
       </div>
@@ -107,6 +226,7 @@
   <footer class="site-footer">
     <div class="container">
       <small>&copy; <span id="year"></span> Insta-Games |
+        <a href="commit.html" style="color: var(--accent); text-decoration: none;">Latest Commit</a> |
         <a href="privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> |
         <a href="terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> |
         <a href="about/" style="color: var(--accent); text-decoration: none;">About</a> |
@@ -115,16 +235,77 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- GSAP Core for FoldText 3D Intro Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Visual Background & Effects Scripts -->
   <script src="three.min.js"></script>
-  <script src="slik-bg.js"></script>
+  <script src="silk-bg.js"></script>
   <script src="glass-header.js"></script>
   <script src="shared.js"></script>
 
   <script>
+    /* FoldText Intro Animation */
+    (function runFoldTextIntro() {
+      const container = document.getElementById('fold-text');
+      const overlay = document.getElementById('intro-overlay');
+      if (!container || !overlay) return;
+
+      const rawText = container.textContent.trim();
+      container.innerHTML = '';
+
+      const chars = Array.from(rawText).map(char => {
+        const wrap = document.createElement('span');
+        wrap.className = 'fold-char-wrap';
+        wrap.textContent = char;
+
+        if (char.trim() !== '') {
+          const shade = document.createElement('span');
+          shade.className = 'fold-char-shade';
+          wrap.appendChild(shade);
+        }
+
+        container.appendChild(wrap);
+        return wrap;
+      });
+
+      const wraps = chars.filter(el => el.textContent.trim() !== '');
+      const shades = container.querySelectorAll('.fold-char-shade');
+
+      gsap.set(wraps, {
+        rotationX: -90,
+        opacity: 0,
+        transformOrigin: '50% 0%'
+      });
+      gsap.set(shades, { opacity: 0.55 });
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setTimeout(() => {
+            overlay.classList.add('fade-out');
+            setTimeout(() => overlay.remove(), 650);
+          }, 450);
+        }
+      });
+
+      tl.to(wraps, {
+        rotationX: 0,
+        opacity: 1,
+        duration: 0.65,
+        ease: 'power3.out',
+        stagger: 0.045
+      }, 0.1);
+
+      tl.to(shades, {
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        stagger: 0.045
+      }, 0.1);
+    })();
+
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile nav toggle
     const navToggle = document.getElementById('nav-toggle');
     const siteNav = document.getElementById('site-nav');
     if (navToggle && siteNav) {
@@ -133,7 +314,6 @@
       });
     }
 
-    // Navigation Tab Switching
     const tabs = [
       { nav: document.getElementById('nav-singleplayer'), sec: document.getElementById('section-singleplayer') },
       { nav: document.getElementById('nav-local-multiplayer'), sec: document.getElementById('section-local-multiplayer') },
@@ -161,14 +341,12 @@
       return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
-    // Load and parse desc.epic from the root folder
     async function loadEpicDescriptions() {
       const descriptions = new Map();
       try {
         const res = await fetch('./desc.epic');
         if (!res.ok) return descriptions;
         const text = await res.text();
-
         const regex = /["'*]([^"'*]+)["'*]\s+has\s+description\s+["'*]([^"'*]*)["'*]/gi;
         let match;
         while ((match = regex.exec(text)) !== null) {
@@ -183,15 +361,12 @@
       return descriptions;
     }
 
-    // Fetch games.json generated by GitHub Actions
     async function loadGamesCatalog() {
       try {
         const res = await fetch('./games.json');
-        if (res.ok) {
-          return await res.json();
-        }
+        if (res.ok) return await res.json();
       } catch (e) {
-        console.warn('games.json not found or could not be loaded:', e);
+        console.warn('games.json could not be loaded:', e);
       }
       return { single: [], multi: [], special: [] };
     }
@@ -209,7 +384,6 @@
 
       for (const dir of dirs) {
         const title = formatDirName(dir);
-
         const desc = descMap.get(normalizeKey(dir)) ||
           descMap.get(normalizeKey(title)) ||
           descMap.get(dir.toLowerCase()) ||
@@ -232,6 +406,17 @@
         loadEpicDescriptions(),
         loadGamesCatalog()
       ]);
+
+      if (catalog.last_commit && catalog.last_commit.name) {
+        const banner = document.getElementById('commit-banner');
+        const nameEl = document.getElementById('banner-commit-name');
+        const hashEl = document.getElementById('banner-commit-hash');
+        if (banner && nameEl && hashEl) {
+          nameEl.textContent = catalog.last_commit.name;
+          hashEl.textContent = catalog.last_commit.hash;
+          banner.style.display = 'flex';
+        }
+      }
 
       renderCategory(catalog.single || [], 'single', 'grid-singleplayer', descMap);
       renderCategory(catalog.multi || [], 'multi', 'grid-local-multiplayer', descMap);

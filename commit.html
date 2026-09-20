@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-Q293MVMDY4');
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Latest Commit - Insta-Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+        .commit-page-wrap {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: rgba(14, 20, 40, 0.45);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: var(--radius);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.38),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+                0 20px 60px rgba(0, 0, 0, 0.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commit-page-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 35%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .commit-header-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            color: var(--success);
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .commit-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 1.25rem;
+            word-break: break-word;
+        }
+
+        .commit-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-box label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-box span,
+        .meta-box a {
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .meta-box a:hover {
+            color: var(--accent);
+        }
+
+        .commit-desc-box {
+            background: rgba(10, 14, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            color: rgba(220, 225, 235, 0.85);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-family: inherit;
+        }
+
+        .commit-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <img src="assets/favicon.png" alt="favico" class="favico" onerror="this.style.display='none'" />
+                <span class="brand-text">Insta-Games</span>
+            </a>
+            <nav class="site-nav">
+                <a href="index.html">← Back to Games</a>
+                <a href="commit.html" class="active">Latest Commit</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="commit-page-wrap">
+            <div class="commit-header-status">
+                <span class="commit-dot"></span> Active Deployment
+            </div>
+
+            <h1 class="commit-title" id="commit-title">Loading commit details...</h1>
+
+            <div class="commit-meta-grid">
+                <div class="meta-box">
+                    <label>Author</label>
+                    <span id="commit-author" class="commit-highlight">—</span>
+                </div>
+                <div class="meta-box">
+                    <label>Committed</label>
+                    <span id="commit-time">—</span>
+                </div>
+                <div class="meta-box">
+                    <label>Hash</label>
+                    <a id="commit-hash-link" href="#" target="_blank" rel="noopener noreferrer"
+                        class="commit-code">—</a>
+                </div>
+            </div>
+
+            <div id="commit-desc-container" style="display: none;">
+                <label
+                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em; display: block; margin-bottom: 0.5rem;">Description</label>
+                <div class="commit-desc-box" id="commit-desc"></div>
+            </div>
+
+            <div class="commit-actions">
+                <a class="btn" href="index.html">← Back to Home</a>
+                <a class="btn" id="commit-github-btn"
+                    href="https://github.com/insta-games/insta-games.github.io/commits/main" target="_blank"
+                    rel="noopener noreferrer">View on GitHub</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <small>&copy; <span id="year"></span> Insta-Games | <a href="index.html"
+                    style="color: var(--accent); text-decoration: none;">Home</a></small>
+        </div>
+    </footer>
+
+    <script src="three.min.js"></script>
+    <script src="silk-bg.js"></script>
+    <script src="glass-header.js"></script>
+    <script src="shared.js"></script>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        async function loadCommitData() {
+            try {
+                const res = await fetch('./games.json');
+                if (!res.ok) throw new Error('Could not fetch games.json');
+                const data = await res.json();
+                const commit = data.last_commit;
+
+                if (commit && commit.name) {
+                    document.getElementById('commit-title').textContent = commit.name;
+                    document.getElementById('commit-author').textContent = commit.author || 'Unknown';
+                    document.getElementById('commit-time').textContent = commit.time || 'Recently';
+
+                    const hash = commit.hash || 'HEAD';
+                    const hashLink = document.getElementById('commit-hash-link');
+                    hashLink.textContent = hash;
+                    hashLink.href = `https://github.com/insta-games/insta-games.github.io/commit/${hash}`;
+
+                    const githubBtn = document.getElementById('commit-github-btn');
+                    githubBtn.href = `https://github.com/insta-games/insta-games.github.io/commit/${hash}`;
+
+                    if (commit.description && commit.description.trim() !== '') {
+                        document.getElementById('commit-desc').textContent = commit.description;
+                        document.getElementById('commit-desc-container').style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('commit-title').textContent = 'No commit metadata recorded yet.';
+                }
+            } catch (err) {
+                document.getElementById('commit-title').textContent = 'Commit information unavailable.';
+                console.warn(err);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadCommitData);
+    </script>
+</body>
+
+</html>
