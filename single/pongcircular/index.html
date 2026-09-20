@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Pong — Tracker vs Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #08090d;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        canvas {
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-neutral-200 flex flex-col items-center justify-center p-3 sm:p-5 bg-[#08090d]">
+
+    <div class="w-full max-w-2xl flex flex-col items-center gap-3">
+        <!-- Top Control Bar & Clean Scoreboard -->
+        <header class="w-full flex items-center justify-between px-1">
+            <!-- Mode Selector Pill -->
+            <div
+                class="inline-flex p-1 rounded-xl bg-neutral-900/90 border border-neutral-800 text-xs font-medium mono">
+                <button id="modeAiBtn" class="px-3 py-1.5 rounded-lg bg-neutral-800 text-white shadow-sm transition">
+                    Bot vs Bot
+                </button>
+                <button id="modePlayerBtn" class="px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition">
+                    Player vs Bot
+                </button>
+            </div>
+
+            <!-- Scoreboard -->
+            <div class="flex items-center gap-5 mono">
+                <div class="flex items-center gap-2 text-right">
+                    <span id="leftLabel" class="text-[11px] text-cyan-400 font-semibold tracking-wider">TRACKER</span>
+                    <span id="leftScore" class="text-2xl font-bold text-cyan-400">0</span>
+                </div>
+                <span class="text-neutral-700 font-light text-xl">:</span>
+                <div class="flex items-center gap-2 text-left">
+                    <span id="rightScore" class="text-2xl font-bold text-fuchsia-400">0</span>
+                    <span class="text-[11px] text-fuchsia-400 font-semibold tracking-wider">PREDICTOR</span>
+                </div>
+            </div>
+
+            <!-- Play Controls -->
+            <div class="flex items-center gap-2 mono text-xs">
+                <button id="pauseBtn"
+                    class="px-3 py-1.5 rounded-lg border border-neutral-800 hover:bg-neutral-900 text-neutral-300 transition">
+                    Pause
+                </button>
+                <button id="resetBtn"
+                    class="px-3 py-1.5 rounded-lg border border-neutral-800 hover:bg-neutral-900 text-neutral-400 hover:text-white transition">
+                    Reset
+                </button>
+            </div>
+        </header>
+
+        <div
+            class="w-full relative rounded-2xl border border-neutral-800/80 bg-[#06070a] shadow-2xl overflow-hidden aspect-square flex items-center justify-center max-w-[620px]">
+            <canvas id="gameCanvas" class="w-full h-full block"></canvas>
+
+            <!-- Minimal Speed Multiplier Pill -->
+            <div
+                class="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-neutral-900/85 backdrop-blur border border-neutral-800 text-[11px] mono text-neutral-400 flex items-center gap-2 pointer-events-none shadow-md">
+                <span class="tracking-wider">VELOCITY</span>
+                <span id="speedMultiplier" class="text-amber-400 font-semibold">1.00x</span>
+            </div>
+
+            <!-- Start / Resume Overlay -->
+            <div id="startOverlay"
+                class="absolute inset-0 bg-black/65 backdrop-blur-[2px] flex flex-col items-center justify-center text-center p-4">
+                <p class="text-neutral-400 text-xs mono uppercase tracking-widest mb-1.5">Circular Arena</p>
+                <h2 id="overlayHeadline" class="text-2xl sm:text-3xl font-bold text-white mb-4 mono">Naive vs Predictor
+                </h2>
+                <button id="startBtn"
+                    class="px-6 py-2.5 rounded-xl bg-white text-black text-sm font-semibold mono hover:bg-neutral-200 transition active:scale-95 shadow-xl">
+                    Start Match
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer / Interaction Guide -->
+        <footer class="w-full flex items-center justify-between text-xs mono text-neutral-500 px-1">
+            <span id="controlTip">Hemisphere lock active • Paddles only move when ball is on their side</span>
+            <div class="flex items-center gap-4">
+                <label class="flex items-center gap-1.5 cursor-pointer hover:text-neutral-300 transition">
+                    <input type="checkbox" id="toggleTrajectory" checked
+                        class="rounded bg-neutral-900 border-neutral-700 text-fuchsia-500 focus:ring-0">
+                    <span>Raycast</span>
+                </label>
+                <button id="muteBtn" class="hover:text-neutral-300 transition">Mute</button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) this.ctx = new AudioContextClass();
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            playHit(ratio = 1.0, isPredictive = false) {
+                if (this.muted || !this.ctx) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = isPredictive ? 'triangle' : 'sine';
+                const baseFreq = isPredictive ? 440 : 360;
+                const freq = Math.min(baseFreq * Math.min(ratio, 3.2), 1800);
+
+                osc.frequency.setValueAtTime(freq, now);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.2, now + 0.05);
+
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+
+            playScore() {
+                if (this.muted || !this.ctx) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(260, now);
+                osc.frequency.exponentialRampToValueAtTime(560, now + 0.12);
+
+                gain.gain.setValueAtTime(0.14, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.12);
+            }
+        }
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const sound = new SoundFX();
+
+        const SIZE = 800;
+        const CENTER = SIZE / 2;
+        const ARENA_RADIUS = 360;
+        const PADDLE_R = 360;
+        const PADDLE_THICKNESS = 10;
+        const BALL_RADIUS = 7.5;
+
+        const WIN_SCORE = 7;
+        const SPEED_EXPONENT = 1.07; // 7% exponential speed acceleration per hit
+
+        let currentMode = 'ai'; // 'ai' or 'player'
+        let running = false;
+        let paused = false;
+
+        let leftScore = 0;
+        let rightScore = 0;
+        let showTrajectory = true;
+
+        // Left paddle occupies left hemisphere [π/2, 3π/2]
+        // Right paddle occupies right hemisphere [-π/2, π/2]
+        // 5x smaller paddle arc span: 0.10 radians (~5.7° total span)
+        const leftPaddle = {
+            angle: Math.PI,      // Center at 180°
+            span: 0.10,          // 5x smaller (~5.7°)
+            speed: 0.14,
+            diveSpeed: 0.42,     // 3x rapid dive speed for same-side rebounds
+            isDiving: false,
+            targetAngle: Math.PI,
+            color: '#22d3ee'
+        };
+
+        const rightPaddle = {
+            angle: 0,            // Center at 0°
+            span: 0.10,          // 5x smaller (~5.7°)
+            speed: 0.19,
+            diveSpeed: 0.50,     // 2.6x rapid dive speed for same-side rebounds
+            isDiving: false,
+            targetAngle: 0,
+            color: '#e879f9'
+        };
+
+        const ball = {
+            x: CENTER,
+            y: CENTER,
+            prevX: CENTER,
+            prevY: CENTER,
+            r: BALL_RADIUS,
+            baseSpeed: 7.5,
+            currentSpeed: 7.5,
+            vx: 0,
+            vy: 0,
+            trajectory: null
+        };
+
+        // Smallest angular distance between two angles
+        function angleDiff(target, current) {
+            return Math.atan2(Math.sin(target - current), Math.cos(target - current));
+        }
+
+        // Normalizes an angle to [-π, π]
+        function normAngle(a) {
+            return Math.atan2(Math.sin(a), Math.cos(a));
+        }
+
+        // Calculates forward boundary intersection for any travel direction
+        function computeBallLanding() {
+            const ox = ball.x - CENTER;
+            const oy = ball.y - CENTER;
+            const vx = ball.vx;
+            const vy = ball.vy;
+
+            const a = vx * vx + vy * vy;
+            if (a === 0) return null;
+            const b = 2 * (ox * vx + oy * vy);
+            const c = (ox * ox + oy * oy) - (PADDLE_R * PADDLE_R);
+
+            const disc = b * b - 4 * a * c;
+            if (disc < 0) return null;
+
+            const sqrtDisc = Math.sqrt(disc);
+            const t1 = (-b + sqrtDisc) / (2 * a);
+            const t2 = (-b - sqrtDisc) / (2 * a);
+            // Forward in time only
+            const validTimes = [t1, t2].filter(t => t > 0.05);
+            if (validTimes.length === 0) return null;
+            const t = Math.min(...validTimes);
+
+            const hitX = ball.x + vx * t;
+            const hitY = ball.y + vy * t;
+            const hitAngle = Math.atan2(hitY - CENTER, hitX - CENTER);
+            return { hitX, hitY, hitAngle, t };
+        }
+
+        // Raycast solver for right paddle, including same-side rebounds
+        function solvePredictorTarget() {
+            const landing = computeBallLanding();
+            if (!landing) {
+                ball.trajectory = null;
+                return;
+            }
+
+            // If landing is on the right hemisphere
+            if (landing.hitX >= CENTER - 2) {
+                const halfSpan = rightPaddle.span / 2;
+                const minAngle = -Math.PI / 2 + halfSpan;
+                const maxAngle = Math.PI / 2 - halfSpan;
+                rightPaddle.targetAngle = Math.max(minAngle, Math.min(maxAngle, landing.hitAngle));
+                ball.trajectory = landing;
+            } else {
+                ball.trajectory = null;
+            }
+        }
+
+        // Prevents tunneling through circular arc paddles at high exponential speeds
+        function handleContinuousCollision() {
+            const ox = ball.prevX - CENTER;
+            const oy = ball.prevY - CENTER;
+            const dx = ball.x - ball.prevX;
+            const dy = ball.y - ball.prevY;
+
+            const rInner = PADDLE_R - ball.r;
+            const prevDistSq = ox * ox + oy * oy;
+            const currDistSq = (ball.x - CENTER) * (ball.x - CENTER) + (ball.y - CENTER) * (ball.y - CENTER);
+
+            // Check if boundary was crossed during this frame
+            if (prevDistSq <= rInner * rInner && currDistSq >= rInner * rInner) {
+                // Ray-circle intersection to find exact time t in [0, 1]
+                const a = dx * dx + dy * dy;
+                const b = 2 * (ox * dx + oy * dy);
+                const c = prevDistSq - (rInner * rInner);
+                const disc = b * b - 4 * a * c;
+
+                if (disc >= 0) {
+                    const t = (-b + Math.sqrt(disc)) / (2 * a);
+                    if (t >= 0 && t <= 1) {
+                        const hitX = ball.prevX + dx * t;
+                        const hitY = ball.prevY + dy * t;
+                        const contactAngle = Math.atan2(hitY - CENTER, hitX - CENTER);
+
+                        // Check right paddle collision (Right semicircle: cos > 0)
+                        if (hitX >= CENTER) {
+                            const diff = angleDiff(contactAngle, rightPaddle.angle);
+                            if (Math.abs(diff) <= rightPaddle.span / 2) {
+                                bouncePaddle(hitX, hitY, contactAngle, diff, true);
+                                return true;
+                            }
+                        }
+                        // Check left paddle collision (Left semicircle: cos < 0)
+                        else {
+                            const diff = angleDiff(contactAngle, leftPaddle.angle);
+                            if (Math.abs(diff) <= leftPaddle.span / 2) {
+                                bouncePaddle(hitX, hitY, contactAngle, diff, false);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        function bouncePaddle(hitX, hitY, contactAngle, angularOffset, isPredictor) {
+            // Normal pointing inwards toward the center of the arena
+            const nx = -Math.cos(contactAngle);
+            const ny = -Math.sin(contactAngle);
+
+            // Reflect velocity: v' = v - 2(v . n)n
+            const dot = ball.vx * nx + ball.vy * ny;
+            let rx = ball.vx - 2 * dot * nx;
+            let ry = ball.vy - 2 * dot * ny;
+
+            // Exponential speed boost
+            ball.currentSpeed = Math.min(ball.currentSpeed * SPEED_EXPONENT, 34);
+
+            // Apply spin/deflection angle based on where it hit on the paddle arc
+            const currentSpan = isPredictor ? rightPaddle.span : leftPaddle.span;
+            const maxDeflection = 0.28; // radians
+            const deflection = (angularOffset / (currentSpan / 2)) * maxDeflection;
+
+            // 15% random bounce deviation applied on every hit (±15% of 90° quadrant = ±13.5°)
+            const RANDOM_SPREAD_15_PERCENT = 0.15 * (Math.PI / 2);
+            const randomJitter = (Math.random() * 2 - 1) * RANDOM_SPREAD_15_PERCENT;
+            let currentReflectionAngle = Math.atan2(ry, rx) + deflection + randomJitter;
+
+            // Ensure reflected vector points comfortably back inward into the arena
+            const inwardAngle = contactAngle + Math.PI;
+            const diffFromInward = angleDiff(currentReflectionAngle, inwardAngle);
+            const maxInwardDeviation = 1.22; // ~70 degrees limit so ball cleanly traverses the arena
+            currentReflectionAngle = normAngle(inwardAngle + Math.max(-maxInwardDeviation, Math.min(maxInwardDeviation, diffFromInward)));
+
+            ball.vx = Math.cos(currentReflectionAngle) * ball.currentSpeed;
+            ball.vy = Math.sin(currentReflectionAngle) * ball.currentSpeed;
+
+            // Position ball cleanly right on the inner paddle boundary
+            const safeR = PADDLE_R - ball.r - 1.0;
+            ball.x = CENTER + Math.cos(contactAngle) * safeR;
+            ball.y = CENTER + Math.sin(contactAngle) * safeR;
+            ball.prevX = ball.x;
+            ball.prevY = ball.y;
+
+            sound.playHit(ball.currentSpeed / ball.baseSpeed, isPredictor);
+            updateSpeedHUD();
+
+            // Recompute AI target
+            solvePredictorTarget();
+        }
+
+        const keys = { w: false, s: false, ArrowUp: false, ArrowDown: false };
+        let pointerActive = false;
+
+        window.addEventListener('keydown', (e) => {
+            sound.init();
+            if (e.code === 'Space') {
+                togglePause();
+                e.preventDefault();
+                return;
+            }
+            if (e.key in keys) {
+                keys[e.key] = true;
+                pointerActive = false;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key in keys) keys[e.key] = false;
+        });
+
+        function handlePointer(clientX, clientY) {
+            if (currentMode !== 'player') return;
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = SIZE / rect.width;
+            const scaleY = SIZE / rect.height;
+            const px = (clientX - rect.left) * scaleX - CENTER;
+            const py = (clientY - rect.top) * scaleY - CENTER;
+
+            let angle = Math.atan2(py, px);
+            // Constrain left player strictly to left semicircle
+            const halfSpan = leftPaddle.span / 2;
+            if (angle > 0 && angle < Math.PI / 2) angle = Math.PI / 2;
+            if (angle < 0 && angle > -Math.PI / 2) angle = -Math.PI / 2;
+
+            leftPaddle.targetAngle = angle;
+            pointerActive = true;
+        }
+
+        canvas.addEventListener('mousemove', (e) => handlePointer(e.clientX, e.clientY));
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length) {
+                handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        function serve(direction = 1) {
+            ball.x = CENTER;
+            ball.y = CENTER;
+            ball.prevX = CENTER;
+            ball.prevY = CENTER;
+            ball.currentSpeed = ball.baseSpeed;
+
+            // Random angle within a 50-degree cone toward the target hemisphere
+            const spread = (Math.random() * 0.8 - 0.4);
+            const angle = direction === 1 ? spread : Math.PI + spread;
+
+            ball.vx = Math.cos(angle) * ball.currentSpeed;
+            ball.vy = Math.sin(angle) * ball.currentSpeed;
+
+            updateSpeedHUD();
+            solvePredictorTarget();
+        }
+
+        function updateSpeedHUD() {
+            const ratio = (ball.currentSpeed / ball.baseSpeed).toFixed(2);
+            document.getElementById('speedMultiplier').textContent = `${ratio}x`;
+        }
+
+        function resetMatch(scoresOnly = false) {
+            if (!scoresOnly) {
+                leftScore = 0;
+                rightScore = 0;
+                document.getElementById('leftScore').textContent = '0';
+                document.getElementById('rightScore').textContent = '0';
+            }
+            leftPaddle.angle = Math.PI;
+            leftPaddle.targetAngle = Math.PI;
+            rightPaddle.angle = 0;
+            rightPaddle.targetAngle = 0;
+            serve(Math.random() > 0.5 ? 1 : -1);
+        }
+
+        function handleScoreLimit() {
+            if (leftScore >= WIN_SCORE || rightScore >= WIN_SCORE) {
+                running = false;
+                const leftWon = leftScore >= WIN_SCORE;
+                const title = document.getElementById('overlayHeadline');
+                if (currentMode === 'ai') {
+                    title.textContent = leftWon ? 'Tracker Bot Wins!' : 'Predictor Bot Wins!';
+                } else {
+                    title.textContent = leftWon ? 'You Win!' : 'Predictor Bot Wins!';
+                }
+                document.getElementById('startBtn').textContent = 'Play Again';
+                document.getElementById('startOverlay').classList.remove('hidden');
+            }
+        }
+
+        function update() {
+            if (!running || paused) return;
+
+            const ballOnLeftSide = ball.x < CENTER;
+            const ballOnRightSide = ball.x >= CENTER;
+            const landing = computeBallLanding();
+
+            // 1. Left Paddle Control (Always active for player; tracker bot remains hemisphere-locked)
+            const playerCanMove = currentMode === 'player';
+            if (playerCanMove || ballOnLeftSide || (landing && landing.hitX < CENTER)) {
+                // Detect same-side downward ricochet threat
+                const sameSideDownThreat = (landing && landing.hitX < CENTER && landing.hitY > ball.y);
+                leftPaddle.isDiving = sameSideDownThreat;
+
+                if (currentMode === 'player') {
+                    const diveMult = (keys.s || keys.ArrowDown || sameSideDownThreat) ? 2.2 : 1.0;
+                    if (!pointerActive) {
+                        const step = 0.055 * diveMult;
+                        if (keys.w || keys.ArrowUp) leftPaddle.targetAngle -= step;
+                        if (keys.s || keys.ArrowDown) leftPaddle.targetAngle += step;
+                    }
+                    // Constrain left player paddle inside left semicircle [-PI, -PI/2] U [PI/2, PI]
+                    const halfSpan = leftPaddle.span / 2;
+                    let tA = leftPaddle.targetAngle;
+                    if (tA > -Math.PI / 2 + halfSpan && tA < Math.PI / 2 - halfSpan) {
+                        tA = (tA >= 0) ? Math.PI / 2 + halfSpan : -Math.PI / 2 - halfSpan;
+                    }
+                    leftPaddle.targetAngle = normAngle(tA);
+                    const diff = angleDiff(leftPaddle.targetAngle, leftPaddle.angle);
+                    const lerpSpeed = sameSideDownThreat ? 0.70 : 0.35;
+                    leftPaddle.angle = normAngle(leftPaddle.angle + diff * lerpSpeed);
+                } else {
+                    // Tracker Bot: If same-side downward bounce, immediately dive to intercept angle
+                    const halfSpan = leftPaddle.span / 2;
+                    let target = sameSideDownThreat ? landing.hitAngle : Math.atan2(ball.y - CENTER, ball.x - CENTER);
+
+                    if (target > -Math.PI / 2 + halfSpan && target < Math.PI / 2 - halfSpan) {
+                        target = (target >= 0) ? Math.PI / 2 + halfSpan : -Math.PI / 2 - halfSpan;
+                    }
+
+                    leftPaddle.targetAngle = target;
+                    const diff = angleDiff(leftPaddle.targetAngle, leftPaddle.angle);
+                    // Accelerate rapidly downward if moving down to intercept same-side rebound
+                    const movingDown = diff > 0;
+                    const activeSpeed = (sameSideDownThreat && movingDown) ? leftPaddle.diveSpeed : leftPaddle.speed;
+                    leftPaddle.angle = normAngle(leftPaddle.angle + Math.sign(diff) * Math.min(Math.abs(diff), activeSpeed));
+                }
+            } else {
+                leftPaddle.isDiving = false;
+            }
+
+            // 2. Right Paddle (Predictor Bot: Moves on right side, dives rapidly if landing on own side)
+            if (ballOnRightSide || (landing && landing.hitX >= CENTER)) {
+                solvePredictorTarget();
+                const rightDiff = angleDiff(rightPaddle.targetAngle, rightPaddle.angle);
+                const sameSideRightThreat = (landing && landing.hitX >= CENTER && landing.hitY > ball.y);
+                const movingDown = rightDiff > 0;
+
+                rightPaddle.isDiving = sameSideRightThreat;
+                const activeSpeed = (sameSideRightThreat && movingDown) ? rightPaddle.diveSpeed : rightPaddle.speed;
+                rightPaddle.angle = normAngle(rightPaddle.angle + Math.sign(rightDiff) * Math.min(Math.abs(rightDiff), activeSpeed));
+            } else {
+                rightPaddle.isDiving = false;
+            }
+
+            // 3. Move Ball with Continuous Collision Detection
+            ball.prevX = ball.x;
+            ball.prevY = ball.y;
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            const hitPaddle = handleContinuousCollision();
+
+            // 4. Out of bounds check (Passed arena boundary without paddle contact)
+            if (!hitPaddle) {
+                const distSq = (ball.x - CENTER) * (ball.x - CENTER) + (ball.y - CENTER) * (ball.y - CENTER);
+                if (distSq > ARENA_RADIUS * ARENA_RADIUS) {
+                    sound.playScore();
+                    if (ball.x < CENTER) {
+                        rightScore++;
+                        document.getElementById('rightScore').textContent = rightScore;
+                        handleScoreLimit();
+                        serve(1);
+                    } else {
+                        leftScore++;
+                        document.getElementById('leftScore').textContent = leftScore;
+                        handleScoreLimit();
+                        serve(-1);
+                    }
+                }
+            }
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, SIZE, SIZE);
+
+            // Arena Outer Circle Boundary
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#181a24';
+            ctx.beginPath();
+            ctx.arc(CENTER, CENTER, ARENA_RADIUS, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Subtle vertical dividing axis
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = '#141620';
+            ctx.setLineDash([6, 8]);
+            ctx.beginPath();
+            ctx.moveTo(CENTER, CENTER - ARENA_RADIUS);
+            ctx.lineTo(CENTER, CENTER + ARENA_RADIUS);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Subtle Raycast Trajectory
+            if (showTrajectory && ball.trajectory && ball.vx > 0) {
+                ctx.strokeStyle = 'rgba(232, 121, 249, 0.28)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(ball.x, ball.y);
+                ctx.lineTo(ball.trajectory.hitX, ball.trajectory.hitY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Target indicator arc mark
+                ctx.strokeStyle = 'rgba(232, 121, 249, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(
+                    CENTER,
+                    CENTER,
+                    PADDLE_R,
+                    rightPaddle.targetAngle - rightPaddle.span / 2,
+                    rightPaddle.targetAngle + rightPaddle.span / 2
+                );
+                ctx.stroke();
+            }
+
+            const leftActive = currentMode === 'player' || ball.x < CENTER || leftPaddle.isDiving;
+            const rightActive = ball.x >= CENTER || rightPaddle.isDiving;
+
+            // Left Paddle Arc (Cyan) - Glows and expands slightly during rapid dive
+            ctx.lineWidth = leftPaddle.isDiving ? PADDLE_THICKNESS + 4 : PADDLE_THICKNESS;
+            ctx.lineCap = 'round';
+            ctx.globalAlpha = leftActive ? 1.0 : 0.4;
+            ctx.strokeStyle = leftPaddle.isDiving ? '#67e8f9' : leftPaddle.color;
+            ctx.beginPath();
+            ctx.arc(
+                CENTER,
+                CENTER,
+                PADDLE_R,
+                leftPaddle.angle - leftPaddle.span / 2,
+                leftPaddle.angle + leftPaddle.span / 2
+            );
+            ctx.stroke();
+
+            // Right Paddle Arc (Magenta) - Glows and expands slightly during rapid dive
+            ctx.lineWidth = rightPaddle.isDiving ? PADDLE_THICKNESS + 4 : PADDLE_THICKNESS;
+            ctx.globalAlpha = rightActive ? 1.0 : 0.4;
+            ctx.strokeStyle = rightPaddle.isDiving ? '#f472b6' : rightPaddle.color;
+            ctx.beginPath();
+            ctx.arc(
+                CENTER,
+                CENTER,
+                PADDLE_R,
+                rightPaddle.angle - rightPaddle.span / 2,
+                rightPaddle.angle + rightPaddle.span / 2
+            );
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+
+            // Ball
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function tick() {
+            update();
+            render();
+            requestAnimationFrame(tick);
+        }
+
+        function togglePause() {
+            if (!running) return;
+            paused = !paused;
+            document.getElementById('pauseBtn').textContent = paused ? 'Resume' : 'Pause';
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            const btnAi = document.getElementById('modeAiBtn');
+            const btnPlayer = document.getElementById('modePlayerBtn');
+            const leftLabel = document.getElementById('leftLabel');
+            const tip = document.getElementById('controlTip');
+
+            if (mode === 'ai') {
+                btnAi.className = 'px-3 py-1.5 rounded-lg bg-neutral-800 text-white shadow-sm transition';
+                btnPlayer.className = 'px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition';
+                leftLabel.textContent = 'TRACKER';
+                tip.textContent = 'Hemisphere lock active • Paddles only move when ball is on their side';
+            } else {
+                btnPlayer.className = 'px-3 py-1.5 rounded-lg bg-neutral-800 text-white shadow-sm transition';
+                btnAi.className = 'px-3 py-1.5 rounded-lg text-neutral-400 hover:text-white transition';
+                leftLabel.textContent = 'YOU';
+                tip.textContent = 'Free control active • You can steer your paddle at any time';
+            }
+            resetMatch(false);
+        }
+
+        document.getElementById('modeAiBtn').addEventListener('click', () => setMode('ai'));
+        document.getElementById('modePlayerBtn').addEventListener('click', () => setMode('player'));
+
+        document.getElementById('pauseBtn').addEventListener('click', togglePause);
+        document.getElementById('resetBtn').addEventListener('click', () => resetMatch(false));
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            sound.init();
+            document.getElementById('startOverlay').classList.add('hidden');
+            running = true;
+            paused = false;
+            resetMatch(false);
+        });
+
+        document.getElementById('toggleTrajectory').addEventListener('change', (e) => {
+            showTrajectory = e.target.checked;
+        });
+
+        const muteBtn = document.getElementById('muteBtn');
+        muteBtn.addEventListener('click', () => {
+            sound.muted = !sound.muted;
+            muteBtn.textContent = sound.muted ? 'Unmute' : 'Mute';
+            muteBtn.classList.toggle('text-neutral-500', !sound.muted);
+            muteBtn.classList.toggle('text-amber-400', sound.muted);
+        });
+
+        // Initialize Native Resolution
+        canvas.width = SIZE;
+        canvas.height = SIZE;
+        requestAnimationFrame(tick);
+    </script>
+</body>
+
+</html>

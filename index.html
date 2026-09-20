@@ -21,9 +21,9 @@
   <meta name="google-adsense-account" content="ca-pub-9609292028680816">
   <title>Insta-Games - Play Free Browser Games Instantly</title>
   <meta name="description"
-    content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required. Snake, Tetris, Pong, Pac-Man, 2048, and more!" />
+    content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." />
   <meta name="keywords"
-    content="browser games, free games, online games, arcade games, puzzle games, multiplayer games, snake game, tetris, pong, pac-man, 2048, no download games" />
+    content="browser games, free games, online games, arcade games, puzzle games, multiplayer games, no download games" />
   <meta name="author" content="Insta-Games" />
 
   <!-- Open Graph / Facebook -->
@@ -42,7 +42,6 @@
     content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." />
   <meta property="twitter:image" content="https://insta-games.github.io/assets/favico.ico" />
 
-  <!-- Additional SEO -->
   <meta name="robots" content="index, follow" />
   <meta name="language" content="English" />
   <meta name="revisit-after" content="7 days" />
@@ -53,101 +52,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Structured Data - Schema.org -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Insta-Games",
-      "url": "https://insta-games.github.io/",
-      "description": "Play free browser games instantly. Classic arcade games, puzzle games, and multiplayer games. No downloads required.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Insta-Games"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://insta-games.github.io/?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "Browser Games Collection",
-      "description": "Collection of free browser games",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "VideoGame",
-            "name": "Snake Game",
-            "url": "https://insta-games.github.io/single/snake/",
-            "gamePlatform": "Web Browser",
-            "applicationCategory": "Game"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "VideoGame",
-            "name": "Tetris",
-            "url": "https://insta-games.github.io/single/tetris/",
-            "gamePlatform": "Web Browser",
-            "applicationCategory": "Game"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "VideoGame",
-            "name": "Pong",
-            "url": "https://insta-games.github.io/single/pong/",
-            "gamePlatform": "Web Browser",
-            "applicationCategory": "Game"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "item": {
-            "@type": "VideoGame",
-            "name": "Pac-Man",
-            "url": "https://insta-games.github.io/single/pacman/",
-            "gamePlatform": "Web Browser",
-            "applicationCategory": "Game"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 5,
-          "item": {
-            "@type": "VideoGame",
-            "name": "Pac-Man Duel",
-            "url": "https://insta-games.github.io/multi/pacman/",
-            "gamePlatform": "Web Browser",
-            "applicationCategory": "Game"
-          }
-        }
-      ]
-    }
-    </script>
 </head>
 
 <body>
   <header class="site-header shadow">
     <div class="container header-inner">
       <a class="brand" href="index.html">
-        <img src="\assets\favicon.png" alt="favico" class="favico" />
+        <img src="assets/favicon.png" alt="favico" class="favico" onerror="this.style.display='none'" />
         <span class="brand-text">Insta-Games</span>
       </a>
       <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
@@ -155,7 +66,6 @@
         <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
         <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
         <a href="javascript:void(0)" id="nav-special">Special Games</a>
-        <!-- Online Multiplayer removed -->
         <a href="about/">About</a>
         <a href="feedback/">Feedback</a>
       </nav>
@@ -163,212 +73,211 @@
   </header>
 
   <!-- Header Ad Placeholder -->
-  <div class="ad-container ad-header" data-ad-placement="header" id="ad-header-top">
-    <!-- Insert your header ad code here when ready -->
-  </div>
+  <div class="ad-container ad-header" data-ad-placement="header" id="ad-header-top"></div>
 
   <main class="container">
+    <!-- Single Player Section -->
     <section class="features" id="section-singleplayer">
       <h2 style="text-align:center;margin-bottom:2rem;">Single Player Games</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Tic Tac Toe</h3>
-          <p>Play against unbeatable AI!</p>
-          <p><a class="btn" href="single/tictactoe/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Pong</h3>
-          <p>Classic Pong vs AI!</p>
-          <p><a class="btn" href="single/pong/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Memory Match</h3>
-          <p>Flip tiles and find pairs.</p>
-          <p><a class="btn" href="single/memory/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Snake</h3>
-          <p>The classic snake game — arrow keys to move.</p>
-          <p><a class="btn" href="single/snake/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Simon</h3>
-          <p>Repeat the color sequence. How long can you go?</p>
-          <p><a class="btn" href="single/simon/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Whack-a-Mole</h3>
-          <p>Click the moles fast! Beat your high score!</p>
-          <p><a class="btn" href="single/whack/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Breakout</h3>
-          <p>Classic brick breaker with 10 levels!</p>
-          <p><a class="btn" href="single/breakout/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Minesweeper</h3>
-          <p>Classic mine detection with 3 difficulty levels!</p>
-          <p><a class="btn" href="single/minesweeper/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Flappy Bird</h3>
-          <p>Tap to flap! Navigate through pipes!</p>
-          <p><a class="btn" href="single/flappy/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Space Invaders</h3>
-          <p>Classic arcade shooter! Defend Earth from aliens!</p>
-          <p><a class="btn" href="single/invaders/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Tetris</h3>
-          <p>Stack falling blocks and clear lines in this timeless puzzle!</p>
-          <p><a class="btn" href="single/tetris/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>2048</h3>
-          <p>Slide tiles, merge matching numbers, and chase the 2048 tile!</p>
-          <p><a class="btn" href="single/2048/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Dino Run</h3>
-          <p>Jump over cacti and duck under birds in this endless runner!</p>
-          <p><a class="btn" href="single/dino/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Connect Four</h3>
-          <p>Drop discs to connect four! Challenge the AI!</p>
-          <p><a class="btn" href="single/connect4/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Checkers</h3>
-          <p>Classic checkers vs AI! Jump to capture and become king!</p>
-          <p><a class="btn" href="single/checkers/">Play</a></p>
-        </article>
-        <!-- <article class="card">
-            <h3>Chess</h3>
-            <p>Classic chess vs AI! Plan your strategy and checkmate!</p>
-            <p><a class="btn" href="chess.html">Play</a></p>
-          </article> -->
-        <article class="card">
-          <h3>Sliding Puzzle</h3>
-          <p>Arrange the tiles in order! Classic 15-puzzle brain teaser!</p>
-          <p><a class="btn" href="single/sliding-puzzle/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Block Puzzle</h3>
-          <p>Drag blocks to fill lines! Addictive Tetris-style puzzle!</p>
-          <p><a class="btn" href="single/blockpuzzle/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Match 3</h3>
-          <p>Match colorful gems! Swap to create matches of 3 or more!</p>
-          <p><a class="btn" href="single/match3/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Fruit Ninja</h3>
-          <p>Slice fruits and avoid bombs! Fast-paced arcade action!</p>
-          <p><a class="btn" href="single/fruitninja/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Pac-Man</h3>
-          <p>Chase pellets, outrun ghosts, and clear the maze!</p>
-          <p><a class="btn" href="single/pacman/">Play</a></p>
-        </article>
+      <div class="grid" id="grid-singleplayer">
+        <div class="empty-state">No games found.</div>
       </div>
     </section>
 
+    <!-- Local Multiplayer Section -->
     <section class="features" id="section-local-multiplayer" style="display:none;">
       <h2 style="text-align:center;margin-bottom:2rem;">Local Multiplayer Games</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Tic Tac Toe</h3>
-          <p>Classic 3×3. Two players!</p>
-          <p><a class="btn" href="multi/tictactoe/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Pong</h3>
-          <p>Head-to-head Pong. First to 5 wins!</p>
-          <p><a class="btn" href="multi/pong/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Racing</h3>
-          <p>Race to the finish! Dodge obstacles and grab speed boosts!</p>
-          <p><a class="btn" href="multi/racing/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Tank Battle</h3>
-          <p>Battle arena with tanks! First to 5 kills wins!</p>
-          <p><a class="btn" href="multi/tanks/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Air Hockey</h3>
-          <p>Fast-paced air hockey with realistic physics!</p>
-          <p><a class="btn" href="multi/hockey/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Snake Duel</h3>
-          <p>Two snakes compete for food! Don't crash!</p>
-          <p><a class="btn" href="multi/snakeduel/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Ping Pong Madness</h3>
-          <p>Pong with power-ups and obstacles!</p>
-          <p><a class="btn" href="multi/pingpong/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Connect Four</h3>
-          <p>Drop discs to connect four! Two players battle!</p>
-          <p><a class="btn" href="multi/connect4/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Checkers</h3>
-          <p>Two-player checkers! Jump to capture and reach the king row!</p>
-          <p><a class="btn" href="multi/checkers/">Play</a></p>
-        </article>
-        <article class="card">
-          <h3>Pac-Man Duel</h3>
-          <p>One player runs the maze, the other hunts them down!</p>
-          <p><a class="btn" href="multi/pacman/">Play</a></p>
-        </article>
+      <div class="grid" id="grid-local-multiplayer">
+        <div class="empty-state">No games found.</div>
       </div>
     </section>
 
+    <!-- Special Games Section -->
     <section class="features" id="section-special" style="display:none;">
       <h2 style="text-align:center;margin-bottom:2rem;">Special Games</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Ragdoll Archers</h3>
-          <p>Ragdoll Archers</p>
-          <p><a class="btn" href="special/ragdollarchers">Play</a></p>
-        </article>
+      <div class="grid" id="grid-special">
+        <div class="empty-state">No games found.</div>
       </div>
     </section>
-    <!-- Online Multiplayer section removed -->
-
   </main>
 
   <!-- Footer Ad Placeholder -->
-  <div class="ad-container ad-footer" data-ad-placement="footer" id="ad-footer-bottom">
-    <!-- Insert your footer ad code here when ready -->
-  </div>
+  <div class="ad-container ad-footer" data-ad-placement="footer" id="ad-footer-bottom"></div>
 
   <footer class="site-footer">
     <div class="container">
-      <small>&copy; <span id="year"></span> Insta-Games | <a href="privacy/"
-          style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="terms/"
-          style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="about/"
-          style="color: var(--accent); text-decoration: none;">About</a> | <a href="feedback/"
-          style="color: var(--accent); text-decoration: none;">Feedback</a></small>
+      <small>&copy; <span id="year"></span> Insta-Games |
+        <a href="privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> |
+        <a href="terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> |
+        <a href="about/" style="color: var(--accent); text-decoration: none;">About</a> |
+        <a href="feedback/" style="color: var(--accent); text-decoration: none;">Feedback</a>
+      </small>
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
-  <script src="ads.js" defer></script>
+  <!-- Scripts -->
   <script src="three.min.js"></script>
-  <script src="shared.js"></script>
+  <script src="slik-bg.js"></script>
   <script src="glass-header.js"></script>
+  <script src="shared.js"></script>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const siteNav = document.getElementById('site-nav');
+    if (navToggle && siteNav) {
+      navToggle.addEventListener('click', () => {
+        siteNav.classList.toggle('open');
+      });
+    }
+
+    // Navigation Tab Switching
+    const tabs = [
+      { nav: document.getElementById('nav-singleplayer'), sec: document.getElementById('section-singleplayer') },
+      { nav: document.getElementById('nav-local-multiplayer'), sec: document.getElementById('section-local-multiplayer') },
+      { nav: document.getElementById('nav-special'), sec: document.getElementById('section-special') }
+    ];
+
+    tabs.forEach(tab => {
+      if (!tab.nav || !tab.sec) return;
+      tab.nav.addEventListener('click', () => {
+        tabs.forEach(t => {
+          if (t.nav) t.nav.classList.remove('active');
+          if (t.sec) t.sec.style.display = 'none';
+        });
+        tab.nav.classList.add('active');
+        tab.sec.style.display = 'block';
+        if (siteNav && window.innerWidth <= 768) siteNav.classList.remove('open');
+      });
+    });
+
+    // Clean title formatter
+    function formatDirName(name) {
+      return name.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    // Alphanumeric normalizer for resilient map matching
+    function normalizeKey(str) {
+      return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    // Parse root desc.epic file
+    async function loadEpicDescriptions() {
+      const descriptions = new Map();
+      try {
+        const res = await fetch('./desc.epic');
+        if (!res.ok) {
+          console.warn('desc.epic not found (HTTP status:', res.status, ')');
+          return descriptions;
+        }
+        const text = await res.text();
+
+        // Supports double quotes, single quotes, or asterisks as delimiters
+        const regex = /["'*]([^"'*]+)["'*]\s+has\s+description\s+["'*]([^"'*]*)["'*]/gi;
+        let match;
+        while ((match = regex.exec(text)) !== null) {
+          const rawName = match[1].trim();
+          const desc = match[2].trim();
+
+          descriptions.set(normalizeKey(rawName), desc);
+          descriptions.set(rawName.toLowerCase(), desc);
+        }
+      } catch (e) {
+        console.error('Error fetching or parsing desc.epic:', e);
+      }
+      return descriptions;
+    }
+
+    // Discover existing directories under target folder
+    async function discoverDirectories(folder) {
+      let folders = new Set();
+
+      // 1. GitHub Tree API check (for insta-games.github.io)
+      try {
+        const res = await fetch('https://api.github.com/repos/insta-games/insta-games.github.io/git/trees/main?recursive=1');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.tree)) {
+            const prefix = folder + '/';
+            data.tree.forEach(item => {
+              if (item.path.startsWith(prefix)) {
+                const subPath = item.path.slice(prefix.length);
+                const parts = subPath.split('/');
+                if (parts.length >= 2 || (parts.length === 1 && item.type === 'tree')) {
+                  if (parts[0] && !parts[0].startsWith('.')) {
+                    folders.add(parts[0]);
+                  }
+                }
+              }
+            });
+            return Array.from(folders);
+          }
+        }
+      } catch (e) { }
+
+      // 2. Directory auto-index scraping (for local test servers)
+      try {
+        const res = await fetch(folder + '/');
+        if (res.ok) {
+          const text = await res.text();
+          const matches = [...text.matchAll(/href="([^"?#/]+)\/?"/gi)];
+          matches.forEach(m => {
+            const name = m[1];
+            if (name && name !== '..' && name !== '.' && !name.includes('.') && !name.includes(':')) {
+              folders.add(name);
+            }
+          });
+        }
+      } catch (e) { }
+
+      return Array.from(folders);
+    }
+
+    // Scan, match descriptions, and render cards
+    async function scanCategory(folder, gridId, descMap) {
+      const grid = document.getElementById(gridId);
+      if (!grid) return;
+
+      const dirs = await discoverDirectories(folder);
+
+      if (!dirs || dirs.length === 0) {
+        grid.innerHTML = '<div class="empty-state">No games found.</div>';
+        return;
+      }
+
+      grid.innerHTML = '';
+
+      for (const dir of dirs) {
+        const title = formatDirName(dir);
+
+        // Try directory slug, formatted title, and stripped variants
+        const desc = descMap.get(normalizeKey(dir)) ||
+          descMap.get(normalizeKey(title)) ||
+          descMap.get(dir.toLowerCase()) ||
+          descMap.get(title.toLowerCase()) ||
+          '';
+
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${title}</h3>
+          ${desc ? `<p class="desc">${desc}</p>` : `<p class="desc"></p>`}
+          <p><a class="btn" href="${folder}/${dir}/">Play</a></p>
+        `;
+        grid.appendChild(card);
+      }
+    }
+
+    // Run scans when DOM is fully loaded
+    window.addEventListener('DOMContentLoaded', async () => {
+      const descMap = await loadEpicDescriptions();
+      scanCategory('single', 'grid-singleplayer', descMap);
+      scanCategory('multi', 'grid-local-multiplayer', descMap);
+      scanCategory('special', 'grid-special', descMap);
+    });
+  </script>
 </body>
 
 </html>
