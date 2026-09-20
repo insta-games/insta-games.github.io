@@ -42,6 +42,27 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "1767fdb",
+      "author": "greg-webdev",
+      "unix_time": 1789904598,
+      "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
+      "description": ""
+    },
+    {
+      "hash": "e131f20",
+      "author": "greg-webdev",
+      "unix_time": 1789904596,
+      "name": "HOLY PONG",
+      "description": ""
+    },
+    {
+      "hash": "9614a96",
+      "author": "github-actions[bot]",
+      "unix_time": 1789903970,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "21d7318",
       "author": "greg-webdev",
       "unix_time": 1789903926,
@@ -3039,10 +3060,10 @@
     }
   ],
   "last_commit": {
-    "hash": "21d7318",
+    "hash": "1767fdb",
     "author": "greg-webdev",
-    "unix_time": 1789903926,
-    "name": "feat: add liquid glass status bubble and smooth momentum scroll engine",
+    "unix_time": 1789904598,
+    "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
     "description": ""
   }
 }
