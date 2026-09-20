@@ -1,75 +1,1131 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Q293MVMDY4');
-    </script>
-    
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
-         crossorigin="anonymous"></script>
-    
-    
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="google-adsense-account" content="ca-pub-9609292028680816">
-    <title>Pong (vs AI) — Insta-Games</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="../../assets/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../../styles.css" />
-    <meta name="description" content="Classic Pong game vs AI. Use arrow keys or WASD!" />
-  </head>
-  <body>
-    <header class="site-header shadow">
-      <div class="container header-inner">
-        <a class="brand" href="../../index.html">
-          <img src="../../assets/favicon.svg" alt="logo" class="logo" />
-          <span class="brand-text">Insta-Games</span>
-        </a>
-        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-        <nav class="site-nav" id="site-nav">
-          <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
-          <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
-          <a href="../../about/">About</a>
-          <a href="../../feedback/">Feedback</a>
-        </nav>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cyber Pong - Insta-Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@600;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    :root {
+      --neon-cyan: #06b6d4;
+      --neon-blue: #3b82f6;
+      --neon-rose: #f43f5e;
+      --glass-bg: rgba(14, 20, 40, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #080c18;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* Top Compact Glass Header */
+    .game-nav-bar {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    .brand-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: opacity 0.2s;
+    }
+
+    .brand-link:hover {
+      opacity: 0.85;
+    }
+
+    /* Game Stage Wrap */
+    .stage-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      padding: 0 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      margin: auto 0;
+    }
+
+    /* Liquid Glass HUD / Scoreboard */
+    .hud-panel {
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 0.9rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .player-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .player-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .player-stat.human .player-name {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    }
+
+    .player-stat.ai {
+      text-align: right;
+    }
+
+    .player-stat.ai .player-name {
+      color: var(--neon-rose);
+      text-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
+    }
+
+    .score-board {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+    }
+
+    .score-divider {
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 1.75rem;
+    }
+
+    .score-human {
+      color: var(--neon-cyan);
+      min-width: 45px;
+      text-align: right;
+      text-shadow: 0 0 16px rgba(6, 182, 212, 0.6);
+    }
+
+    .score-ai {
+      color: var(--neon-rose);
+      min-width: 45px;
+      text-align: left;
+      text-shadow: 0 0 16px rgba(244, 63, 94, 0.6);
+    }
+
+    /* Game Viewport Container */
+    .arena-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 600px;
+      background: radial-gradient(circle at 50% 50%, rgba(20, 30, 65, 0.5) 0%, rgba(6, 10, 24, 0.95) 85%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 20px 60px rgba(0, 0, 0, 0.6);
+      touch-action: none;
+    }
+
+    canvas#pongCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Start / Pause Center Overlay */
+    .arena-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 10, 24, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      z-index: 20;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+
+    .arena-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .overlay-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff 0%, var(--neon-cyan) 60%, var(--neon-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+
+    .overlay-sub {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      max-width: 480px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Controls Bar & Settings */
+    .controls-panel {
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .control-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+    }
+
+    /* Segmented Liquid Glass Buttons */
+    .segmented-group {
+      display: inline-flex;
+      background: rgba(10, 15, 30, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .seg-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 0.4rem 0.8rem;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .seg-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .seg-btn.active {
+      background: var(--neon-cyan);
+      color: #03131c;
+      box-shadow: 0 0 14px rgba(6, 182, 212, 0.45);
+      font-weight: 700;
+    }
+
+    .seg-btn.active.ai-pred {
+      background: var(--neon-rose);
+      color: #1a0208;
+      box-shadow: 0 0 14px rgba(244, 63, 94, 0.45);
+    }
+
+    /* Action Buttons */
+    .btn-action {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+      color: #020c18;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 0 18px rgba(6, 182, 212, 0.35);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(6, 182, 212, 0.6);
+    }
+
+    /* Trajectory Target Debug / Marker indicator */
+    .mode-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mode-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 6px var(--neon-cyan);
+    }
+
+    .mode-dot.pred {
+      background: var(--neon-rose);
+      box-shadow: 0 0 6px var(--neon-rose);
+    }
+
+    @media (max-width: 768px) {
+      .hud-panel {
+        padding: 0.75rem 1rem;
+      }
+
+      .score-board {
+        font-size: 1.85rem;
+      }
+
+      .controls-panel {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .control-group {
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="game-nav-bar">
+    <a href="index.html" class="brand-link">
+      <span>←</span>
+      <span>Back to Games</span>
+    </a>
+    <div class="mode-indicator">
+      <span id="statusIndicatorDot" class="mode-dot"></span>
+      <span id="statusIndicatorText">Linear AI</span>
+    </div>
+  </header>
+
+  <main class="stage-wrapper">
+    <section class="hud-panel">
+      <div class="player-stat human">
+        <span class="player-name">Player 1</span>
+        <small style="color: #64748b; font-size: 0.7rem;">Mouse / Touch / W-S</small>
       </div>
-    </header>
 
-    <main class="container">
-      <section class="game-wrap center">
-        <h1>Pong (vs AI)</h1>
-        
-        <canvas id="pong" class="snake-canvas" width="600" height="400"></canvas>
-        <div class="controls">
-          <label for="pong-difficulty" style="align-self:center;color:var(--muted)">Difficulty:</label>
-          <select id="pong-difficulty" class="btn" style="padding:0.5rem 0.75rem;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-            <option value="impossible" selected>Impossible</option>
-          </select>
-          <button id="reset" class="btn reset-scores">Reset</button>
-          <div class="status" id="pong-score" style="margin:0 auto;">You: 0 | AI: 0</div>
+      <div class="score-board">
+        <span class="score-human" id="playerScoreDisplay">0</span>
+        <span class="score-divider">:</span>
+        <span class="score-ai" id="aiScoreDisplay">0</span>
+      </div>
+
+      <div class="player-stat ai">
+        <span class="player-name" id="aiLabel">AI (Linear)</span>
+        <small id="difficultyLabel" style="color: #64748b; font-size: 0.7rem;">Medium</small>
+      </div>
+    </section>
+
+    <!-- Canvas Game Arena -->
+    <div class="arena-container" id="arenaContainer">
+      <canvas id="pongCanvas"></canvas>
+
+      <!-- Center Overlay for Start / Pause / Win -->
+      <div class="arena-overlay" id="arenaOverlay">
+        <h1 class="overlay-title" id="overlayTitle">Cyber Pong</h1>
+        <p class="overlay-sub" id="overlaySub">
+          Move your mouse or slide your finger on the screen to control your paddle. First to 7 points wins the match!
+        </p>
+        <button type="button" class="btn-action btn-primary" id="startBtn">
+          ▶ Start Match
+        </button>
+      </div>
+    </div>
+
+    <section class="controls-panel">
+      <div class="control-group">
+        <span class="control-label">AI Logic:</span>
+        <div class="segmented-group" id="aiModeGroup">
+          <button type="button" class="seg-btn active" data-mode="linear">Linear</button>
+          <button type="button" class="seg-btn" data-mode="prediction">Prediction</button>
         </div>
-      </section>
-    </main>
+      </div>
 
-    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games | <a href="../../privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="../../terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="../../about/" style="color: var(--accent); text-decoration: none;">About</a> | <a href="../../feedback/" style="color: var(--accent); text-decoration: none;">Feedback</a></small></div></footer>
-    <script>
-      window.FORCE_SINGLE_PLAYER = true;
-    </script>
-    <script src="../../script.js" defer></script>
-    <script src="pong.js?v=4" defer></script>
-    <script src="../../three.min.js"></script>
-  <script src="../../shared.js"></script>
-  <script src="../../glass-header.js"></script>
-  </body>
+      <div class="control-group">
+        <span class="control-label">Difficulty:</span>
+        <div class="segmented-group" id="diffGroup">
+          <button type="button" class="seg-btn" data-diff="easy">Easy</button>
+          <button type="button" class="seg-btn active" data-diff="medium">Medium</button>
+          <button type="button" class="seg-btn" data-diff="hard">Hard</button>
+          <button type="button" class="seg-btn" data-diff="insane">Insane</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <button type="button" class="btn-action" id="audioToggleBtn">🔊 Audio ON</button>
+        <button type="button" class="btn-action" id="resetBtn">↺ Reset</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            this.ctx = new AudioContextClass();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      toggleMute() {
+        this.muted = !this.muted;
+        return !this.muted;
+      }
+
+      playPaddleHit(isPlayer = true) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        const startFreq = isPlayer ? 420 : 330;
+        osc.frequency.setValueAtTime(startFreq, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(startFreq + 120, this.ctx.currentTime + 0.08);
+
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.13);
+      }
+
+      playWallHit() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(220, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(140, this.ctx.currentTime + 0.06);
+
+        gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.09);
+      }
+
+      playScore(isPlayerWin) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const notes = isPlayerWin ? [330, 440, 550, 660] : [400, 320, 240, 180];
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = isPlayerWin ? 'square' : 'sawtooth';
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.08);
+
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + (idx + 1) * 0.08 + 0.05);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(this.ctx.currentTime + idx * 0.08);
+          osc.stop(this.ctx.currentTime + (idx + 1) * 0.08 + 0.06);
+        });
+      }
+    }
+
+    const sound = new SoundEngine();
+  </script>
+
+  <script>
+    const canvas = document.getElementById('pongCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const VIRTUAL_WIDTH = 1280;
+    const VIRTUAL_HEIGHT = 720;
+    const WINNING_SCORE = 7;
+
+    // Difficulty presets
+    const DIFFICULTIES = {
+      easy: {
+        aiSpeedMultiplier: 0.55,
+        reactionLatency: 0.12,
+        wobbleVariance: 48,
+        label: 'Easy'
+      },
+      medium: {
+        aiSpeedMultiplier: 0.85,
+        reactionLatency: 0.06,
+        wobbleVariance: 24,
+        label: 'Medium'
+      },
+      hard: {
+        aiSpeedMultiplier: 1.15,
+        reactionLatency: 0.02,
+        wobbleVariance: 8,
+        label: 'Hard'
+      },
+      insane: {
+        aiSpeedMultiplier: 1.55,
+        reactionLatency: 0.0,
+        wobbleVariance: 0,
+        label: 'Insane'
+      }
+    };
+
+    const gameState = {
+      running: false,
+      paused: false,
+      playerScore: 0,
+      aiScore: 0,
+      aiMode: 'linear', // 'linear' | 'prediction'
+      difficulty: 'medium',
+      predictedY: VIRTUAL_HEIGHT / 2,
+      lastPredictionTime: 0
+    };
+
+    const player = {
+      x: 36,
+      y: VIRTUAL_HEIGHT / 2 - 60,
+      w: 16,
+      h: 120,
+      targetY: VIRTUAL_HEIGHT / 2 - 60,
+      speed: 12,
+      glowColor: '#06b6d4',
+      trailY: []
+    };
+
+    const ai = {
+      x: VIRTUAL_WIDTH - 52,
+      y: VIRTUAL_HEIGHT / 2 - 60,
+      w: 16,
+      h: 120,
+      targetY: VIRTUAL_HEIGHT / 2 - 60,
+      speed: 9,
+      glowColor: '#f43f5e',
+      trailY: [],
+      errorOffset: 0
+    };
+
+    const ball = {
+      x: VIRTUAL_WIDTH / 2,
+      y: VIRTUAL_HEIGHT / 2,
+      radius: 9,
+      baseSpeed: 10,
+      vx: 10,
+      vy: 4,
+      history: [],
+      maxHistory: 8
+    };
+
+    let particles = [];
+
+    function createSparks(x, y, color, count = 16) {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() * 3 + 2,
+          color: color,
+          alpha: 1,
+          decay: Math.random() * 0.03 + 0.02
+        });
+      }
+    }
+
+    function computePredictedIntercept() {
+      // If the ball is moving away from the AI, aim toward center with a slight bias
+      if (ball.vx <= 0) {
+        return VIRTUAL_HEIGHT / 2;
+      }
+
+      let simX = ball.x;
+      let simY = ball.y;
+      let simVx = ball.vx;
+      let simVy = ball.vy;
+
+      const targetX = ai.x - ball.radius;
+      let maxSteps = 400; // Safeguard loop
+
+      while (simX < targetX && maxSteps > 0) {
+        simX += simVx;
+        simY += simVy;
+
+        // Bounce simulation off top and bottom walls
+        if (simY - ball.radius <= 0) {
+          simY = ball.radius;
+          simVy = -simVy;
+        } else if (simY + ball.radius >= VIRTUAL_HEIGHT) {
+          simY = VIRTUAL_HEIGHT - ball.radius;
+          simVy = -simVy;
+        }
+
+        maxSteps--;
+      }
+
+      // Add difficulty variance
+      const diffParams = DIFFICULTIES[gameState.difficulty];
+      const variance = (Math.random() * 2 - 1) * diffParams.wobbleVariance;
+      return Math.max(ai.h / 2, Math.min(VIRTUAL_HEIGHT - ai.h / 2, simY + variance));
+    }
+
+    function resetBall(servingPlayer = 1) {
+      ball.x = VIRTUAL_WIDTH / 2;
+      ball.y = VIRTUAL_HEIGHT / 2;
+      ball.history = [];
+
+      const angle = (Math.random() * Math.PI / 4) - (Math.PI / 8); // -22.5 to +22.5 deg
+      const dir = servingPlayer === 1 ? -1 : 1;
+      const speed = ball.baseSpeed;
+
+      ball.vx = Math.cos(angle) * speed * dir;
+      ball.vy = Math.sin(angle) * speed * (Math.random() > 0.5 ? 1 : -1);
+
+      // Re-calculate target intercept immediately on ball launch
+      gameState.predictedY = computePredictedIntercept();
+    }
+
+    let keys = { ArrowUp: false, ArrowDown: false, KeyW: false, KeyS: false };
+
+    window.addEventListener('keydown', (e) => {
+      if (keys.hasOwnProperty(e.code)) {
+        keys[e.code] = true;
+      }
+      if (e.code === 'Space') {
+        togglePause();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (keys.hasOwnProperty(e.code)) {
+        keys[e.code] = false;
+      }
+    });
+
+    function setPlayerPaddleFromClientY(clientY) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleY = VIRTUAL_HEIGHT / rect.height;
+      const arenaY = (clientY - rect.top) * scaleY;
+      player.targetY = arenaY - player.h / 2;
+    }
+
+    canvas.addEventListener('mousemove', (e) => {
+      setPlayerPaddleFromClientY(e.clientY);
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        setPlayerPaddleFromClientY(e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('touchstart', (e) => {
+      sound.init();
+      if (e.touches.length > 0) {
+        setPlayerPaddleFromClientY(e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    function updateGame() {
+      if (!gameState.running || gameState.paused) return;
+
+      // 1. Keyboard Controls Input fallback
+      if (keys.ArrowUp || keys.KeyW) {
+        player.targetY -= player.speed * 1.3;
+      }
+      if (keys.ArrowDown || keys.KeyS) {
+        player.targetY += player.speed * 1.3;
+      }
+
+      // Clamp and smooth player paddle
+      player.targetY = Math.max(0, Math.min(VIRTUAL_HEIGHT - player.h, player.targetY));
+      player.y += (player.targetY - player.y) * 0.35;
+
+      // 2. AI Logic update
+      const diff = DIFFICULTIES[gameState.difficulty];
+      const aiSpeed = ai.speed * diff.aiSpeedMultiplier;
+
+      if (gameState.aiMode === 'prediction') {
+        // Recalculate trajectory on directional inflection
+        if (ball.vx > 0 && Math.abs(ball.x - (VIRTUAL_WIDTH / 2)) < 25) {
+          gameState.predictedY = computePredictedIntercept();
+        }
+        ai.targetY = gameState.predictedY - ai.h / 2;
+      } else {
+        // Linear mode: Simply tracks current ball Y position directly
+        ai.targetY = ball.y - ai.h / 2;
+      }
+
+      // Move AI paddle toward targetY with speed throttling
+      const aiDiff = ai.targetY - ai.y;
+      if (Math.abs(aiDiff) > 1.5) {
+        ai.y += Math.sign(aiDiff) * Math.min(Math.abs(aiDiff), aiSpeed);
+      }
+      ai.y = Math.max(0, Math.min(VIRTUAL_HEIGHT - ai.h, ai.y));
+
+      // 3. Ball Physics & Trails
+      ball.history.push({ x: ball.x, y: ball.y });
+      if (ball.history.length > ball.maxHistory) {
+        ball.history.shift();
+      }
+
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // Wall Collisions
+      if (ball.y - ball.radius <= 0) {
+        ball.y = ball.radius;
+        ball.vy = Math.abs(ball.vy);
+        createSparks(ball.x, 0, '#38bdf8', 8);
+        sound.playWallHit();
+      } else if (ball.y + ball.radius >= VIRTUAL_HEIGHT) {
+        ball.y = VIRTUAL_HEIGHT - ball.radius;
+        ball.vy = -Math.abs(ball.vy);
+        createSparks(ball.x, VIRTUAL_HEIGHT, '#38bdf8', 8);
+        sound.playWallHit();
+      }
+
+      // 4. Paddle Collision Detection
+      // Player Paddle Check (Left)
+      if (
+        ball.vx < 0 &&
+        ball.x - ball.radius <= player.x + player.w &&
+        ball.x + ball.radius >= player.x &&
+        ball.y >= player.y - ball.radius &&
+        ball.y <= player.y + player.h + ball.radius
+      ) {
+        ball.x = player.x + player.w + ball.radius;
+
+        // Angle deflection based on hit location
+        const offset = (ball.y - (player.y + player.h / 2)) / (player.h / 2);
+        const maxAngle = Math.PI / 3; // 60 deg max
+        const angle = offset * maxAngle;
+        const currentSpeed = Math.min(22, Math.hypot(ball.vx, ball.vy) * 1.05); // Speed up slightly
+
+        ball.vx = Math.cos(angle) * currentSpeed;
+        ball.vy = Math.sin(angle) * currentSpeed;
+
+        createSparks(player.x + player.w, ball.y, player.glowColor, 16);
+        sound.playPaddleHit(true);
+
+        // Pre-compute prediction when returning to AI
+        if (gameState.aiMode === 'prediction') {
+          gameState.predictedY = computePredictedIntercept();
+        }
+      }
+
+      // AI Paddle Check (Right)
+      if (
+        ball.vx > 0 &&
+        ball.x + ball.radius >= ai.x &&
+        ball.x - ball.radius <= ai.x + ai.w &&
+        ball.y >= ai.y - ball.radius &&
+        ball.y <= ai.y + ai.h + ball.radius
+      ) {
+        ball.x = ai.x - ball.radius;
+
+        const offset = (ball.y - (ai.y + ai.h / 2)) / (ai.h / 2);
+        const maxAngle = Math.PI / 3;
+        const angle = offset * maxAngle;
+        const currentSpeed = Math.min(22, Math.hypot(ball.vx, ball.vy) * 1.05);
+
+        ball.vx = -Math.cos(angle) * currentSpeed;
+        ball.vy = Math.sin(angle) * currentSpeed;
+
+        createSparks(ai.x, ball.y, ai.glowColor, 16);
+        sound.playPaddleHit(false);
+      }
+
+      // 5. Scoring
+      if (ball.x + ball.radius < 0) {
+        // AI scores
+        gameState.aiScore++;
+        updateScoreboard();
+        createSparks(0, ball.y, '#f43f5e', 28);
+        sound.playScore(false);
+        checkMatchEnd() || resetBall(1);
+      } else if (ball.x - ball.radius > VIRTUAL_WIDTH) {
+        // Player scores
+        gameState.playerScore++;
+        updateScoreboard();
+        createSparks(VIRTUAL_WIDTH, ball.y, '#06b6d4', 28);
+        sound.playScore(true);
+        checkMatchEnd() || resetBall(2);
+      }
+
+      // 6. Particle Decay
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    function checkMatchEnd() {
+      if (gameState.playerScore >= WINNING_SCORE || gameState.aiScore >= WINNING_SCORE) {
+        gameState.running = false;
+        const won = gameState.playerScore >= WINNING_SCORE;
+        showOverlay(
+          won ? 'VICTORY!' : 'DEFEAT',
+          won ? `You defeated the ${gameState.difficulty.toUpperCase()} AI!` : 'The machine reigns supreme. Better luck next game!',
+          'Play Again'
+        );
+        return true;
+      }
+      return false;
+    }
+
+    function updateScoreboard() {
+      document.getElementById('playerScoreDisplay').textContent = gameState.playerScore;
+      document.getElementById('aiScoreDisplay').textContent = gameState.aiScore;
+    }
+
+    function drawGame() {
+      ctx.clearRect(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+
+      // Center court dotted net
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 4;
+      ctx.setLineDash([12, 14]);
+      ctx.beginPath();
+      ctx.moveTo(VIRTUAL_WIDTH / 2, 0);
+      ctx.lineTo(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw Trajectory Laser Guide if AI mode is set to Prediction (Subtle visual aid)
+      if (gameState.aiMode === 'prediction' && ball.vx > 0) {
+        ctx.strokeStyle = 'rgba(244, 63, 94, 0.18)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 8]);
+        ctx.beginPath();
+        ctx.moveTo(ball.x, ball.y);
+        ctx.lineTo(ai.x, gameState.predictedY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Target intercept reticle
+        ctx.fillStyle = 'rgba(244, 63, 94, 0.4)';
+        ctx.beginPath();
+        ctx.arc(ai.x, gameState.predictedY, 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Ball Trails
+      for (let i = 0; i < ball.history.length; i++) {
+        const h = ball.history[i];
+        const ratio = (i + 1) / ball.history.length;
+        ctx.fillStyle = `rgba(6, 182, 212, ${ratio * 0.28})`;
+        ctx.beginPath();
+        ctx.arc(h.x, h.y, ball.radius * (0.6 + ratio * 0.4), 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Ball with glow
+      ctx.save();
+      ctx.shadowColor = '#06b6d4';
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // Draw Player Paddle
+      ctx.save();
+      ctx.shadowColor = player.glowColor;
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = player.glowColor;
+      roundRect(ctx, player.x, player.y, player.w, player.h, 8);
+      ctx.fill();
+
+      // Inner glass highlight
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      roundRect(ctx, player.x + 3, player.y + 4, player.w - 6, player.h - 8, 4);
+      ctx.fill();
+      ctx.restore();
+
+      // Draw AI Paddle
+      ctx.save();
+      ctx.shadowColor = ai.glowColor;
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = ai.glowColor;
+      roundRect(ctx, ai.x, ai.y, ai.w, ai.h, 8);
+      ctx.fill();
+
+      // Inner highlight
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      roundRect(ctx, ai.x + 3, ai.y + 4, ai.w - 6, ai.h - 8, 4);
+      ctx.fill();
+      ctx.restore();
+
+      // Draw Particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function roundRect(context, x, y, w, h, r) {
+      if (w < 2 * r) r = w / 2;
+      if (h < 2 * r) r = h / 2;
+      context.beginPath();
+      context.moveTo(x + r, y);
+      context.arcTo(x + w, y, x + w, y + h, r);
+      context.arcTo(x + w, y + h, x, y + h, r);
+      context.arcTo(x, y + h, x, y, r);
+      context.arcTo(x, y, x + w, y, r);
+      context.closePath();
+    }
+
+    function gameLoop() {
+      updateGame();
+      drawGame();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function resizeCanvas() {
+      const container = document.getElementById('arenaContainer');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = container.getBoundingClientRect();
+
+      canvas.width = VIRTUAL_WIDTH;
+      canvas.height = VIRTUAL_HEIGHT;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    const overlay = document.getElementById('arenaOverlay');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const overlaySub = document.getElementById('overlaySub');
+    const startBtn = document.getElementById('startBtn');
+    const aiLabel = document.getElementById('aiLabel');
+    const diffLabel = document.getElementById('difficultyLabel');
+    const statusDot = document.getElementById('statusIndicatorDot');
+    const statusText = document.getElementById('statusIndicatorText');
+
+    function showOverlay(title, subtitle, buttonText) {
+      overlayTitle.textContent = title;
+      overlaySub.textContent = subtitle;
+      startBtn.textContent = buttonText;
+      overlay.classList.remove('hidden');
+    }
+
+    function hideOverlay() {
+      overlay.classList.add('hidden');
+    }
+
+    function startMatch() {
+      sound.init();
+      gameState.playerScore = 0;
+      gameState.aiScore = 0;
+      updateScoreboard();
+      resetBall(1);
+      gameState.running = true;
+      gameState.paused = false;
+      hideOverlay();
+    }
+
+    function togglePause() {
+      if (!gameState.running) return;
+      gameState.paused = !gameState.paused;
+      if (gameState.paused) {
+        showOverlay('PAUSED', 'Press Space or resume button to continue playing.', 'Resume Game');
+      } else {
+        hideOverlay();
+      }
+    }
+
+    startBtn.addEventListener('click', () => {
+      if (!gameState.running) {
+        startMatch();
+      } else if (gameState.paused) {
+        gameState.paused = false;
+        hideOverlay();
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      gameState.running = false;
+      gameState.paused = false;
+      gameState.playerScore = 0;
+      gameState.aiScore = 0;
+      updateScoreboard();
+      resetBall(1);
+      showOverlay('Cyber Pong', 'Select your difficulty and AI mode, then launch the game.', '▶ Start Match');
+    });
+
+    // AI Mode Switcher
+    document.querySelectorAll('#aiModeGroup .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#aiModeGroup .seg-btn').forEach(b => {
+          b.classList.remove('active', 'ai-pred');
+        });
+        btn.classList.add('active');
+        if (btn.dataset.mode === 'prediction') {
+          btn.classList.add('ai-pred');
+        }
+
+        gameState.aiMode = btn.dataset.mode;
+        const isPred = gameState.aiMode === 'prediction';
+
+        aiLabel.textContent = `AI (${isPred ? 'Prediction' : 'Linear'})`;
+        statusText.textContent = `${isPred ? 'Prediction' : 'Linear'} AI`;
+
+        if (isPred) {
+          statusDot.classList.add('pred');
+        } else {
+          statusDot.classList.remove('pred');
+        }
+
+        if (isPred) {
+          gameState.predictedY = computePredictedIntercept();
+        }
+      });
+    });
+
+    // Difficulty Switcher
+    document.querySelectorAll('#diffGroup .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#diffGroup .seg-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        gameState.difficulty = btn.dataset.diff;
+        diffLabel.textContent = DIFFICULTIES[gameState.difficulty].label;
+      });
+    });
+
+    // Audio Mute Toggle
+    const audioBtn = document.getElementById('audioToggleBtn');
+    audioBtn.addEventListener('click', () => {
+      const active = sound.toggleMute();
+      audioBtn.textContent = active ? '🔊 Audio ON' : '🔇 Audio OFF';
+    });
+
+    window.onload = function () {
+      resizeCanvas();
+      resetBall(1);
+      gameLoop();
+    };
+  </script>
+</body>
+
 </html>
