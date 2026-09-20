@@ -1,0 +1,41 @@
+{
+  "single": [
+    "2048",
+    "blockpuzzle",
+    "breakout",
+    "checkers",
+    "connect4",
+    "copter",
+    "dino",
+    "flappy",
+    "fruitninja",
+    "invaders",
+    "match3",
+    "memory",
+    "minesweeper",
+    "pacman",
+    "pong",
+    "pongcircular",
+    "simon",
+    "sliding-puzzle",
+    "snake",
+    "tetris",
+    "tictactoe",
+    "whack"
+  ],
+  "multi": [
+    "checkers",
+    "connect4",
+    "hockey",
+    "pacman",
+    "pingpong",
+    "pong",
+    "racing",
+    "snakeduel",
+    "tanks",
+    "tictactoe"
+  ],
+  "special": [
+    "ragdollarchers"
+  ]
+}
