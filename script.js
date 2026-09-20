@@ -17,20 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
   if (navSingleplayer && navLocalMultiplayer) {
     // If on a game page (no sections), navigation links go to index.html
     if (!isIndexPage) {
+      const getRootUrl = (hash = '') => {
+        const brand = document.querySelector('a.brand');
+        const base = brand ? brand.getAttribute('href').split('#')[0] : 'index.html';
+        return hash ? base + hash : base;
+      };
+
       navSingleplayer.addEventListener('click', function (e) {
         e.preventDefault();
-        window.location.href = 'index.html';
+        window.location.href = getRootUrl();
       });
       
       navLocalMultiplayer.addEventListener('click', function (e) {
         e.preventDefault();
-        window.location.href = 'index.html#local-multiplayer';
+        window.location.href = getRootUrl('#local-multiplayer');
       });
 
       if (navOnlineMultiplayer) {
         navOnlineMultiplayer.addEventListener('click', function (e) {
           e.preventDefault();
-          window.location.href = 'index.html#online-multiplayer';
+          window.location.href = getRootUrl('#online-multiplayer');
         });
       }
     }

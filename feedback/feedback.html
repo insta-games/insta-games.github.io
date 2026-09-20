@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q293MVMDY4');
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
+         crossorigin="anonymous"></script>
+    
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="google-adsense-account" content="ca-pub-9609292028680816">
+    <title>Feedback — Insta-Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css" />
+    <meta name="description" content="Send us your feedback about our games!" />
+    <style>
+        .feedback-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .feedback-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-align: center;
+        }
+        .feedback-content p {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .feedback-form {
+            background: var(--card);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        .form-group select {
+            cursor: pointer;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
+        }
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        .success-message {
+            display: none;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .required {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="../index.html">
+                <img src="../assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Insta-Games</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="../index.html">Single Player</a>
+                <a href="../index.html#local-multiplayer">Local Multiplayer</a>
+                <a href="../about/">About</a>
+                <a href="../feedback/" class="active">Feedback</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="feedback-content">
+            <h1>📬 Send Us Feedback</h1>
+            <p>Have a suggestion, found a bug, or just want to say hi? We'd love to hear from you!</p>
+
+            <div class="success-message" id="success-message">
+                ✅ Thank you for your feedback! We'll get back to you soon.
+            </div>
+
+            <div class="error-message" id="error-message">
+                ❌ Oops! Something went wrong. Please try again.
+            </div>
+
+            <div class="feedback-form">
+                <form id="feedback-form" action="https://formspree.io/f/xjkjveon" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Feedback Type <span class="required">*</span></label>
+                        <select id="category" name="category" required>
+                            <option value="">Select a category...</option>
+                            <option value="bug">🐛 Bug Report</option>
+                            <option value="suggestion">💡 Suggestion</option>
+                            <option value="game-idea">🎮 New Game Idea</option>
+                            <option value="improvement">⚡ Game Improvement</option>
+                            <option value="compliment">👍 Compliment</option>
+                            <option value="other">💬 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="game">Which Game? (Optional)</label>
+                        <select id="game" name="game">
+                            <option value="">Select a game...</option>
+                            <option value="snake">Snake</option>
+                            <option value="tetris">Tetris</option>
+                            <option value="2048">2048</option>
+                            <option value="pong">Pong</option>
+                            <option value="tictactoe">Tic Tac Toe</option>
+                            <option value="memory">Memory Match</option>
+                            <option value="minesweeper">Minesweeper</option>
+                            <option value="breakout">Breakout</option>
+                            <option value="flappy">Flappy Bird</option>
+                            <option value="invaders">Space Invaders</option>
+                            <option value="whack">Whack-a-Mole</option>
+                            <option value="connect4">Connect Four</option>
+                            <option value="checkers">Checkers</option>
+                            <option value="chess">Chess</option>
+                            <option value="racing">Racing</option>
+                            <option value="tanks">Tank Battle</option>
+                            <option value="hockey">Air Hockey</option>
+                            <option value="snakeduel">Snake Duel</option>
+                            <option value="pingpong">Ping Pong Madness</option>
+                            <option value="simon">Simon</option>
+                            <option value="other">Other/Multiple Games</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" required placeholder="Tell us what's on your mind..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Feedback</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <small>&copy; <span id="year"></span> Insta-Games | <a href="../privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="../terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="../about/" style="color: var(--accent); text-decoration: none;">About</a> | <a href="../feedback/" style="color: var(--accent); text-decoration: none;">Feedback</a></small>
+        </div>
+    </footer>
+
+    <script src="../script.js" defer></script>
+    <script>
+        const form = document.getElementById('feedback-form');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            console.log('Form submitted, sending to Formspree...');
+            
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('https://formspree.io/f/xjkjveon', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                if (response.ok) {
+                    console.log('Success!');
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    form.reset();
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    console.error('Form submission failed:', data);
+                    errorMessage.textContent = '❌ ' + (data.error || 'Form submission failed. Please try again.');
+                    throw new Error(data.error || 'Form submission failed');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

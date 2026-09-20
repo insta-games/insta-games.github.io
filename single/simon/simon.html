@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q293MVMDY4');
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
+         crossorigin="anonymous"></script>
+    
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="google-adsense-account" content="ca-pub-9609292028680816">
+    <title>Simon — Insta-Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../../styles.css" />
+    <meta name="description" content="Simon Says memory game. Repeat the growing color sequence. How far can you go?" />
+  </head>
+  <body>
+    <header class="site-header shadow">
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html"><img src="../../assets/favicon.svg" class="logo" alt="logo"/><span class="brand-text">Insta-Games</span></a>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+        <nav class="site-nav" id="site-nav">
+          <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
+          <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
+          <a href="../../about/">About</a>
+          <a href="../../feedback/">Feedback</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="game-wrap center">
+        <h1>Simon</h1>
+        <p class="muted">Repeat the color sequence. The sequence grows each round.</p>
+        <div id="simon-board" class="simon-board">
+          <div class="card-tile simon-pad simon-red" data-pad="0"></div>
+          <div class="card-tile simon-pad simon-yellow" data-pad="1"></div>
+          <div class="card-tile simon-pad simon-green" data-pad="2"></div>
+          <div class="card-tile simon-pad simon-blue" data-pad="3"></div>
+        </div>
+        <div class="flex-center mt-1">
+          <button id="simon-start" class="btn">Start</button>
+          <button id="reset" class="btn reset-scores">Reset</button>
+          <div class="muted">Level: <strong id="simon-level">0</strong></div>
+          <div class="muted" id="player-scores" style="display:none;">
+            P1: <strong id="p1-score">0</strong> | 
+            P2: <strong id="p2-score">0</strong>
+          </div>
+        </div>
+        <div id="simon-result" class="muted mt-half"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="container"><small>&copy; <span id="year"></span> Insta-Games | <a href="../../privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> | <a href="../../terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> | <a href="../../about/" style="color: var(--accent); text-decoration: none;">About</a> | <a href="../../feedback/" style="color: var(--accent); text-decoration: none;">Feedback</a></small></div></footer>
+    <script src="../../script.js" defer></script>
+    <script src="simon.js?v=2" defer></script>
+  </body>
+</html>

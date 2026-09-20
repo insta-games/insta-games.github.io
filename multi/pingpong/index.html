@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    </main>
+    </main>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q293MVMDY4"></script>
+    </main>
+    </main>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q293MVMDY4');
+    </script>
+        <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
+         crossorigin="anonymous"></script>
+        
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-9609292028680816">
+    <title>Ping Pong Madness - 2 Player</title>
+    <link rel="stylesheet" href="../../styles.css?v=2">
+    <style>
+        .pingpong-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .pingpong-canvas {
+            background: transparent;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        .status {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 15px 0;
+            min-height: 30px;
+            color: var(--accent);
+        }
+        .scores {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="../../index.html">
+                <img src="../../assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Insta-Games</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="javascript:void(0)" id="nav-singleplayer">Single Player</a>
+                <a href="javascript:void(0)" id="nav-local-multiplayer" class="active">Local Multiplayer</a>
+                <a href="../../about/">About</a>
+                <a href="../../feedback/">Feedback</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+    <header class="site-header shadow">
+        <div class="container header-inner">
+            <a class="brand" href="../../index.html">
+                <img src="../../assets/favicon.svg" alt="logo" class="logo" />
+                <span class="brand-text">Insta-Games</span>
+            </a>
+            <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <nav class="site-nav" id="site-nav">
+                <a href="javascript:void(0)" id="nav-singleplayer">Single Player</a>
+                <a href="javascript:void(0)" id="nav-local-multiplayer" class="active">Local Multiplayer</a>
+                <a href="../../about/">About</a>
+                <a href="../../feedback/">Feedback</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+    <div class="pingpong-container">
+        <h1 style="text-align: center;">🏓 Ping Pong Madness</h1>
+        <div class="status" id="status">First to 7 wins!</div>
+        <div class="scores">
+            <div style="color: #06b6d4;" id="p1Score">0</div>
+            <div style="color: #3b82f6;" id="p2Score">0</div>
+        </div>
+        <canvas id="gameCanvas" class="pingpong-canvas" width="800" height="600"></canvas>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <p><strong>Player 1 (Cyan):</strong> W/S &nbsp;&nbsp;&nbsp; <strong>Player 2 (Blue):</strong> ↑/↓</p>
+            <button id="resetBtn" class="btn">New Game</button>
+            <button onclick="window.location.href='../../index.html#local-multiplayer'" class="btn">Back to Games</button>
+        </div>
+    </div>
+    
+    </main>
+    </main>
+    <script src="pingpong.js?v=1"></script>
+    </main>
+    <script src="../../script.js" defer></script>
+</body>
+</html>
