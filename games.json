@@ -38,11 +38,55 @@
   "special": [
     "ragdollarchers"
   ],
+  "commits": [
+    {
+      "hash": "Geg",
+      "author": "2026-09-20T18:33:52+08:00",
+      "timestamp": "Update generategameindex.yml",
+      "name": "Signed-off-by: Geg <greg@notgreg.space>",
+      "description": ""
+    },
+    {
+      "hash": "Geg",
+      "author": "2026-09-20T18:22:46+08:00",
+      "timestamp": "Update generategameindex.yml",
+      "name": "Signed-off-by: Geg <greg@notgreg.space>",
+      "description": ""
+    },
+    {
+      "hash": "Geg",
+      "author": "2026-09-20T17:57:53+08:00",
+      "timestamp": "Update generategameindex.yml",
+      "name": "Signed-off-by: Geg <greg@notgreg.space>",
+      "description": ""
+    },
+    {
+      "hash": "Geg",
+      "author": "2026-09-20T17:56:00+08:00",
+      "timestamp": "Create generategameindex.yml",
+      "name": "lol\n\nSigned-off-by: Geg <greg@notgreg.space>",
+      "description": ""
+    },
+    {
+      "hash": "greg-webdev",
+      "author": "2026-09-20T17:47:22+08:00",
+      "timestamp": "HOLY REVAMP",
+      "name": "now index.html will auto update with the games you put in",
+      "description": ""
+    },
+    {
+      "hash": "sanjith-esp32",
+      "author": "2026-01-12T12:46:43+08:00",
+      "timestamp": "Update game styling and remove online multiplayer buttons",
+      "name": "- Enhanced snake game with themed gradients and glow effects\n- Styled snake segments with rounded corners and blue accent colors\n- Updated apple with cyan gradient and glow matching website theme\n- Removed online multiplayer navigation buttons from all games\n- Updated branding from 'Game Site' to 'Insta-Games'",
+      "description": ""
+    }
+  ],
   "last_commit": {
-    "hash": "e484d4b",
-    "author": "greg-webdev",
-    "time": "11 seconds ago",
-    "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
+    "hash": "Geg",
+    "author": "2026-09-20T18:33:52+08:00",
+    "timestamp": "Update generategameindex.yml",
+    "name": "Signed-off-by: Geg <greg@notgreg.space>",
     "description": ""
   }
 }
