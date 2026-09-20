@@ -34,31 +34,41 @@ jobs:
               else:
                   catalog[section] = []
 
-          # Unit delimiter format: %h (hash), %an (author), %cI (ISO-8601 date), %s (title), %b (body)
-          delimiter = '||COMMIT_SEP||'
-          field_sep = '\x1f'
-          git_format = f'{field_sep}%h{field_sep}%an{field_sep}%cI{field_sep}%s{field_sep}%b{delimiter}'
+          # Detect repository URL dynamically
+          repo_url = os.environ.get('GITHUB_SERVER_URL', 'https://github.com') + '/' + os.environ.get('GITHUB_REPOSITORY', 'insta-games/insta-games.github.io')
+          catalog['repo_url'] = repo_url
+
+          # Pull ALL commits without limit
+          # %h: short hash, %an: author, %ct: Unix timestamp, %s: subject, %b: body
+          delimiter = '---COMMIT_DELIMITER_TAG---'
+          record_sep = '---FIELD_SEPARATOR_TAG---'
+          git_format = f'{record_sep}%h{record_sep}%an{record_sep}%ct{record_sep}%s{record_sep}%b{delimiter}'
           
-          # Pull entire commit history
           cmd = ['git', 'log', f'--format={git_format}']
           raw_log = subprocess.check_output(cmd, text=True, errors='replace')
 
           commits = []
-          for block in raw_log.split(delimiter):
-              block = block.strip()
-              if not block:
+          for entry in raw_log.split(delimiter):
+              entry = entry.strip()
+              if not entry:
                   continue
-              parts = block.split('\x1f')[1:]
-              if len(parts) >= 4:
-                  h = parts[0].strip()
-                  author = parts[1].strip()
-                  iso_date = parts[2].strip()
-                  title = parts[3].strip()
-                  desc = parts[4].strip() if len(parts) > 4 else ''
+              parts = entry.split(record_sep)
+              if len(parts) >= 5:
+                  h = parts[1].strip()
+                  author = parts[2].strip()
+                  raw_time = parts[3].strip()
+                  title = parts[4].strip()
+                  desc = parts[5].strip() if len(parts) > 5 else ''
+                  
+                  try:
+                      timestamp_int = int(raw_time)
+                  except ValueError:
+                      timestamp_int = 0
+
                   commits.append({
                       'hash': h,
                       'author': author,
-                      'timestamp': iso_date,
+                      'unix_time': timestamp_int,
                       'name': title,
                       'description': desc
                   })
@@ -67,7 +77,8 @@ jobs:
           catalog['last_commit'] = commits[0] if commits else None
 
           with open('games.json', 'w', encoding='utf-8') as f:
-              json.dump(catalog, f, indent=2)
+              json.dump(catalog, f, indent=2, ensure_ascii=False)
+          print(f'Successfully exported {len(commits)} commits to games.json')
           "
 
       - name: Commit and Push games.json
