@@ -48,22 +48,6 @@ body {
   display: block;
 }
 
-/* Full-Screen Zoom Button Overlay */
-#btn-zoom-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(6, 15, 50, 0.25);
-  z-index: 9000;
-  pointer-events: none;
-  clip-path: circle(0% at var(--ox, 50%) var(--oy, 50%));
-  transition: clip-path 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: clip-path;
-}
-
-#btn-zoom-overlay.active {
-  clip-path: circle(150% at var(--ox, 50%) var(--oy, 50%));
-}
-
 /* Layout Containers */
 .container {
   max-width: var(--container);
