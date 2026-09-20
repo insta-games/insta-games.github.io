@@ -37,5 +37,12 @@
   ],
   "special": [
     "ragdollarchers"
-  ]
+  ],
+  "last_commit": {
+    "hash": "0b19357",
+    "author": "Geg",
+    "time": "8 seconds ago",
+    "name": "Update generategameindex.yml",
+    "description": "Signed-off-by: Geg <greg@notgreg.space>"
+  }
 }
