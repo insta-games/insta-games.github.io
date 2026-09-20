@@ -38,55 +38,2961 @@
   "special": [
     "ragdollarchers"
   ],
+  "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
-      "hash": "Geg",
-      "author": "2026-09-20T18:33:52+08:00",
-      "timestamp": "Update generategameindex.yml",
-      "name": "Signed-off-by: Geg <greg@notgreg.space>",
+      "hash": "986a125",
+      "author": "Geg",
+      "unix_time": 1789900954,
+      "name": "Update generategameindex.yml",
+      "description": "AGAIN>>>>>\n\nSigned-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "40f91ab",
+      "author": "Geg",
+      "unix_time": 1789900718,
+      "name": "Update generategameindex.yml",
+      "description": "again???\n\nSigned-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "05a83a7",
+      "author": "greg-webdev",
+      "unix_time": 1789900600,
+      "name": "again",
       "description": ""
     },
     {
-      "hash": "Geg",
-      "author": "2026-09-20T18:22:46+08:00",
-      "timestamp": "Update generategameindex.yml",
-      "name": "Signed-off-by: Geg <greg@notgreg.space>",
+      "hash": "c576a61",
+      "author": "greg-webdev",
+      "unix_time": 1789900505,
+      "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
       "description": ""
     },
     {
-      "hash": "Geg",
-      "author": "2026-09-20T17:57:53+08:00",
-      "timestamp": "Update generategameindex.yml",
-      "name": "Signed-off-by: Geg <greg@notgreg.space>",
+      "hash": "2b6e48f",
+      "author": "greg-webdev",
+      "unix_time": 1789900501,
+      "name": "update commit checker",
       "description": ""
     },
     {
-      "hash": "Geg",
-      "author": "2026-09-20T17:56:00+08:00",
-      "timestamp": "Create generategameindex.yml",
-      "name": "lol\n\nSigned-off-by: Geg <greg@notgreg.space>",
+      "hash": "b8a5ce9",
+      "author": "github-actions[bot]",
+      "unix_time": 1789900443,
+      "name": "Auto-update full commit history [skip ci]",
       "description": ""
     },
     {
-      "hash": "greg-webdev",
-      "author": "2026-09-20T17:47:22+08:00",
-      "timestamp": "HOLY REVAMP",
-      "name": "now index.html will auto update with the games you put in",
+      "hash": "0441a9f",
+      "author": "Geg",
+      "unix_time": 1789900432,
+      "name": "Update generategameindex.yml",
+      "description": "Signed-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "d2cbe0d",
+      "author": "github-actions[bot]",
+      "unix_time": 1789900152,
+      "name": "Auto-update games.json with latest commit info [skip ci]",
       "description": ""
     },
     {
-      "hash": "sanjith-esp32",
-      "author": "2026-01-12T12:46:43+08:00",
-      "timestamp": "Update game styling and remove online multiplayer buttons",
-      "name": "- Enhanced snake game with themed gradients and glow effects\n- Styled snake segments with rounded corners and blue accent colors\n- Updated apple with cyan gradient and glow matching website theme\n- Removed online multiplayer navigation buttons from all games\n- Updated branding from 'Game Site' to 'Insta-Games'",
+      "hash": "e484d4b",
+      "author": "greg-webdev",
+      "unix_time": 1789900141,
+      "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
+      "description": ""
+    },
+    {
+      "hash": "586af57",
+      "author": "greg-webdev",
+      "unix_time": 1789900136,
+      "name": "make last commit",
+      "description": ""
+    },
+    {
+      "hash": "1692baf",
+      "author": "github-actions[bot]",
+      "unix_time": 1789899774,
+      "name": "Auto-update games.json with latest commit info [skip ci]",
+      "description": ""
+    },
+    {
+      "hash": "0b19357",
+      "author": "Geg",
+      "unix_time": 1789899766,
+      "name": "Update generategameindex.yml",
+      "description": "Signed-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "e27a1c9",
+      "author": "greg-webdev",
+      "unix_time": 1789898337,
+      "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
+      "description": ""
+    },
+    {
+      "hash": "2ac1cc8",
+      "author": "greg-webdev",
+      "unix_time": 1789898325,
+      "name": "refactor: replace dynamic directory discovery with games.json catalog loading",
+      "description": ""
+    },
+    {
+      "hash": "05ed818",
+      "author": "github-actions[bot]",
+      "unix_time": 1789898282,
+      "name": "Auto-generate games.json [skip ci]",
+      "description": ""
+    },
+    {
+      "hash": "33dc993",
+      "author": "Geg",
+      "unix_time": 1789898273,
+      "name": "Update generategameindex.yml",
+      "description": "Signed-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "ada4bc2",
+      "author": "Geg",
+      "unix_time": 1789898160,
+      "name": "Create generategameindex.yml",
+      "description": "lol\n\nSigned-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "4b459f8",
+      "author": "greg-webdev",
+      "unix_time": 1789897740,
+      "name": "Puts back style.css (deleted accident sry)",
+      "description": ""
+    },
+    {
+      "hash": "6815bf8",
+      "author": "greg-webdev",
+      "unix_time": 1789897642,
+      "name": "HOLY REVAMP",
+      "description": "now index.html will auto update with the games you put in"
+    },
+    {
+      "hash": "61da979",
+      "author": "greg-webdev",
+      "unix_time": 1789891698,
+      "name": "fix some stuff",
+      "description": ""
+    },
+    {
+      "hash": "28e43a4",
+      "author": "greg-webdev",
+      "unix_time": 1789889993,
+      "name": "revamp ui add game",
+      "description": ""
+    },
+    {
+      "hash": "fbdbc56",
+      "author": "greg-webdev",
+      "unix_time": 1789880753,
+      "name": "feat: add Ragdoll Archers game build and assets",
+      "description": ""
+    },
+    {
+      "hash": "c4c11d7",
+      "author": "greg-webdev",
+      "unix_time": 1789877456,
+      "name": "refactor: reorganize project directory structure by grouping games into single and multi-player folders",
+      "description": ""
+    },
+    {
+      "hash": "ea93a38",
+      "author": "Sanjith",
+      "unix_time": 1784701763,
+      "name": "Point copter mirror to copter.io",
+      "description": ""
+    },
+    {
+      "hash": "fcd8608",
+      "author": "Sanjith",
+      "unix_time": 1784701536,
+      "name": "Switch copter pages to proxy mirror",
+      "description": ""
+    },
+    {
+      "hash": "ba19786",
+      "author": "Sanjith",
+      "unix_time": 1784701193,
+      "name": "Add direct redirect endpoint for copter",
+      "description": ""
+    },
+    {
+      "hash": "1a1f61e",
+      "author": "Sanjith",
+      "unix_time": 1783638406,
+      "name": "Remove 'Many Free Games' stat from about page",
+      "description": ""
+    },
+    {
+      "hash": "bca8c9c",
+      "author": "Sanjith",
+      "unix_time": 1783638234,
+      "name": "Remove online multiplayer page and remove mission/future-plans from about",
+      "description": ""
+    },
+    {
+      "hash": "d7891d7",
+      "author": "Sanjith",
+      "unix_time": 1783638086,
+      "name": "Remove explicit game-count mentions from site metadata",
+      "description": ""
+    },
+    {
+      "hash": "d331702",
+      "author": "Sanji",
+      "unix_time": 1776138003,
+      "name": "Fix repeated peer disconnected loop during host fallback",
+      "description": ""
+    },
+    {
+      "hash": "4af5ee5",
+      "author": "Sanji",
+      "unix_time": 1776137200,
+      "name": "Fix SnakeIO matchmaking handshake and connection timeout stalls",
+      "description": ""
+    },
+    {
+      "hash": "a7ffa34",
+      "author": "Sanji",
+      "unix_time": 1776136246,
+      "name": "Add homepage Online Multiplayer tab and section routing",
+      "description": ""
+    },
+    {
+      "hash": "183cc4c",
+      "author": "Sanji",
+      "unix_time": 1776136176,
+      "name": "Add SnakeIO online multiplayer with PeerJS auto-room matchmaking",
+      "description": ""
+    },
+    {
+      "hash": "faaae76",
+      "author": "Sanji",
+      "unix_time": 1776132313,
+      "name": "Refine Pac-Man ghost AI to match arcade behavior",
+      "description": ""
+    },
+    {
+      "hash": "c5d5c94",
+      "author": "Sanji",
+      "unix_time": 1776132011,
+      "name": "Fix 2048 iPad layout",
+      "description": ""
+    },
+    {
+      "hash": "af803ca",
+      "author": "Sanji",
+      "unix_time": 1776131670,
+      "name": "Fix Dino sprite and collision",
+      "description": ""
+    },
+    {
+      "hash": "407a68d",
+      "author": "Sanji",
+      "unix_time": 1776131558,
+      "name": "Make Pac-Man feel more authentic",
+      "description": ""
+    },
+    {
+      "hash": "60d14d1",
+      "author": "Sanji",
+      "unix_time": 1776131352,
+      "name": "Add 2048 single-player game",
+      "description": ""
+    },
+    {
+      "hash": "09e4fc9",
+      "author": "Sanji",
+      "unix_time": 1776131187,
+      "name": "Slow down Pac-Man gameplay",
+      "description": ""
+    },
+    {
+      "hash": "264c036",
+      "author": "Sanji",
+      "unix_time": 1776131003,
+      "name": "Add Pac-Man single and multiplayer games",
+      "description": ""
+    },
+    {
+      "hash": "2be36cb",
+      "author": "Sanji",
+      "unix_time": 1776130808,
+      "name": "Remove online multiplayer and Firebase",
+      "description": ""
+    },
+    {
+      "hash": "a6a1210",
+      "author": "Sanji",
+      "unix_time": 1776129719,
+      "name": "Fix active nav tab on all local multiplayer pages",
+      "description": ""
+    },
+    {
+      "hash": "ca9b940",
+      "author": "Sanji",
+      "unix_time": 1776129099,
+      "name": "Update site pages and about CTA section",
+      "description": ""
+    },
+    {
+      "hash": "c2b3ecb",
+      "author": "Sanji",
+      "unix_time": 1776129070,
+      "name": "Fix duplicate nav header on racing page",
+      "description": ""
+    },
+    {
+      "hash": "c023b96",
+      "author": "Sanji",
+      "unix_time": 1776129026,
+      "name": "Remove online multiplayer pages and Run3; fix feedback nav active state",
+      "description": ""
+    },
+    {
+      "hash": "2c109df",
+      "author": "sanjith-esp32",
+      "unix_time": 1772259556,
+      "name": "Replace rainbow dynamic colors with solid blue theme in Flappy Bird",
+      "description": ""
+    },
+    {
+      "hash": "fc12004",
+      "author": "sanjith-esp32",
+      "unix_time": 1772259296,
+      "name": "Remove Node.js dependencies and server setup files - keeping only static site files",
+      "description": ""
+    },
+    {
+      "hash": "da0eb9f",
+      "author": "sanjith-esp32",
+      "unix_time": 1772259195,
+      "name": "Add Node.js server dependencies (Express and Socket.io)",
+      "description": ""
+    },
+    {
+      "hash": "911788f",
+      "author": "sanjith-esp32",
+      "unix_time": 1772259092,
+      "name": "Fix visual distortions in Flappy Bird - disable image smoothing, round coordinates, fix pipe rendering gaps, add context state management, and disable screen distortion effects",
+      "description": ""
+    },
+    {
+      "hash": "7ddbf17",
+      "author": "sanjith",
+      "unix_time": 1771997385,
+      "name": "Make Flappy distortion intelligible and playable",
+      "description": ""
+    },
+    {
+      "hash": "7b99be4",
+      "author": "sanjith",
+      "unix_time": 1771997149,
+      "name": "Keep Flappy distortion continuous across resets",
+      "description": ""
+    },
+    {
+      "hash": "51a8d82",
+      "author": "sanjith",
+      "unix_time": 1771996976,
+      "name": "Make Flappy impossible via extreme visual distortion",
+      "description": ""
+    },
+    {
+      "hash": "659d220",
+      "author": "sanjith",
+      "unix_time": 1771996794,
+      "name": "Amplify Flappy distortion to extreme levels",
+      "description": ""
+    },
+    {
+      "hash": "8899f72",
+      "author": "sanjith",
+      "unix_time": 1771996670,
+      "name": "Apply full-page distortion effects in Flappy",
+      "description": ""
+    },
+    {
+      "hash": "6e35fe0",
+      "author": "sanjith",
+      "unix_time": 1771996529,
+      "name": "Strengthen Flappy full-screen distortion effect",
+      "description": ""
+    },
+    {
+      "hash": "01e6f4d",
+      "author": "sanjith",
+      "unix_time": 1771996373,
+      "name": "Start Flappy color shifts from level 1",
+      "description": ""
+    },
+    {
+      "hash": "8376a8e",
+      "author": "sanjith",
+      "unix_time": 1771996126,
+      "name": "ignore",
+      "description": ""
+    },
+    {
+      "hash": "ea4fed5",
+      "author": "sanjith",
+      "unix_time": 1771996100,
+      "name": "Increase Flappy Bird post-level-15 visual distortion",
+      "description": ""
+    },
+    {
+      "hash": "8d5cc03",
+      "author": "sanjith",
+      "unix_time": 1771995575,
+      "name": "Fix level-15 Flappy trigger and bump script cache version",
+      "description": ""
+    },
+    {
+      "hash": "b45e2fc",
+      "author": "sanjith",
+      "unix_time": 1771995214,
+      "name": "Lower Flappy extreme difficulty trigger to level 15",
+      "description": ""
+    },
+    {
+      "hash": "0256bfb",
+      "author": "sanjith",
+      "unix_time": 1771994960,
+      "name": "Increase Flappy difficulty and add post-100 color distortion",
+      "description": ""
+    },
+    {
+      "hash": "77786a9",
+      "author": "sanjith",
+      "unix_time": 1771979919,
+      "name": "Fix multiplayer snake stutter with local state merge and UI throttling",
+      "description": ""
+    },
+    {
+      "hash": "a324817",
+      "author": "sanjith",
+      "unix_time": 1771902386,
+      "name": "chore: sync docs and metadata URLs with insta-games domain",
+      "description": ""
+    },
+    {
+      "hash": "299a68e",
+      "author": "sanjith-esp32",
+      "unix_time": 1768522584,
+      "name": "Remove Paper.io multiplayer game files",
+      "description": ""
+    },
+    {
+      "hash": "ef730f2",
+      "author": "sanjith-esp32",
+      "unix_time": 1768522531,
+      "name": "Add Paper.io online multiplayer game with touch and keyboard controls",
+      "description": ""
+    },
+    {
+      "hash": "f4d70f7",
+      "author": "sanjith-esp32",
+      "unix_time": 1768521560,
+      "name": "Add Paper.io online multiplayer game with touch and keyboard controls",
+      "description": ""
+    },
+    {
+      "hash": "c4fd091",
+      "author": "sanjith-esp32",
+      "unix_time": 1768521222,
+      "name": "Remove Paper.io multiplayer game",
+      "description": ""
+    },
+    {
+      "hash": "26e0f19",
+      "author": "sanjith-esp32",
+      "unix_time": 1768520810,
+      "name": "Fix paper.io trail not clearing - immediately sync to Firebase when returning to territory",
+      "description": ""
+    },
+    {
+      "hash": "e3a7336",
+      "author": "sanjith-esp32",
+      "unix_time": 1768460954,
+      "name": "Add Firebase cleanup - auto-remove players on disconnect and delete empty rooms",
+      "description": ""
+    },
+    {
+      "hash": "e745917",
+      "author": "sanjith-esp32",
+      "unix_time": 1768460704,
+      "name": "Fix food spawning - properly remove eaten food from Firebase and prevent race conditions",
+      "description": ""
+    },
+    {
+      "hash": "3d3219b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768460221,
+      "name": "Fix snake collision detection - prevent false collisions by checking body segments only",
+      "description": ""
+    },
+    {
+      "hash": "7bae0b5",
+      "author": "sanjith-esp32",
+      "unix_time": 1768446599,
+      "name": "Make player territory more opaque for better visibility",
+      "description": ""
+    },
+    {
+      "hash": "4c7463b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768446521,
+      "name": "Fix territory capture - properly clear trail and update territory when returning to base",
+      "description": ""
+    },
+    {
+      "hash": "2cdb31b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768446404,
+      "name": "Smooth out Paper.io graphics - rounded territories, smooth trails, circular players",
+      "description": ""
+    },
+    {
+      "hash": "423410a",
+      "author": "sanjith-esp32",
+      "unix_time": 1768446245,
+      "name": "Add multiplayer Paper.io game with territory capture mechanics",
+      "description": ""
+    },
+    {
+      "hash": "63044d8",
+      "author": "sanjith-esp32",
+      "unix_time": 1768445996,
+      "name": "Fix respawn to preserve player name, color, and visibility",
+      "description": ""
+    },
+    {
+      "hash": "c04e304",
+      "author": "sanjith-esp32",
+      "unix_time": 1768445918,
+      "name": "Drop all eaten food when snake dies (one per segment beyond initial length)",
+      "description": ""
+    },
+    {
+      "hash": "6bd4f1f",
+      "author": "sanjith-esp32",
+      "unix_time": 1768445281,
+      "name": "Move visibility event listeners inside DOMContentLoaded to fix initialization order",
+      "description": ""
+    },
+    {
+      "hash": "82cfc61",
+      "author": "sanjith-esp32",
+      "unix_time": 1768445079,
+      "name": "Fix duplicate isPaused declaration",
+      "description": ""
+    },
+    {
+      "hash": "94200ab",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444956,
+      "name": "Add missing pauseScreen div element",
+      "description": ""
+    },
+    {
+      "hash": "4709756",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444877,
+      "name": "Add Google AdSense meta tag to all HTML files",
+      "description": ""
+    },
+    {
+      "hash": "c67420b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444685,
+      "name": "Add Google AdSense account meta tag",
+      "description": ""
+    },
+    {
+      "hash": "4d2983c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444629,
+      "name": "Add ads.txt for Google AdSense verification",
+      "description": ""
+    },
+    {
+      "hash": "a6a8443",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444411,
+      "name": "Fix DOM elements initialization - move to DOMContentLoaded event",
+      "description": ""
+    },
+    {
+      "hash": "aaae226",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444274,
+      "name": "Add Run 3 - 3D tunnel endless runner with gravity-defying mechanics",
+      "description": ""
+    },
+    {
+      "hash": "c0997e0",
+      "author": "sanjith-esp32",
+      "unix_time": 1768444247,
+      "name": "Fix duplicate pauseScreen declaration that broke join button",
+      "description": ""
+    },
+    {
+      "hash": "82e5506",
+      "author": "sanjith-esp32",
+      "unix_time": 1768443920,
+      "name": "Add pause screen when player leaves tab - hide snake and show pause overlay",
+      "description": ""
+    },
+    {
+      "hash": "f345107",
+      "author": "sanjith-esp32",
+      "unix_time": 1768443743,
+      "name": "Change boost penalty to lose 1 segment every 1/4 second (15 frames)",
+      "description": ""
+    },
+    {
+      "hash": "f05462e",
+      "author": "sanjith-esp32",
+      "unix_time": 1768443589,
+      "name": "Add header and footer to join screen, hide during gameplay",
+      "description": ""
+    },
+    {
+      "hash": "28a89d6",
+      "author": "sanjith-esp32",
+      "unix_time": 1768436669,
+      "name": "Add moderate boost penalty: lose 1 extra segment every 30 frames (~0.5s)",
+      "description": ""
+    },
+    {
+      "hash": "f5a5522",
+      "author": "sanjith-esp32",
+      "unix_time": 1768436553,
+      "name": "Remove extra segment loss when boosting - boost only increases speed",
+      "description": ""
+    },
+    {
+      "hash": "a0b2327",
+      "author": "sanjith-esp32",
+      "unix_time": 1768436295,
+      "name": "Change score to reflect snake length instead of food eaten",
+      "description": ""
+    },
+    {
+      "hash": "3454df8",
+      "author": "sanjith-esp32",
+      "unix_time": 1768436240,
+      "name": "Add point penalty for boosting: lose 1 point per boost",
+      "description": ""
+    },
+    {
+      "hash": "d23243e",
+      "author": "sanjith-esp32",
+      "unix_time": 1768436160,
+      "name": "Add Online Multiplayer section with Snake.io game",
+      "description": ""
+    },
+    {
+      "hash": "aee263a",
+      "author": "sanjith-esp32",
+      "unix_time": 1768435961,
+      "name": "Slow down snake: reduce speed from 3 to 2, boost from 6 to 4",
+      "description": ""
+    },
+    {
+      "hash": "3e2cae8",
+      "author": "sanjith-esp32",
+      "unix_time": 1768435354,
+      "name": "Add dedicated boost button for touch devices to fix accidental boosting",
+      "description": ""
+    },
+    {
+      "hash": "88cc594",
+      "author": "sanjith-esp32",
+      "unix_time": 1768435088,
+      "name": "Auto-spawn food when count drops below 50% to maintain gameplay",
+      "description": ""
+    },
+    {
+      "hash": "d1b9d61",
+      "author": "sanjith-esp32",
+      "unix_time": 1768435027,
+      "name": "Auto-remove AFK/disconnected players after 10 seconds of inactivity",
+      "description": ""
+    },
+    {
+      "hash": "c086b1d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768434974,
+      "name": "Optimize rendering: use requestAnimationFrame, remove async/await from game loop, optimize math",
+      "description": ""
+    },
+    {
+      "hash": "e4aa931",
+      "author": "sanjith-esp32",
+      "unix_time": 1768434480,
+      "name": "Major performance optimization: reduce Firebase updates to 15/s, halve food count, optimize grid/collision",
+      "description": ""
+    },
+    {
+      "hash": "e559e75",
+      "author": "sanjith-esp32",
+      "unix_time": 1768433662,
+      "name": "Fix touch input on join screen: only prevent default when game is active",
+      "description": ""
+    },
+    {
+      "hash": "4f84c87",
+      "author": "sanjith-esp32",
+      "unix_time": 1768372186,
+      "name": "Fix centering: revert to standard transform order and clear before transforms",
+      "description": ""
+    },
+    {
+      "hash": "da4559a",
+      "author": "sanjith-esp32",
+      "unix_time": 1768372036,
+      "name": "Fix camera centering: use direct offset calculation for proper zoom centering",
+      "description": ""
+    },
+    {
+      "hash": "8f8f223",
+      "author": "sanjith-esp32",
+      "unix_time": 1768371779,
+      "name": "Fix camera centering: simplify transform to properly center snake on screen",
+      "description": ""
+    },
+    {
+      "hash": "67e834c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768371625,
+      "name": "Zoom camera in close: increase zoom to 1.5x",
+      "description": ""
+    },
+    {
+      "hash": "f9eeed1",
+      "author": "sanjith-esp32",
+      "unix_time": 1768371316,
+      "name": "Zoom in by 50%: increase zoom from 0.6 to 0.9",
+      "description": ""
+    },
+    {
+      "hash": "ed70fdb",
+      "author": "sanjith-esp32",
+      "unix_time": 1768370927,
+      "name": "Fix touch input: remove conflicting event handlers and add pointer-events auto",
+      "description": ""
+    },
+    {
+      "hash": "53eefcd",
+      "author": "sanjith-esp32",
+      "unix_time": 1768367662,
+      "name": "Fix iPad/mobile input: add touch handlers and mobile-friendly attributes",
+      "description": ""
+    },
+    {
+      "hash": "f76367c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768367270,
+      "name": "Add zoom out view (0.6x scale) for better game overview",
+      "description": ""
+    },
+    {
+      "hash": "7bc30a4",
+      "author": "sanjith-esp32",
+      "unix_time": 1768367096,
+      "name": "Fix visibility: subtle grid and snake outline for better contrast",
+      "description": ""
+    },
+    {
+      "hash": "5367b35",
+      "author": "sanjith-esp32",
+      "unix_time": 1768366965,
+      "name": "Remove deploy workflow file",
+      "description": ""
+    },
+    {
+      "hash": "78f9b34",
+      "author": "sanjith-esp32",
+      "unix_time": 1768366868,
+      "name": "Fix snake not visible on join: initialize local player and camera immediately",
+      "description": ""
+    },
+    {
+      "hash": "c3aaf9f",
+      "author": "sanjith-esp32",
+      "unix_time": 1768366798,
+      "name": "Improve auto-join: match players into same non-full rooms",
+      "description": ""
+    },
+    {
+      "hash": "ade90f3",
+      "author": "sanjith-esp32",
+      "unix_time": 1768366572,
+      "name": "Make game fullscreen with snake always centered",
+      "description": ""
+    },
+    {
+      "hash": "b21ec48",
+      "author": "sanjith-esp32",
+      "unix_time": 1768366311,
+      "name": "Add respawn feature to multiplayer snake",
+      "description": ""
+    },
+    {
+      "hash": "1dfba86",
+      "author": "sanjith-esp32",
+      "unix_time": 1768366236,
+      "name": "Convert multiplayer snake to snake.io gameplay mechanics",
+      "description": ""
+    },
+    {
+      "hash": "3b671eb",
+      "author": "sanjith-esp32",
+      "unix_time": 1768365834,
+      "name": "Add multiplayer snake game with Firebase",
+      "description": ""
+    },
+    {
+      "hash": "92edb24",
+      "author": "sanjith-esp32",
+      "unix_time": 1768365745,
+      "name": "Add multiplayer games documentation",
+      "description": ""
+    },
+    {
+      "hash": "9efd3f2",
+      "author": "sanjith-esp32",
+      "unix_time": 1768355336,
+      "name": "Fix lobby Firebase configuration and add Google Analytics",
+      "description": ""
+    },
+    {
+      "hash": "c3aaeaa",
+      "author": "sanjith-esp32",
+      "unix_time": 1768355177,
+      "name": "Add GitHub configuration",
+      "description": ""
+    },
+    {
+      "hash": "8bdcb38",
+      "author": "sanjith.raspi",
+      "unix_time": 1768354984,
+      "name": "test",
+      "description": ""
+    },
+    {
+      "hash": "c020598",
+      "author": "sanjith-esp32",
+      "unix_time": 1768348664,
+      "name": "Fix Dino Run layout with game-wrap section",
+      "description": ""
+    },
+    {
+      "hash": "732d287",
+      "author": "sanjith-esp32",
+      "unix_time": 1768284683,
+      "name": "Fix canvas rendering - draw dark background immediately on load",
+      "description": ""
+    },
+    {
+      "hash": "3403a10",
+      "author": "sanjith-esp32",
+      "unix_time": 1768284475,
+      "name": "Fix Dino Run initial canvas rendering",
+      "description": ""
+    },
+    {
+      "hash": "7698c44",
+      "author": "sanjith-esp32",
+      "unix_time": 1768284337,
+      "name": "Update Dino Run header and footer to match other games",
+      "description": ""
+    },
+    {
+      "hash": "5db63f2",
+      "author": "sanjith-esp32",
+      "unix_time": 1768284234,
+      "name": "Remove deploy workflow file",
+      "description": ""
+    },
+    {
+      "hash": "2369194",
+      "author": "sanjith-esp32",
+      "unix_time": 1768284177,
+      "name": "Update Dino Run to match dark website theme",
+      "description": ""
+    },
+    {
+      "hash": "d2ec946",
+      "author": "sanjith-esp32",
+      "unix_time": 1768284067,
+      "name": "Remove emoji from Dino Run title",
+      "description": ""
+    },
+    {
+      "hash": "c2d8b4f",
+      "author": "sanjith-esp32",
+      "unix_time": 1768283846,
+      "name": "Add GitHub Actions workflow for automatic deployment",
+      "description": ""
+    },
+    {
+      "hash": "3dabe3b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768283757,
+      "name": "Add Dino Run game (Chrome offline dinosaur)",
+      "description": ""
+    },
+    {
+      "hash": "e9f024e",
+      "author": "sanjith-esp32",
+      "unix_time": 1768283632,
+      "name": "Remove deploy workflow file",
+      "description": ""
+    },
+    {
+      "hash": "afc045c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768283586,
+      "name": "Update Fruit Ninja: 5 lives, bombs are instant death, miss fruit = -1 life",
+      "description": ""
+    },
+    {
+      "hash": "52fc8eb",
+      "author": "sanjith-esp32",
+      "unix_time": 1768283293,
+      "name": "Download fruit images locally to assets folder",
+      "description": ""
+    },
+    {
+      "hash": "57f7e8d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768282891,
+      "name": "Replace emoji text with actual images for fruits",
+      "description": ""
+    },
+    {
+      "hash": "b9d2468",
+      "author": "sanjith-esp32",
+      "unix_time": 1768282575,
+      "name": "Update Google Analytics to match official format exactly",
+      "description": ""
+    },
+    {
+      "hash": "558038d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768282134,
+      "name": "Enable explicit page_view tracking in Google Analytics",
+      "description": ""
+    },
+    {
+      "hash": "512e9ea",
+      "author": "sanjith-esp32",
+      "unix_time": 1768280911,
+      "name": "Fix Connect 4 colors: make player 1 red instead of cyan",
+      "description": ""
+    },
+    {
+      "hash": "d962c52",
+      "author": "sanjith-esp32",
+      "unix_time": 1768280190,
+      "name": "Fix Fruit Ninja rendering on iPad: properly reset shadow after drawing",
+      "description": ""
+    },
+    {
+      "hash": "e099bef",
+      "author": "sanjith-esp32",
+      "unix_time": 1768279832,
+      "name": "Fix Tetris upward glitch: remove vertical offset from rotation calculations",
+      "description": ""
+    },
+    {
+      "hash": "a8ba329",
+      "author": "sanjith-esp32",
+      "unix_time": 1768279696,
+      "name": "Fix Tetris rotation glitch: remove upward wall kicks to prevent pieces floating up",
+      "description": ""
+    },
+    {
+      "hash": "ffbbaa2",
+      "author": "sanjith-esp32",
+      "unix_time": 1768279519,
+      "name": "Reduce Fruit Ninja launch velocity: -18 to -28 → -12 to -20",
+      "description": ""
+    },
+    {
+      "hash": "4f5c6a2",
+      "author": "sanjith-esp32",
+      "unix_time": 1768277056,
+      "name": "Fix sitemap dates to valid current date",
+      "description": ""
+    },
+    {
+      "hash": "d99eecc",
+      "author": "sanjith-esp32",
+      "unix_time": 1768276503,
+      "name": "Remove Pac-Man game from project",
+      "description": ""
+    },
+    {
+      "hash": "801050d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768276327,
+      "name": "Fix spawn positions for new maze layout: Pac-Man at (14,28), ghosts at row 13",
+      "description": ""
+    },
+    {
+      "hash": "fd1e96c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768276178,
+      "name": "Move Pac-Man spawn 1 square right (x: 14->15)",
+      "description": ""
+    },
+    {
+      "hash": "8a5a1ae",
+      "author": "sanjith-esp32",
+      "unix_time": 1768276044,
+      "name": "Make Pac-Man map harder: narrower corridors, more walls, strategic power pellet placement",
+      "description": ""
+    },
+    {
+      "hash": "2c8f61c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768275874,
+      "name": "Call reset() on init to ensure correct spawn position",
+      "description": ""
+    },
+    {
+      "hash": "68fc9fb",
+      "author": "sanjith-esp32",
+      "unix_time": 1768275729,
+      "name": "Fix spawn position: move to row 29 (valid dot area, not wall)",
+      "description": ""
+    },
+    {
+      "hash": "3a6a40d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768275557,
+      "name": "Fix Pac-Man spawn position to valid playable area (y: 23->26)",
+      "description": ""
+    },
+    {
+      "hash": "26f9536",
+      "author": "sanjith-esp32",
+      "unix_time": 1768275379,
+      "name": "Fix canMove to properly handle decimal coordinates, preventing wall phasing",
+      "description": ""
+    },
+    {
+      "hash": "64c4ce7",
+      "author": "sanjith-esp32",
+      "unix_time": 1768275282,
+      "name": "Fix Pac-Man collision bugs: proper bounds checking, no wall phasing, prevent crashes",
+      "description": ""
+    },
+    {
+      "hash": "355eaee",
+      "author": "sanjith-esp32",
+      "unix_time": 1768275027,
+      "name": "Speed up Pac-Man: 2x speed and 3x FPS",
+      "description": ""
+    },
+    {
+      "hash": "58026e3",
+      "author": "sanjith-esp32",
+      "unix_time": 1768274695,
+      "name": "Enable mouse slicing on hover instead of click",
+      "description": ""
+    },
+    {
+      "hash": "2404cd8",
+      "author": "sanjith-esp32",
+      "unix_time": 1768273754,
+      "name": "Fix fruit physics: reduce gravity and increase launch velocity",
+      "description": ""
+    },
+    {
+      "hash": "d192e14",
+      "author": "sanjith-esp32",
+      "unix_time": 1768273626,
+      "name": "Increase fruit launch velocity to reach at least 75% screen height",
+      "description": ""
+    },
+    {
+      "hash": "aecb4ec",
+      "author": "sanjith-esp32",
+      "unix_time": 1768273449,
+      "name": "Increase fruit launch height for better gameplay",
+      "description": ""
+    },
+    {
+      "hash": "88f4b9d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768273318,
+      "name": "Remove start/reset buttons - game auto-starts on first tap/click",
+      "description": ""
+    },
+    {
+      "hash": "c32b3fa",
+      "author": "sanjith-esp32",
+      "unix_time": 1768273136,
+      "name": "Keep fruits more centered and reduce horizontal drift to prevent off-screen",
+      "description": ""
+    },
+    {
+      "hash": "1b5361e",
+      "author": "sanjith-esp32",
+      "unix_time": 1768273016,
+      "name": "Remove life penalty for missing fruits - only bombs cost lives",
+      "description": ""
+    },
+    {
+      "hash": "3277bc4",
+      "author": "sanjith-esp32",
+      "unix_time": 1768272943,
+      "name": "Reduce fruit speed by ~35% for easier gameplay",
+      "description": ""
+    },
+    {
+      "hash": "572a383",
+      "author": "sanjith-esp32",
+      "unix_time": 1768272817,
+      "name": "Increase fruit hitbox size by 50% for easier slicing",
+      "description": ""
+    },
+    {
+      "hash": "7e99ad1",
+      "author": "sanjith-esp32",
+      "unix_time": 1768272656,
+      "name": "Add Fruit Ninja to homepage",
+      "description": ""
+    },
+    {
+      "hash": "3388025",
+      "author": "sanjith-esp32",
+      "unix_time": 1768272378,
+      "name": "Remove ads disabled console message",
+      "description": ""
+    },
+    {
+      "hash": "1d1e401",
+      "author": "sanjith-esp32",
+      "unix_time": 1768271922,
+      "name": "Add Google AdSense script to all pages",
+      "description": ""
+    },
+    {
+      "hash": "87bfeef",
+      "author": "sanjith-esp32",
+      "unix_time": 1768267947,
+      "name": "Update Google Analytics tracking ID to G-Q293MVMDY4",
+      "description": ""
+    },
+    {
+      "hash": "1096100",
+      "author": "sanjith-esp32",
+      "unix_time": 1768267539,
+      "name": "Add Google Search Console verification meta tag",
+      "description": ""
+    },
+    {
+      "hash": "adfbb45",
+      "author": "sanjith-esp32",
+      "unix_time": 1768267348,
+      "name": "Update sitemap and robots.txt with new domain (insta-games.github.io)",
+      "description": ""
+    },
+    {
+      "hash": "d4daba2",
+      "author": "sanjith-esp32",
+      "unix_time": 1768262054,
+      "name": "Add Feedback link to navigation header across all pages",
+      "description": ""
+    },
+    {
+      "hash": "d15451b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768259050,
+      "name": "Update about page to direct users to feedback form instead of contact info",
+      "description": ""
+    },
+    {
+      "hash": "c3d60a9",
+      "author": "sanjith-esp32",
+      "unix_time": 1768258812,
+      "name": "Enhance Connect 4 visuals with 3D depth, glossy pieces, board frame, and shine effects",
+      "description": ""
+    },
+    {
+      "hash": "fd51cfe",
+      "author": "sanjith-esp32",
+      "unix_time": 1768258426,
+      "name": "Update Connect 4 boards to match website theme with cyan/orange gradients and glow effects",
+      "description": ""
+    },
+    {
+      "hash": "c017e17",
+      "author": "sanjith-esp32",
+      "unix_time": 1768201919,
+      "name": "Add Google Analytics event tracking for game starts and game overs",
+      "description": ""
+    },
+    {
+      "hash": "c014be0",
+      "author": "sanjith-esp32",
+      "unix_time": 1768201709,
+      "name": "Slow down Pac-Man movement and restore ghost speed to 0.3",
+      "description": ""
+    },
+    {
+      "hash": "1765413",
+      "author": "sanjith-esp32",
+      "unix_time": 1768201351,
+      "name": "Slow down Pac-Man movement and restore ghost speed to 0.3",
+      "description": ""
+    },
+    {
+      "hash": "3137015",
+      "author": "sanjith-esp32",
+      "unix_time": 1768201208,
+      "name": "Update Pac-Man speed settings",
+      "description": ""
+    },
+    {
+      "hash": "73dc7f5",
+      "author": "sanjith-esp32",
+      "unix_time": 1768201172,
+      "name": "Slow down Pac-Man game speed further (15 FPS to 10 FPS, ghost speed 0.3 to 0.2)",
+      "description": ""
+    },
+    {
+      "hash": "39153c4",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200788,
+      "name": "Remove Crossy Road and Pipe Connect games",
+      "description": ""
+    },
+    {
+      "hash": "e831a91",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200754,
+      "name": "Add touch controls to Ping Pong Madness for mobile play",
+      "description": ""
+    },
+    {
+      "hash": "ac98c6d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200699,
+      "name": "Increase Crossy Road canvas size from 600px to 800px max width",
+      "description": ""
+    },
+    {
+      "hash": "2e45bfc",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200559,
+      "name": "Fix Crossy Road game start - remove blocking condition that prevented first move",
+      "description": ""
+    },
+    {
+      "hash": "7e8bd4d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200451,
+      "name": "Make Crossy Road responsive and match website theme colors",
+      "description": ""
+    },
+    {
+      "hash": "19c0d02",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200291,
+      "name": "Fix crossy road game not starting - allow first move to start the game",
+      "description": ""
+    },
+    {
+      "hash": "405700b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200278,
+      "name": "Fix header navigation styling in Pac-Man and Crossy Road games",
+      "description": ""
+    },
+    {
+      "hash": "aaf3d8a",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200129,
+      "name": "Slow down Pac-Man game speed for better playability",
+      "description": ""
+    },
+    {
+      "hash": "204fb1b",
+      "author": "sanjith-esp32",
+      "unix_time": 1768200051,
+      "name": "Add touch controls to racing multiplayer game with virtual buttons for both players",
+      "description": ""
+    },
+    {
+      "hash": "d64611e",
+      "author": "sanjith-esp32",
+      "unix_time": 1768199810,
+      "name": "Update homepage to include Pac-Man, Crossy Road, and Pipe Connect games",
+      "description": ""
+    },
+    {
+      "hash": "9bc6e55",
+      "author": "sanjith-esp32",
+      "unix_time": 1768199294,
+      "name": "Add Pipe Connect puzzle game with multiple difficulty levels and pathfinding",
+      "description": ""
+    },
+    {
+      "hash": "e8eead7",
+      "author": "sanjith-esp32",
+      "unix_time": 1768199281,
+      "name": "Add Pac-Man and Crossy Road games",
+      "description": ""
+    },
+    {
+      "hash": "1ac136f",
+      "author": "sanjith-esp32",
+      "unix_time": 1768199175,
+      "name": "Add Pac-Man game with ghosts, power pellets, and maze navigation",
+      "description": ""
+    },
+    {
+      "hash": "7253dd8",
+      "author": "sanjith-esp32",
+      "unix_time": 1768199140,
+      "name": "Add Fruit Ninja game with slicing mechanics, combos, and bombs",
+      "description": ""
+    },
+    {
+      "hash": "3af0d7c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768198995,
+      "name": "Remove chess game files",
+      "description": ""
+    },
+    {
+      "hash": "49ce343",
+      "author": "sanjith-esp32",
+      "unix_time": 1768198192,
+      "name": "Fix ball phasing through obstacles by adding proper collision position correction",
+      "description": ""
+    },
+    {
+      "hash": "cd0996a",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197897,
+      "name": "Fix pong ball getting stuck at top/bottom boundaries",
+      "description": ""
+    },
+    {
+      "hash": "fc1e786",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197878,
+      "name": "Add click-to-change-color feature for cars in multiplayer racing game",
+      "description": ""
+    },
+    {
+      "hash": "96bb2ad",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197715,
+      "name": "Fix tetris reset button by adding event listener",
+      "description": ""
+    },
+    {
+      "hash": "b61db4d",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197570,
+      "name": "Change tetris rotation to use center pivot point for more intuitive piece rotation",
+      "description": ""
+    },
+    {
+      "hash": "de972c5",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197379,
+      "name": "Add score display to snake game over screen, penalty timeout to whack-a-mole, and improve tetris DAS",
+      "description": ""
+    },
+    {
+      "hash": "438ef59",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197344,
+      "name": "Add touch controls to tank multiplayer game with virtual joysticks for both players",
+      "description": ""
+    },
+    {
+      "hash": "6c59611",
+      "author": "sanjith-esp32",
+      "unix_time": 1768197283,
+      "name": "Fix duplicate header in tanks.html",
+      "description": ""
+    },
+    {
+      "hash": "87c9dfd",
+      "author": "sanjith-esp32",
+      "unix_time": 1768193203,
+      "name": "Update game styling and remove online multiplayer buttons",
+      "description": "- Enhanced snake game with themed gradients and glow effects\n- Styled snake segments with rounded corners and blue accent colors\n- Updated apple with cyan gradient and glow matching website theme\n- Removed online multiplayer navigation buttons from all games\n- Updated branding from 'Game Site' to 'Insta-Games'"
+    },
+    {
+      "hash": "f0b38cd",
+      "author": "sanjith-esp32",
+      "unix_time": 1768192622,
+      "name": "Remove emoji from About page and fix chess board rendering bug",
+      "description": ""
+    },
+    {
+      "hash": "f0cf939",
+      "author": "sanjith-esp32",
+      "unix_time": 1768187861,
+      "name": "Remove emoji and subtitle from Local Multiplayer section",
+      "description": ""
+    },
+    {
+      "hash": "6ce5289",
+      "author": "sanjith-esp32",
+      "unix_time": 1768187615,
+      "name": "Rebrand from 'Game Site' to 'Insta-Games' across all pages",
+      "description": ""
+    },
+    {
+      "hash": "4d66941",
+      "author": "sanjith-esp32",
+      "unix_time": 1768187345,
+      "name": "Trigger GitHub Pages deployment",
+      "description": ""
+    },
+    {
+      "hash": "963b174",
+      "author": "sanjith-esp32",
+      "unix_time": 1768185188,
+      "name": "Update GitHub Actions workflow to deploy from main branch",
+      "description": ""
+    },
+    {
+      "hash": "cc3c19c",
+      "author": "sanjith-esp32",
+      "unix_time": 1768185016,
+      "name": "Remove online multiplayer games (copter-server.js, copterbattle.html, paperio.html, snakeio.html, etc.); update index.html and script.js to remove online multiplayer section; fix tictactoe.js difficulty selector locking behavior",
+      "description": ""
+    },
+    {
+      "hash": "6db1605",
+      "author": "sanjith-esp32",
+      "unix_time": 1767854769,
+      "name": "Fix castling - exclude from check validation and fix isInCheck reference",
+      "description": ""
+    },
+    {
+      "hash": "dec0d34",
+      "author": "sanjith-esp32",
+      "unix_time": 1767854438,
+      "name": "Add castling support to chess",
+      "description": ""
+    },
+    {
+      "hash": "e22bd49",
+      "author": "sanjith-esp32",
+      "unix_time": 1767854129,
+      "name": "Add 2-player local multiplayer chess, delist AI chess for now",
+      "description": ""
+    },
+    {
+      "hash": "797494b",
+      "author": "sanjith-esp32",
+      "unix_time": 1767853760,
+      "name": "Fix stalemate bug - add color parameter to getValidMoves",
+      "description": ""
+    },
+    {
+      "hash": "1c1896b",
+      "author": "sanjith-esp32",
+      "unix_time": 1767853564,
+      "name": "Add check, checkmate detection and game review to chess",
+      "description": ""
+    },
+    {
+      "hash": "b43da14",
+      "author": "sanjith-esp32",
+      "unix_time": 1767852644,
+      "name": "Add chess game with AI opponent",
+      "description": ""
+    },
+    {
+      "hash": "cb9d459",
+      "author": "sanjith-esp32",
+      "unix_time": 1767749347,
+      "name": "Start snake with 3 segments instead of 1",
+      "description": ""
+    },
+    {
+      "hash": "31c211c",
+      "author": "sanjith-esp32",
+      "unix_time": 1767677513,
+      "name": "Add counterclockwise rotation to Tetris (Z key)",
+      "description": ""
+    },
+    {
+      "hash": "409c26e",
+      "author": "sanjith-esp32",
+      "unix_time": 1767677265,
+      "name": "Fix rotation glitch preventing pieces from phasing through blocks",
+      "description": ""
+    },
+    {
+      "hash": "247921c",
+      "author": "sanjith-esp32",
+      "unix_time": 1767677103,
+      "name": "Add hold piece feature to Tetris (press C to hold)",
+      "description": ""
+    },
+    {
+      "hash": "dc5a004",
+      "author": "sanjith-esp32",
+      "unix_time": 1767676968,
+      "name": "Prevent Tetris piece rotation when blocked by other pieces",
+      "description": ""
+    },
+    {
+      "hash": "0aa599c",
+      "author": "sanjith-esp32",
+      "unix_time": 1767676832,
+      "name": "Add ghost piece outline in Tetris showing where piece will land",
+      "description": ""
+    },
+    {
+      "hash": "50e2d0a",
+      "author": "sanjith-esp32",
+      "unix_time": 1767676593,
+      "name": "Add visible borders to all game canvases",
+      "description": ""
+    },
+    {
+      "hash": "6ff415f",
+      "author": "sanjith-esp32",
+      "unix_time": 1767676522,
+      "name": "Add faster continuous left/right movement in Tetris",
+      "description": ""
+    },
+    {
+      "hash": "b404c27",
+      "author": "sanjith-esp32",
+      "unix_time": 1767676396,
+      "name": "Prevent page scrolling with arrow keys during gameplay",
+      "description": ""
+    },
+    {
+      "hash": "1ffc57a",
+      "author": "sanjith-esp32",
+      "unix_time": 1767580073,
+      "name": "Prevent clicking simon tiles during pattern playback",
+      "description": ""
+    },
+    {
+      "hash": "c98a165",
+      "author": "sanjith-esp32",
+      "unix_time": 1767579757,
+      "name": "Reduce grid line opacity for better blending",
+      "description": ""
+    },
+    {
+      "hash": "4338b7c",
+      "author": "sanjith-esp32",
+      "unix_time": 1767579669,
+      "name": "Bump snake.js version for cache bust",
+      "description": ""
+    },
+    {
+      "hash": "de548df",
+      "author": "sanjith-esp32",
+      "unix_time": 1767579541,
+      "name": "Match snake game background with website theme",
+      "description": ""
+    },
+    {
+      "hash": "e3ad8fe",
+      "author": "sanjith-esp32",
+      "unix_time": 1767579184,
+      "name": "Use lighter background for snake canvas to better match site theme",
+      "description": ""
+    },
+    {
+      "hash": "dc3bad1",
+      "author": "sanjith-esp32",
+      "unix_time": 1767579096,
+      "name": "Match snake canvas background with website theme",
+      "description": ""
+    },
+    {
+      "hash": "9e8136e",
+      "author": "sanjith-esp32",
+      "unix_time": 1767578926,
+      "name": "Enhance memory match card blue gradient",
+      "description": ""
+    },
+    {
+      "hash": "0392d5a",
+      "author": "sanjith-esp32",
+      "unix_time": 1767578671,
+      "name": "Fix navigation on game pages and update memory match card theme to dark blue",
+      "description": ""
+    },
+    {
+      "hash": "890446d",
+      "author": "sanjith-esp32",
+      "unix_time": 1767365415,
+      "name": "Add active class to About nav link on all static pages",
+      "description": ""
+    },
+    {
+      "hash": "fcce924",
+      "author": "sanjith-esp32",
+      "unix_time": 1767365263,
+      "name": "Fix navigation links on static pages to properly link to index.html sections",
+      "description": ""
+    },
+    {
+      "hash": "950232d",
+      "author": "sanjith-esp32",
+      "unix_time": 1767365082,
+      "name": "Fix navigation highlighting on static pages - removed active class from Single Player nav link on about, privacy, feedback, and terms pages",
+      "description": ""
+    },
+    {
+      "hash": "95fa22f",
+      "author": "sanjith-esp32",
+      "unix_time": 1763035284,
+      "name": "Update snakeio.html to match main website dark/cyan theme",
+      "description": ""
+    },
+    {
+      "hash": "472993e",
+      "author": "sanjith-esp32",
+      "unix_time": 1763011169,
+      "name": "Increase AI tanks from 5 to 20 in Copter Battle",
+      "description": ""
+    },
+    {
+      "hash": "b44d388",
+      "author": "sanjith-esp32",
+      "unix_time": 1763010561,
+      "name": "Optimize all three games - 30 FPS broadcasts, culling, segment sampling",
+      "description": ""
+    },
+    {
+      "hash": "37c80d0",
+      "author": "sanjith-esp32",
+      "unix_time": 1763010309,
+      "name": "Optimize tank performance - reduce count to 5, 30 FPS broadcasts, simpler rendering",
+      "description": ""
+    },
+    {
+      "hash": "b55147b",
+      "author": "sanjith-esp32",
+      "unix_time": 1763010009,
+      "name": "Add AI tanks to Copter Battle - give half XP of player kills",
+      "description": ""
+    },
+    {
+      "hash": "54b0ac3",
+      "author": "sanjith-esp32",
+      "unix_time": 1763008506,
+      "name": "Improve flood fill by aligning bounding box to grid",
+      "description": ""
+    },
+    {
+      "hash": "67026f4",
+      "author": "sanjith-esp32",
+      "unix_time": 1763008127,
+      "name": "Fix flood fill by properly closing polygon loop",
+      "description": ""
+    },
+    {
+      "hash": "fa7d591",
+      "author": "sanjith-esp32",
+      "unix_time": 1763007979,
+      "name": "Fix duplicate keys declaration in paperio.js",
+      "description": ""
+    },
+    {
+      "hash": "4e07606",
+      "author": "sanjith-esp32",
+      "unix_time": 1763005730,
+      "name": "Add touch controls to Paper.io with swipe-based directional input",
+      "description": ""
+    },
+    {
+      "hash": "7882bd6",
+      "author": "sanjith-esp32",
+      "unix_time": 1763005326,
+      "name": "Increase Copter Battle map size from 3000x3000 to 5000x5000",
+      "description": ""
+    },
+    {
+      "hash": "e6ae6f6",
+      "author": "sanjith-esp32",
+      "unix_time": 1763005112,
+      "name": "Move controls explanation to login screen instead of in-game UI",
+      "description": ""
+    },
+    {
+      "hash": "82f56b8",
+      "author": "sanjith-esp32",
+      "unix_time": 1763004887,
+      "name": "Move Copter Battle upgrade button to bottom-left to avoid minimap overlap",
+      "description": ""
+    },
+    {
+      "hash": "8d7d491",
+      "author": "sanjith-esp32",
+      "unix_time": 1763004702,
+      "name": "Add minimaps to all three multiplayer games",
+      "description": ""
+    },
+    {
+      "hash": "a5b72be",
+      "author": "sanjith-esp32",
+      "unix_time": 1763004080,
+      "name": "Add Snake.io to online multiplayer games section",
+      "description": ""
+    },
+    {
+      "hash": "d44b2a0",
+      "author": "sanjith-esp32",
+      "unix_time": 1763003837,
+      "name": "Fix Snake.io collision detection - allow tighter turns",
+      "description": ""
+    },
+    {
+      "hash": "67c4b75",
+      "author": "sanjith-esp32",
+      "unix_time": 1762953234,
+      "name": "Add proper wrapper pages for Paper.io and Snake.io matching Copter Battle format",
+      "description": ""
+    },
+    {
+      "hash": "8c4723e",
+      "author": "sanjith-esp32",
+      "unix_time": 1762953082,
+      "name": "Add Snake.io multiplayer game",
+      "description": ""
+    },
+    {
+      "hash": "f94dd60",
+      "author": "sanjith-esp32",
+      "unix_time": 1762952834,
+      "name": "Fix camera positioning for 2x zoom",
+      "description": ""
+    },
+    {
+      "hash": "c24a383",
+      "author": "sanjith-esp32",
+      "unix_time": 1762952536,
+      "name": "Use timestamp for cache busting",
+      "description": ""
+    },
+    {
+      "hash": "3e02fe5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762952197,
+      "name": "Restore onclick handler and bump cache version to v3",
+      "description": ""
+    },
+    {
+      "hash": "82a4680",
+      "author": "sanjith-esp32",
+      "unix_time": 1762952101,
+      "name": "Add debugging and fix joinGame scope - make it globally accessible",
+      "description": ""
+    },
+    {
+      "hash": "c7b3d4b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762951940,
+      "name": "Fix render function call - move to DOMContentLoaded",
+      "description": ""
+    },
+    {
+      "hash": "1839038",
+      "author": "sanjith-esp32",
+      "unix_time": 1762951690,
+      "name": "Add cache busting parameter to JS",
+      "description": ""
+    },
+    {
+      "hash": "e4bac00",
+      "author": "sanjith-esp32",
+      "unix_time": 1762951562,
+      "name": "Fix joinGame function scope - use event listener instead of onclick",
+      "description": ""
+    },
+    {
+      "hash": "d44417a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762949782,
+      "name": "Fix render loop to safely handle uninitialized canvas",
+      "description": ""
+    },
+    {
+      "hash": "0dd7e89",
+      "author": "sanjith-esp32",
+      "unix_time": 1762948315,
+      "name": "Fix START GAME button - wait for DOM to load before initializing",
+      "description": ""
+    },
+    {
+      "hash": "deb20ee",
+      "author": "sanjith-esp32",
+      "unix_time": 1762948101,
+      "name": "Add 2x zoom for closer view of player and territory",
+      "description": ""
+    },
+    {
+      "hash": "e2782b5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762948004,
+      "name": "Reduce player speed to 1 pixel per frame for maximum control",
+      "description": ""
+    },
+    {
+      "hash": "ad4829c",
+      "author": "sanjith-esp32",
+      "unix_time": 1762947716,
+      "name": "Reduce player speed by 50% (3 -> 1.5) for better control",
+      "description": ""
+    },
+    {
+      "hash": "5d01614",
+      "author": "sanjith-esp32",
+      "unix_time": 1762947615,
+      "name": "Add reasonable 300x300 limit to prevent server freezing on massive captures",
+      "description": ""
+    },
+    {
+      "hash": "66844e5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762947188,
+      "name": "Add visible map boundaries with cyan border and outer shadow",
+      "description": ""
+    },
+    {
+      "hash": "edae9fa",
+      "author": "sanjith-esp32",
+      "unix_time": 1762947092,
+      "name": "Remove all capture size limits - allow unlimited territory capture",
+      "description": ""
+    },
+    {
+      "hash": "2306765",
+      "author": "sanjith-esp32",
+      "unix_time": 1762946983,
+      "name": "Major flood fill fixes - remove early exit, increase limit to 200x200, add logging",
+      "description": ""
+    },
+    {
+      "hash": "4f236dd",
+      "author": "sanjith-esp32",
+      "unix_time": 1762946025,
+      "name": "Fix syntax error - remove extra closing brace",
+      "description": ""
+    },
+    {
+      "hash": "8270212",
+      "author": "sanjith-esp32",
+      "unix_time": 1762945761,
+      "name": "Fix rendering - only fill when tiles exist and check territory exists",
+      "description": ""
+    },
+    {
+      "hash": "0578c34",
+      "author": "sanjith-esp32",
+      "unix_time": 1762945617,
+      "name": "Major performance optimization - reduce fill limit, batch rendering, 30fps updates",
+      "description": ""
+    },
+    {
+      "hash": "5e47f1b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762945346,
+      "name": "Fix flood fill to properly fill all enclosed areas with reliable point-in-polygon test",
+      "description": ""
+    },
+    {
+      "hash": "493348a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762944978,
+      "name": "Optimize Paper.io performance - limit flood fill area and only render visible tiles",
+      "description": ""
+    },
+    {
+      "hash": "8f02de2",
+      "author": "sanjith-esp32",
+      "unix_time": 1762944634,
+      "name": "Fix Paper.io flood fill to properly fill enclosed areas",
+      "description": ""
+    },
+    {
+      "hash": "6085a81",
+      "author": "sanjith-esp32",
+      "unix_time": 1762944390,
+      "name": "Improve Paper.io territory border rendering - single clean outline",
+      "description": ""
+    },
+    {
+      "hash": "46e4f9a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762933540,
+      "name": "Fix Paper.io WebSocket connection to use HTTPS",
+      "description": ""
+    },
+    {
+      "hash": "5bc22c1",
+      "author": "sanjith-esp32",
+      "unix_time": 1762933303,
+      "name": "Fix Paper.io header navigation and hide loading text",
+      "description": ""
+    },
+    {
+      "hash": "03540f9",
+      "author": "sanjith-esp32",
+      "unix_time": 1762933148,
+      "name": "Fix Paper.io WebSocket connection path",
+      "description": ""
+    },
+    {
+      "hash": "b32479c",
+      "author": "sanjith-esp32",
+      "unix_time": 1762932979,
+      "name": "Add Paper.io online multiplayer game - territory capture with trail mechanics",
+      "description": ""
+    },
+    {
+      "hash": "3840776",
+      "author": "sanjith-esp32",
+      "unix_time": 1762930895,
+      "name": "Flip helicopter orientation - cockpit at front, tail at back",
+      "description": ""
+    },
+    {
+      "hash": "1d3ee88",
+      "author": "sanjith-esp32",
+      "unix_time": 1762930697,
+      "name": "Fix bullet spawn position to shoot from front of helicopter",
+      "description": ""
+    },
+    {
+      "hash": "cff1764",
+      "author": "sanjith-esp32",
+      "unix_time": 1762930525,
+      "name": "Simplify helicopter design - clean top-down view",
+      "description": ""
+    },
+    {
+      "hash": "a50fc9a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762930395,
+      "name": "Redesign helicopter sprites for top-down view with spinning rotors",
+      "description": ""
+    },
+    {
+      "hash": "b443891",
+      "author": "sanjith-esp32",
+      "unix_time": 1762930249,
+      "name": "Add detailed animated helicopter sprites with rotor animation",
+      "description": ""
+    },
+    {
+      "hash": "20a9996",
+      "author": "sanjith-esp32",
+      "unix_time": 1762930020,
+      "name": "Update Copter Battle theme to match website design",
+      "description": ""
+    },
+    {
+      "hash": "df789be",
+      "author": "sanjith-esp32",
+      "unix_time": 1762929691,
+      "name": "Fix Copter Battle page to use standard site header",
+      "description": ""
+    },
+    {
+      "hash": "e567354",
+      "author": "sanjith-esp32",
+      "unix_time": 1762927965,
+      "name": "Standardize navigation headers across all game pages",
+      "description": ""
+    },
+    {
+      "hash": "0cb1b5f",
+      "author": "sanjith-esp32",
+      "unix_time": 1762927314,
+      "name": "Embed Copter Battle game into website with navigation bar",
+      "description": ""
+    },
+    {
+      "hash": "182a6d1",
+      "author": "sanjith-esp32",
+      "unix_time": 1762927204,
+      "name": "Redesign login screen with modern UI and website navigation",
+      "description": ""
+    },
+    {
+      "hash": "e57b699",
+      "author": "sanjith-esp32",
+      "unix_time": 1762927075,
+      "name": "Add touch-friendly upgrade button with badge and pulse animation",
+      "description": ""
+    },
+    {
+      "hash": "b58d640",
+      "author": "sanjith-esp32",
+      "unix_time": 1762926673,
+      "name": "Make upgrades harder: 5 kills per upgrade point (was 1 kill)",
+      "description": ""
+    },
+    {
+      "hash": "85b7a94",
+      "author": "sanjith-esp32",
+      "unix_time": 1762925539,
+      "name": "Add mobile connection status, better error handling, and self-signed cert support",
+      "description": ""
+    },
+    {
+      "hash": "804c568",
+      "author": "sanjith-esp32",
+      "unix_time": 1762925228,
+      "name": "Update Copter Battle link to use HTTPS server",
+      "description": ""
+    },
+    {
+      "hash": "bc481ba",
+      "author": "sanjith-esp32",
+      "unix_time": 1762923958,
+      "name": "Add connection debugging and error handling for multiplayer",
+      "description": ""
+    },
+    {
+      "hash": "0f3ce94",
+      "author": "sanjith-esp32",
+      "unix_time": 1762922914,
+      "name": "Add tank controls for shooting: Left/Right arrows rotate gun, Up arrow shoots",
+      "description": ""
+    },
+    {
+      "hash": "884fc55",
+      "author": "sanjith-esp32",
+      "unix_time": 1762922665,
+      "name": "Update controls: WASD for movement, Arrow keys for shooting, Touch joysticks for mobile",
+      "description": ""
+    },
+    {
+      "hash": "effe6a2",
+      "author": "sanjith-esp32",
+      "unix_time": 1762922390,
+      "name": "Rebuild Copter Battle as combat shooter like copter.io - WASD movement, shooting, upgrades, leaderboard",
+      "description": ""
+    },
+    {
+      "hash": "63eff30",
+      "author": "sanjith-esp32",
+      "unix_time": 1762921873,
+      "name": "Fix HTTPS mixed content issue - Add HTTP fallback for Copter Battle",
+      "description": ""
+    },
+    {
+      "hash": "b05ea88",
+      "author": "sanjith-esp32",
+      "unix_time": 1762920452,
+      "name": "Add Copter Battle - Real-time multiplayer helicopter game",
+      "description": ""
+    },
+    {
+      "hash": "c0c7873",
+      "author": "sanjith-esp32",
+      "unix_time": 1762915278,
+      "name": "Move Local and Online Multiplayer to separate navigation items in header",
+      "description": ""
+    },
+    {
+      "hash": "26b019a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762914873,
+      "name": "Split multiplayer section into Local Multiplayer and Online Multiplayer (coming soon)",
+      "description": ""
+    },
+    {
+      "hash": "ed1b484",
+      "author": "sanjith-esp32",
+      "unix_time": 1762913969,
+      "name": "Revert Google Analytics to G-33Q7MTCK21",
+      "description": ""
+    },
+    {
+      "hash": "f1110c4",
+      "author": "sanjith-esp32",
+      "unix_time": 1762913366,
+      "name": "Fix Google Analytics measurement ID from G-33Q7MTCK21 to G-W5FP60KL51",
+      "description": ""
+    },
+    {
+      "hash": "b990fc5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762880904,
+      "name": "Add comprehensive game directory submission guide",
+      "description": ""
+    },
+    {
+      "hash": "ec9976a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762880605,
+      "name": "Add structured data documentation",
+      "description": ""
+    },
+    {
+      "hash": "483dd0d",
+      "author": "sanjith-esp32",
+      "unix_time": 1762880565,
+      "name": "Add structured data (Schema.org) for better SEO and rich snippets",
+      "description": ""
+    },
+    {
+      "hash": "c79ad62",
+      "author": "sanjith-esp32",
+      "unix_time": 1762879803,
+      "name": "Add SEO improvements: sitemap, robots.txt, Open Graph tags, better meta descriptions",
+      "description": ""
+    },
+    {
+      "hash": "2870ea2",
+      "author": "sanjith-esp32",
+      "unix_time": 1762879610,
+      "name": "Remove Our Values, Why Browser Games, and Technology sections from About page",
+      "description": ""
+    },
+    {
+      "hash": "efb5565",
+      "author": "sanjith-esp32",
+      "unix_time": 1762879556,
+      "name": "Remove email and GitHub contact info from About page",
+      "description": ""
+    },
+    {
+      "hash": "0599846",
+      "author": "sanjith-esp32",
+      "unix_time": 1762879433,
+      "name": "Add About page with mission, stats, and contact info for AdSense compliance",
+      "description": ""
+    },
+    {
+      "hash": "59e3384",
+      "author": "sanjith-esp32",
+      "unix_time": 1762878989,
+      "name": "Update privacy policy to explicitly mention Google Analytics",
+      "description": ""
+    },
+    {
+      "hash": "afc7be7",
+      "author": "sanjith-esp32",
+      "unix_time": 1762878803,
+      "name": "Add Google Analytics (G-33Q7MTCK21) to all HTML pages",
+      "description": ""
+    },
+    {
+      "hash": "e21b77a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762875693,
+      "name": "Fix drawGrid to use actual stored colors instead of grey gradient",
+      "description": ""
+    },
+    {
+      "hash": "26388a4",
+      "author": "sanjith-esp32",
+      "unix_time": 1762875581,
+      "name": "Make pieces blue when dragging, random colors when placed on grid",
+      "description": ""
+    },
+    {
+      "hash": "9f3d305",
+      "author": "sanjith-esp32",
+      "unix_time": 1762875440,
+      "name": "Change all pieces to green color (draggable and placed)",
+      "description": ""
+    },
+    {
+      "hash": "14dcad9",
+      "author": "sanjith-esp32",
+      "unix_time": 1762875180,
+      "name": "Use Math.round instead of Math.floor for better grid snapping on piece placement",
+      "description": ""
+    },
+    {
+      "hash": "b3129f7",
+      "author": "sanjith-esp32",
+      "unix_time": 1762874987,
+      "name": "Change placed pieces to green color instead of piece color",
+      "description": ""
+    },
+    {
+      "hash": "f269066",
+      "author": "sanjith-esp32",
+      "unix_time": 1762874821,
+      "name": "Widen canvas to 600px and increase piece spacing to 180px to prevent overlap",
+      "description": ""
+    },
+    {
+      "hash": "a1dec42",
+      "author": "sanjith-esp32",
+      "unix_time": 1762874655,
+      "name": "Fix piece overlap by adjusting spacing to 165px and left offset to 20px",
+      "description": ""
+    },
+    {
+      "hash": "3df8768",
+      "author": "sanjith-esp32",
+      "unix_time": 1762874441,
+      "name": "Increase spacing between pieces to prevent overlap",
+      "description": ""
+    },
+    {
+      "hash": "58f8672",
+      "author": "sanjith-esp32",
+      "unix_time": 1762874266,
+      "name": "Fix block placement positioning",
+      "description": ""
+    },
+    {
+      "hash": "a0ea5b5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762874135,
+      "name": "Remove canvas backgrounds to blend seamlessly with site",
+      "description": ""
+    },
+    {
+      "hash": "9e37cbd",
+      "author": "sanjith-esp32",
+      "unix_time": 1762873952,
+      "name": "Add seamless-canvas class to make games blend with site background",
+      "description": ""
+    },
+    {
+      "hash": "87678c4",
+      "author": "sanjith-esp32",
+      "unix_time": 1762873790,
+      "name": "Update Block Puzzle with dark blue blocks and glowing edges",
+      "description": ""
+    },
+    {
+      "hash": "7fb018b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762873484,
+      "name": "Remove border around puzzle to match site background",
+      "description": ""
+    },
+    {
+      "hash": "e522bb9",
+      "author": "sanjith-esp32",
+      "unix_time": 1762873318,
+      "name": "Simplify tiles with clean dark blue and glowing edges",
+      "description": ""
+    },
+    {
+      "hash": "4de740d",
+      "author": "sanjith-esp32",
+      "unix_time": 1762873132,
+      "name": "Enhance sliding puzzle tiles with glossy effects and color variety",
+      "description": ""
+    },
+    {
+      "hash": "02b842a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762873075,
+      "name": "Remove Brick Breaker game",
+      "description": ""
+    },
+    {
+      "hash": "b93e53c",
+      "author": "sanjith-esp32",
+      "unix_time": 1762872711,
+      "name": "Update all 4 new games to match site styling",
+      "description": ""
+    },
+    {
+      "hash": "231ec26",
+      "author": "sanjith-esp32",
+      "unix_time": 1762872404,
+      "name": "Improve Sliding Puzzle UI with gradients, hover effects, and polish",
+      "description": ""
+    },
+    {
+      "hash": "10a0aac",
+      "author": "sanjith-esp32",
+      "unix_time": 1762871976,
+      "name": "Add 4 new games: Sliding Puzzle, Brick Breaker, Block Puzzle, Match 3",
+      "description": ""
+    },
+    {
+      "hash": "f118c6c",
+      "author": "sanjith-esp32",
+      "unix_time": 1762868516,
+      "name": "Add better error handling and debugging to feedback form",
+      "description": ""
+    },
+    {
+      "hash": "18d9cc7",
+      "author": "sanjith-esp32",
+      "unix_time": 1762868199,
+      "name": "Remove mailto link from feedback page",
+      "description": ""
+    },
+    {
+      "hash": "82cd95e",
+      "author": "sanjith-esp32",
+      "unix_time": 1762868164,
+      "name": "Integrate Formspree with form ID xjkjveon",
+      "description": ""
+    },
+    {
+      "hash": "071bf54",
+      "author": "sanjith-esp32",
+      "unix_time": 1762867912,
+      "name": "Update feedback email to games3910394@gmail.com",
+      "description": ""
+    },
+    {
+      "hash": "80de241",
+      "author": "sanjith-esp32",
+      "unix_time": 1762866625,
+      "name": "Convert feedback form to mailto (simpler solution)",
+      "description": ""
+    },
+    {
+      "hash": "13a7c42",
+      "author": "sanjith-esp32",
+      "unix_time": 1762866442,
+      "name": "Update feedback form to use direct email",
+      "description": ""
+    },
+    {
+      "hash": "984321c",
+      "author": "sanjith-esp32",
+      "unix_time": 1762866253,
+      "name": "Fix feedback form Formspree integration",
+      "description": ""
+    },
+    {
+      "hash": "39219cf",
+      "author": "sanjith-esp32",
+      "unix_time": 1762865895,
+      "name": "Add feedback page with Formspree integration",
+      "description": ""
+    },
+    {
+      "hash": "a2d9c22",
+      "author": "sanjith-esp32",
+      "unix_time": 1762864906,
+      "name": "Add Privacy Policy and Terms of Service pages",
+      "description": ""
+    },
+    {
+      "hash": "b1c98ae",
+      "author": "sanjith-esp32",
+      "unix_time": 1762864741,
+      "name": "Prepare website for advertisements with ad placeholders and configuration",
+      "description": ""
+    },
+    {
+      "hash": "404214d",
+      "author": "sanjith-esp32",
+      "unix_time": 1762864022,
+      "name": "Bump Whack-a-Mole JS version to force cache refresh",
+      "description": ""
+    },
+    {
+      "hash": "f8f5d76",
+      "author": "sanjith-esp32",
+      "unix_time": 1762863951,
+      "name": "Fix Whack-a-Mole reset button and initial status",
+      "description": ""
+    },
+    {
+      "hash": "e8bbe64",
+      "author": "sanjith-esp32",
+      "unix_time": 1762863815,
+      "name": "Fix win detection and add auto-reset in Checkers multiplayer",
+      "description": ""
+    },
+    {
+      "hash": "be218d0",
+      "author": "sanjith-esp32",
+      "unix_time": 1762863448,
+      "name": "Add auto-reset after 2 seconds when game ends in Checkers single-player",
+      "description": ""
+    },
+    {
+      "hash": "fe6ebce",
+      "author": "sanjith-esp32",
+      "unix_time": 1762863243,
+      "name": "Add debug logging to diagnose AI stuck issue",
+      "description": ""
+    },
+    {
+      "hash": "6266de3",
+      "author": "sanjith-esp32",
+      "unix_time": 1762863129,
+      "name": "Fix AI thinking status and flag management in Checkers",
+      "description": ""
+    },
+    {
+      "hash": "0f6bf70",
+      "author": "sanjith-esp32",
+      "unix_time": 1762863002,
+      "name": "Fix AI multi-jump capture sequence in Checkers",
+      "description": ""
+    },
+    {
+      "hash": "18e0183",
+      "author": "sanjith-esp32",
+      "unix_time": 1762862902,
+      "name": "Fix Checkers single-player AI turn and board update",
+      "description": ""
+    },
+    {
+      "hash": "afe1d95",
+      "author": "sanjith-esp32",
+      "unix_time": 1762862734,
+      "name": "Add Checkers game with single-player (vs AI) and multiplayer versions",
+      "description": ""
+    },
+    {
+      "hash": "3d92c6b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762862203,
+      "name": "Force cache refresh for Connect Four styling",
+      "description": ""
+    },
+    {
+      "hash": "41cd698",
+      "author": "sanjith-esp32",
+      "unix_time": 1762862103,
+      "name": "Update Connect Four styling to match other games",
+      "description": ""
+    },
+    {
+      "hash": "3deb626",
+      "author": "sanjith-esp32",
+      "unix_time": 1762861909,
+      "name": "Fix: AI was blocking itself - allow AI moves when aiThinking is true",
+      "description": ""
+    },
+    {
+      "hash": "775e79c",
+      "author": "sanjith-esp32",
+      "unix_time": 1762861710,
+      "name": "Fix AI turn display and updates in Connect Four single-player",
+      "description": ""
+    },
+    {
+      "hash": "aa1c530",
+      "author": "sanjith-esp32",
+      "unix_time": 1762861530,
+      "name": "Trigger GitHub Pages rebuild",
+      "description": ""
+    },
+    {
+      "hash": "9b33930",
+      "author": "sanjith-esp32",
+      "unix_time": 1762861398,
+      "name": "Split Connect Four into separate single-player (AI) and multiplayer versions",
+      "description": ""
+    },
+    {
+      "hash": "b19b8fc",
+      "author": "sanjith-esp32",
+      "unix_time": 1762859403,
+      "name": "Add 3 new multiplayer games: Snake Duel, Connect Four (with AI), and Ping Pong Madness",
+      "description": ""
+    },
+    {
+      "hash": "0cb9692",
+      "author": "sanjith-esp32",
+      "unix_time": 1762858279,
+      "name": "Remove Bomber Battle game",
+      "description": ""
+    },
+    {
+      "hash": "4020de5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762858194,
+      "name": "Remove Quick Draw and Reflex Battle games",
+      "description": ""
+    },
+    {
+      "hash": "30fa750",
+      "author": "sanjith-esp32",
+      "unix_time": 1762858045,
+      "name": "Air Hockey: make puck even more slippery - increase friction to 0.998",
+      "description": ""
+    },
+    {
+      "hash": "c15b17d",
+      "author": "sanjith-esp32",
+      "unix_time": 1762857956,
+      "name": "Air Hockey: make puck more slippery - reduce friction from 0.98 to 0.995",
+      "description": ""
+    },
+    {
+      "hash": "8ccecfc",
+      "author": "sanjith-esp32",
+      "unix_time": 1762857794,
+      "name": "Tank Battle: fix spawn positions - player1 was spawning on top of a wall",
+      "description": ""
+    },
+    {
+      "hash": "e450e88",
+      "author": "sanjith-esp32",
+      "unix_time": 1762857590,
+      "name": "Tank Battle: simplify movement logic - store and revert to old position on collision",
+      "description": ""
+    },
+    {
+      "hash": "70ea4cb",
+      "author": "sanjith-esp32",
+      "unix_time": 1762857475,
+      "name": "Tank Battle: fix movement calculation for forward/backward motion",
+      "description": ""
+    },
+    {
+      "hash": "83de201",
+      "author": "sanjith-esp32",
+      "unix_time": 1762857382,
+      "name": "Tank Battle: fix controls - implement proper tank steering (W/S forward/back, A/D rotate)",
+      "description": ""
+    },
+    {
+      "hash": "32a0f6a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762856781,
+      "name": "Racing game: randomize obstacles - random spawn intervals, positions, and sizes",
+      "description": ""
+    },
+    {
+      "hash": "308a8c3",
+      "author": "sanjith-esp32",
+      "unix_time": 1762856654,
+      "name": "Racing game: independent finish lines - each player sees their own finish line in their lane",
+      "description": ""
+    },
+    {
+      "hash": "b1b249e",
+      "author": "sanjith-esp32",
+      "unix_time": 1762856545,
+      "name": "Racing game: increase race distance to 20000 (5x longer)",
+      "description": ""
+    },
+    {
+      "hash": "a2b5442",
+      "author": "sanjith-esp32",
+      "unix_time": 1762856468,
+      "name": "Racing game: independent track movement per player - each lane only moves when its player moves",
+      "description": ""
+    },
+    {
+      "hash": "4695a00",
+      "author": "sanjith-esp32",
+      "unix_time": 1762856243,
+      "name": "Racing game: increase track length from 2500 to 4000",
+      "description": ""
+    },
+    {
+      "hash": "861d4e1",
+      "author": "sanjith-esp32",
+      "unix_time": 1762856024,
+      "name": "Racing game: dynamic track speed based on car movement, faster gameplay",
+      "description": ""
+    },
+    {
+      "hash": "a0dce04",
+      "author": "sanjith-esp32",
+      "unix_time": 1762851105,
+      "name": "Fix racing game: proper car alignment, lane boundaries, individual distance tracking",
+      "description": ""
+    },
+    {
+      "hash": "d866f44",
+      "author": "sanjith-esp32",
+      "unix_time": 1762850552,
+      "name": "Add three more multiplayer games: Quick Draw, Reflex Battle, and Bomber Battle",
+      "description": ""
+    },
+    {
+      "hash": "a9e0262",
+      "author": "sanjith-esp32",
+      "unix_time": 1762849749,
+      "name": "Trigger deployment after environment cleanup",
+      "description": ""
+    },
+    {
+      "hash": "e5d3d07",
+      "author": "sanjith-esp32",
+      "unix_time": 1762849637,
+      "name": "Remove environment from workflow to fix deployment",
+      "description": ""
+    },
+    {
+      "hash": "278b4d2",
+      "author": "sanjith-esp32",
+      "unix_time": 1762849558,
+      "name": "Add environment and concurrency to Pages workflow",
+      "description": ""
+    },
+    {
+      "hash": "13b5442",
+      "author": "sanjith-esp32",
+      "unix_time": 1762849416,
+      "name": "Fix GitHub Pages deployment workflow",
+      "description": ""
+    },
+    {
+      "hash": "bba9a96",
+      "author": "sanjith-esp32",
+      "unix_time": 1762848247,
+      "name": "Add three new multiplayer games: Racing, Tank Battle, and Air Hockey",
+      "description": ""
+    },
+    {
+      "hash": "2efd913",
+      "author": "sanjith-esp32",
+      "unix_time": 1762847353,
+      "name": "Fix multiplayer navigation - change href to javascript:void(0)",
+      "description": ""
+    },
+    {
+      "hash": "7bd61d2",
+      "author": "sanjith-esp32",
+      "unix_time": 1762846815,
+      "name": "Major update: Added single/multiplayer modes, seamless theme, bug fixes, removed 2048",
+      "description": ""
+    },
+    {
+      "hash": "48d5b9b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762418181,
+      "name": "2048: block input during move; increase cooldown to prevent spam wins",
+      "description": ""
+    },
+    {
+      "hash": "97d1245",
+      "author": "sanjith-esp32",
+      "unix_time": 1762418053,
+      "name": "Prevent page scroll for Pong controls; debounce 2048 moves to stop spamming; nudge breakout ball off walls",
+      "description": ""
+    },
+    {
+      "hash": "efceed9",
+      "author": "sanjith-esp32",
+      "unix_time": 1762417862,
+      "name": "Fix Breakout wall-sticking; add Pong difficulty selector and AI; TTT/Pong UI tweaks; Snake improvements",
+      "description": ""
+    },
+    {
+      "hash": "564ab57",
+      "author": "sanjith-esp32",
+      "unix_time": 1762417734,
+      "name": "Add TTT difficulties; smoother Snake movement; fix Snake restart; persist high score",
+      "description": ""
+    },
+    {
+      "hash": "8a668c8",
+      "author": "sanjith-esp32",
+      "unix_time": 1762417010,
+      "name": "Publish site: add reset behavior, persistent memory level and snake high score",
+      "description": ""
+    },
+    {
+      "hash": "7f85bae",
+      "author": "sanjith-esp32",
+      "unix_time": 1762349021,
+      "name": "Add initialization call to memory.js",
+      "description": ""
+    },
+    {
+      "hash": "4cc3999",
+      "author": "sanjith-esp32",
+      "unix_time": 1762348712,
+      "name": "Remove modeText reference from simon.js",
+      "description": ""
+    },
+    {
+      "hash": "21755ef",
+      "author": "sanjith-esp32",
+      "unix_time": 1762348499,
+      "name": "Remove mode selection buttons from games - segregation handled by homepage",
+      "description": ""
+    },
+    {
+      "hash": "b271876",
+      "author": "sanjith-esp32",
+      "unix_time": 1762347681,
+      "name": "Remove mode selection buttons from games - segregation handled by homepage",
+      "description": ""
+    },
+    {
+      "hash": "0842afc",
+      "author": "sanjith-esp32",
+      "unix_time": 1762267158,
+      "name": "Update homepage to include Memory, Snake, and Simon in multiplayer section",
+      "description": ""
+    },
+    {
+      "hash": "6b8b326",
+      "author": "sanjith-esp32",
+      "unix_time": 1762267040,
+      "name": "Add 2-player mode to Simon - players alternate turns, points for completing sequences",
+      "description": ""
+    },
+    {
+      "hash": "1c43d1b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762072634,
+      "name": "Add 2-player mode to Snake - P1 arrows, P2 WASD, compete for food",
+      "description": ""
+    },
+    {
+      "hash": "654775f",
+      "author": "sanjith-esp32",
+      "unix_time": 1762072486,
+      "name": "Add 2-player mode to Memory Match - players take turns finding pairs",
+      "description": ""
+    },
+    {
+      "hash": "e1d45ff",
+      "author": "sanjith-esp32",
+      "unix_time": 1762071200,
+      "name": "Fix Tetris page footer and script defer attributes for consistency",
+      "description": ""
+    },
+    {
+      "hash": "634cb24",
+      "author": "sanjith-esp32",
+      "unix_time": 1762071007,
+      "name": "Remove all game links from navigation, keep only Home button",
+      "description": ""
+    },
+    {
+      "hash": "a3afd07",
+      "author": "sanjith-esp32",
+      "unix_time": 1762070837,
+      "name": "Fix Tetris UI to match site design with proper header and styling",
+      "description": ""
+    },
+    {
+      "hash": "c0fcee7",
+      "author": "sanjith-esp32",
+      "unix_time": 1762070732,
+      "name": "Add Tetris with classic 7 tetromino shapes, line clearing, and progressive difficulty",
+      "description": ""
+    },
+    {
+      "hash": "69bb290",
+      "author": "sanjith-esp32",
+      "unix_time": 1762070271,
+      "name": "Add Space Invaders arcade shooter with alien waves and progressive difficulty",
+      "description": ""
+    },
+    {
+      "hash": "d864e71",
+      "author": "sanjith-esp32",
+      "unix_time": 1762070085,
+      "name": "Add Flappy Bird game with gravity physics and pipe obstacles",
+      "description": ""
+    },
+    {
+      "hash": "b3503a8",
+      "author": "sanjith-esp32",
+      "unix_time": 1762069911,
+      "name": "Add debugging and improve Minesweeper grid visibility",
+      "description": ""
+    },
+    {
+      "hash": "3af1b2a",
+      "author": "sanjith-esp32",
+      "unix_time": 1762069816,
+      "name": "Fix Minesweeper grid display and centering",
+      "description": ""
+    },
+    {
+      "hash": "2dab946",
+      "author": "sanjith-esp32",
+      "unix_time": 1762069666,
+      "name": "Add Minesweeper game with Easy, Medium, and Hard difficulty levels",
+      "description": ""
+    },
+    {
+      "hash": "f1c0e32",
+      "author": "sanjith-esp32",
+      "unix_time": 1762069361,
+      "name": "Add multiplayer mode to Whack-a-Mole and Breakout - 5 games now support both modes",
+      "description": ""
+    },
+    {
+      "hash": "783500e",
+      "author": "sanjith-esp32",
+      "unix_time": 1762069122,
+      "name": "Add AI mode to Tic Tac Toe and 2-player mode to Pong - both games now support single and multiplayer",
+      "description": ""
+    },
+    {
+      "hash": "71c927f",
+      "author": "sanjith-esp32",
+      "unix_time": 1762068903,
+      "name": "Reorganize homepage: 2048 appears in both single and multiplayer sections",
+      "description": ""
+    },
+    {
+      "hash": "08113fa",
+      "author": "sanjith-esp32",
+      "unix_time": 1762068394,
+      "name": "Add 2048 game with single-player and multiplayer modes",
+      "description": ""
+    },
+    {
+      "hash": "398113f",
+      "author": "sanjith-esp32",
+      "unix_time": 1762067939,
+      "name": "Add Pong game: single-player vs AI with keyboard/touch controls, first to 5 wins",
+      "description": ""
+    },
+    {
+      "hash": "c930145",
+      "author": "sanjith-esp32",
+      "unix_time": 1762067741,
+      "name": "Add level system to Breakout: 10 progressive levels with increasing speed and brick rows",
+      "description": ""
+    },
+    {
+      "hash": "bce9c34",
+      "author": "sanjith-esp32",
+      "unix_time": 1762067521,
+      "name": "Add Breakout (Brick Breaker) game with touch/mouse/keyboard controls",
+      "description": ""
+    },
+    {
+      "hash": "2775f07",
+      "author": "sanjith-esp32",
+      "unix_time": 1762007321,
+      "name": "Remove Rock Paper Scissors game from site",
+      "description": ""
+    },
+    {
+      "hash": "f67349b",
+      "author": "sanjith-esp32",
+      "unix_time": 1762007150,
+      "name": "Add touchscreen support to all games: swipe controls for Snake, touch-friendly CSS for all interactive elements",
+      "description": ""
+    },
+    {
+      "hash": "cb65dbe",
+      "author": "sanjith-esp32",
+      "unix_time": 1762006901,
+      "name": "Snake: add debug logging and cache-busting parameter",
+      "description": ""
+    },
+    {
+      "hash": "a895113",
+      "author": "sanjith-esp32",
+      "unix_time": 1762006785,
+      "name": "Snake: add usage instructions, fix canvas text rendering, improve game over display",
+      "description": ""
+    },
+    {
+      "hash": "ff0be09",
+      "author": "sanjith-esp32",
+      "unix_time": 1762006649,
+      "name": "Snake game: add wall collision death, WASD support, auto-start on key press, remove start/stop buttons",
+      "description": ""
+    },
+    {
+      "hash": "a618245",
+      "author": "sanjith-esp32",
+      "unix_time": 1762006448,
+      "name": "Make game grid responsive: 6 cols on XL screens, 4 on large, 3 on medium, 2 on tablet, 1 on mobile",
+      "description": ""
+    },
+    {
+      "hash": "2d82d51",
+      "author": "sanjith-esp32",
+      "unix_time": 1762006296,
+      "name": "Restore full styles.css - was accidentally truncated",
+      "description": ""
+    },
+    {
+      "hash": "a35d2ec",
+      "author": "sanjith-esp32",
+      "unix_time": 1762006124,
+      "name": "Refactor Memory Match: add processFlippedPair function and cleanupVisualState to prevent stuck cards",
+      "description": ""
+    },
+    {
+      "hash": "ac258d5",
+      "author": "sanjith-esp32",
+      "unix_time": 1762005899,
+      "name": "Add CSS pointer-events lock and console logging for Memory Match debugging",
+      "description": ""
+    },
+    {
+      "hash": "95ebaf9",
+      "author": "sanjith-esp32",
+      "unix_time": 1762005699,
+      "name": "Fix Memory Match: add defensive check for flipped.length >= 2 before processing",
+      "description": ""
+    },
+    {
+      "hash": "c65c3af",
+      "author": "sanjith-esp32",
+      "unix_time": 1762005578,
+      "name": "Fix Memory Match: lock BEFORE flipping second card to prevent rapid-click race condition",
+      "description": ""
+    },
+    {
+      "hash": "98ad1d8",
+      "author": "sanjith-esp32",
+      "unix_time": 1761989171,
+      "name": "Fix Memory Match: prevent clicking more than 2 cards at once",
+      "description": ""
+    },
+    {
+      "hash": "3d15faa",
+      "author": "sanjith-esp32",
+      "unix_time": 1761989159,
+      "name": "Fix Memory Match: prevent clicking more than 2 cards at once",
+      "description": ""
+    },
+    {
+      "hash": "c0eef26",
+      "author": "sanjith-esp32",
+      "unix_time": 1761988934,
+      "name": "Update game controller logo",
+      "description": ""
+    },
+    {
+      "hash": "40ee5b0",
+      "author": "sanjith-esp32",
+      "unix_time": 1761988774,
+      "name": "Initial commit",
       "description": ""
     }
   ],
   "last_commit": {
-    "hash": "Geg",
-    "author": "2026-09-20T18:33:52+08:00",
-    "timestamp": "Update generategameindex.yml",
-    "name": "Signed-off-by: Geg <greg@notgreg.space>",
-    "description": ""
+    "hash": "986a125",
+    "author": "Geg",
+    "unix_time": 1789900954,
+    "name": "Update generategameindex.yml",
+    "description": "AGAIN>>>>>\n\nSigned-off-by: Geg <greg@notgreg.space>"
   }
 }
