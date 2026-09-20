@@ -2,14 +2,8 @@ name: Generate Games Index
 
 on:
   push:
-    branches:
-      - main
-      - master
-    paths:
-      - 'single/**'
-      - 'multi/**'
-      - 'special/**'
-      - 'desc.epic'
+    paths-ignore:
+      - 'games.json'
   workflow_dispatch:
 
 permissions:
