@@ -1,4 +1,4 @@
-name: Generate Games Index & Commit Info
+name: Generate Games Index & Full Commit History
 
 on:
   push:
@@ -13,22 +13,15 @@ jobs:
   generate-index:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout entire repository history
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
-      - name: Build games.json with Commit Details
+      - name: Build games.json with Full History
         run: |
-          # Extract commit metadata from Git log
-          COMMIT_HASH=$(git log -1 --format="%h")
-          AUTHOR_NAME=$(git log -1 --format="%an")
-          COMMIT_DATE=$(git log -1 --format="%cd" --date=relative)
-          COMMIT_TITLE=$(git log -1 --format="%s")
-          COMMIT_DESC=$(git log -1 --format="%b")
-
           python3 -c "
-          import os, json
+          import os, json, subprocess
 
           catalog = {}
           for section in ['single', 'multi', 'special']:
@@ -41,14 +34,37 @@ jobs:
               else:
                   catalog[section] = []
 
-          # Append last commit object
-          catalog['last_commit'] = {
-              'hash': '''$COMMIT_HASH'''.strip(),
-              'author': '''$AUTHOR_NAME'''.strip(),
-              'time': '''$COMMIT_DATE'''.strip(),
-              'name': '''$COMMIT_TITLE'''.strip(),
-              'description': '''$COMMIT_DESC'''.strip()
-          }
+          # Unit delimiter format: %h (hash), %an (author), %cI (ISO-8601 date), %s (title), %b (body)
+          delimiter = '||COMMIT_SEP||'
+          field_sep = '\x1f'
+          git_format = f'{field_sep}%h{field_sep}%an{field_sep}%cI{field_sep}%s{field_sep}%b{delimiter}'
+          
+          # Pull entire commit history
+          cmd = ['git', 'log', f'--format={git_format}']
+          raw_log = subprocess.check_output(cmd, text=True, errors='replace')
+
+          commits = []
+          for block in raw_log.split(delimiter):
+              block = block.strip()
+              if not block:
+                  continue
+              parts = block.split('\x1f')[1:]
+              if len(parts) >= 4:
+                  h = parts[0].strip()
+                  author = parts[1].strip()
+                  iso_date = parts[2].strip()
+                  title = parts[3].strip()
+                  desc = parts[4].strip() if len(parts) > 4 else ''
+                  commits.append({
+                      'hash': h,
+                      'author': author,
+                      'timestamp': iso_date,
+                      'name': title,
+                      'description': desc
+                  })
+
+          catalog['commits'] = commits
+          catalog['last_commit'] = commits[0] if commits else None
 
           with open('games.json', 'w', encoding='utf-8') as f:
               json.dump(catalog, f, indent=2)
@@ -59,5 +75,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add games.json
-          git commit -m "Auto-update games.json with latest commit info [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto-update full commit history [skip ci]" || echo "No changes to commit"
           git push
