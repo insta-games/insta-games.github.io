@@ -42,6 +42,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "21d7318",
+      "author": "greg-webdev",
+      "unix_time": 1789903926,
+      "name": "feat: add liquid glass status bubble and smooth momentum scroll engine",
+      "description": ""
+    },
+    {
+      "hash": "228743a",
+      "author": "github-actions[bot]",
+      "unix_time": 1789902956,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "93dc087",
       "author": "greg-webdev",
       "unix_time": 1789902932,
@@ -3025,10 +3039,10 @@
     }
   ],
   "last_commit": {
-    "hash": "93dc087",
+    "hash": "21d7318",
     "author": "greg-webdev",
-    "unix_time": 1789902932,
-    "name": "ROLLBACK AND FIXX",
+    "unix_time": 1789903926,
+    "name": "feat: add liquid glass status bubble and smooth momentum scroll engine",
     "description": ""
   }
 }
