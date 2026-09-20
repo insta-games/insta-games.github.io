@@ -65,7 +65,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-            min-height: 400px;
+            min-height: 350px;
         }
 
         .commit-item {
@@ -73,7 +73,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             overflow: hidden;
-            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+            transition: border-color 0.2s ease, background 0.2s ease;
             cursor: pointer;
         }
 
@@ -136,7 +136,6 @@
             color: var(--accent);
         }
 
-        /* Expandable Body */
         .commit-details {
             display: none;
             padding: 0 1.25rem 1.25rem 1.25rem;
@@ -194,7 +193,6 @@
             justify-content: flex-end;
         }
 
-        /* Pagination Bar */
         .pagination-bar {
             display: flex;
             align-items: center;
@@ -210,6 +208,7 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            flex-wrap: wrap;
         }
 
         .page-btn {
@@ -268,8 +267,7 @@
                     <h1 class="history-title">Commit History</h1>
                     <p class="history-stats" id="history-stats">Loading commit logs...</p>
                 </div>
-                <a class="btn" href="https://github.com/insta-games/insta-games.github.io/commits/main" target="_blank"
-                    rel="noopener noreferrer">
+                <a id="github-main-btn" class="btn" href="https://github.com" target="_blank" rel="noopener noreferrer">
                     View on GitHub
                 </a>
             </div>
@@ -278,7 +276,6 @@
                 <div class="empty-state">Loading commits...</div>
             </div>
 
-            <!-- Pagination Footer -->
             <div class="pagination-bar" id="pagination-bar" style="display: none;">
                 <span class="page-info" id="page-info"></span>
                 <div class="page-controls" id="page-controls"></div>
@@ -304,32 +301,32 @@
         const COMMITS_PER_PAGE = 15;
         let allCommits = [];
         let currentPage = 1;
+        let baseUrl = 'https://github.com/insta-games/insta-games.github.io';
 
-        // Calculates real-time difference between commit timestamp and current clock
-        function timeAgo(isoDateString) {
-            if (!isoDateString) return 'recently';
-            const past = new Date(isoDateString);
-            if (isNaN(past.getTime())) return isoDateString;
+        // Computes difference using standard epoch comparison
+        function calculateTimeDifference(unixSeconds) {
+            if (!unixSeconds || isNaN(unixSeconds)) return 'recently';
 
-            const now = new Date();
-            const diffSeconds = Math.max(0, Math.floor((now - past) / 1000));
+            const nowMs = Date.now();
+            const pastMs = Number(unixSeconds) * 1000;
+            const diffSec = Math.max(0, Math.floor((nowMs - pastMs) / 1000));
 
-            if (diffSeconds < 45) return 'just now';
+            if (diffSec < 45) return 'just now';
 
-            const diffMinutes = Math.floor(diffSeconds / 60);
-            if (diffMinutes < 60) return `${diffMinutes}m ago`;
+            const diffMin = Math.floor(diffSec / 60);
+            if (diffMin < 60) return `${diffMin}m ago`;
 
-            const diffHours = Math.floor(diffMinutes / 60);
-            if (diffHours < 24) return `${diffHours}h ago`;
+            const diffHr = Math.floor(diffMin / 60);
+            if (diffHr < 24) return `${diffHr}h ago`;
 
-            const diffDays = Math.floor(diffHours / 24);
-            if (diffDays < 30) return `${diffDays}d ago`;
+            const diffDay = Math.floor(diffHr / 24);
+            if (diffDay < 30) return `${diffDay}d ago`;
 
-            const diffMonths = Math.floor(diffDays / 30);
-            if (diffMonths < 12) return `${diffMonths}mo ago`;
+            const diffMonth = Math.floor(diffDay / 30);
+            if (diffMonth < 12) return `${diffMonth}mo ago`;
 
-            const diffYears = Math.floor(diffDays / 365);
-            return `${diffYears}y ago`;
+            const diffYear = Math.floor(diffDay / 365);
+            return `${diffYear}y ago`;
         }
 
         function renderPage(page) {
@@ -345,9 +342,9 @@
                 const item = document.createElement('div');
                 item.className = 'commit-item';
 
-                const commitUrl = `https://github.com/insta-games/insta-games.github.io/commit/${c.hash}`;
-                const relativeTime = timeAgo(c.timestamp);
-                const fullDate = c.timestamp ? new Date(c.timestamp).toLocaleString() : 'Unknown date';
+                const commitUrl = `${baseUrl}/commit/${c.hash}`;
+                const relativeTime = calculateTimeDifference(c.unix_time);
+                const fullDate = c.unix_time ? new Date(c.unix_time * 1000).toLocaleString() : 'Date unavailable';
 
                 item.innerHTML = `
           <div class="commit-summary">
@@ -373,8 +370,8 @@
                 <span>${fullDate} (${relativeTime})</span>
               </div>
               <div class="details-box">
-                <label>Full Commit Link</label>
-                <a href="${commitUrl}" target="_blank" rel="noopener noreferrer">github.com/${c.hash}</a>
+                <label>Direct Commit URL</label>
+                <a href="${commitUrl}" target="_blank" rel="noopener noreferrer">${c.hash}</a>
               </div>
             </div>
 
@@ -417,37 +414,43 @@
 
             controls.innerHTML = '';
 
-            // Prev Button
             const prevBtn = document.createElement('button');
             prevBtn.className = 'page-btn';
             prevBtn.textContent = '← Prev';
             prevBtn.disabled = currentPage === 1;
-            prevBtn.addEventListener('click', () => renderPage(currentPage - 1));
+            prevBtn.addEventListener('click', () => {
+                renderPage(currentPage - 1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
             controls.appendChild(prevBtn);
 
-            // Page numbers (smart window around current page)
             for (let i = 1; i <= totalPages; i++) {
                 if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
                     const numBtn = document.createElement('button');
                     numBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
                     numBtn.textContent = i;
-                    numBtn.addEventListener('click', () => renderPage(i));
+                    numBtn.addEventListener('click', () => {
+                        renderPage(i);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
                     controls.appendChild(numBtn);
                 } else if (i === currentPage - 3 || i === currentPage + 3) {
                     const dots = document.createElement('span');
                     dots.style.color = 'var(--muted)';
-                    dots.style.padding = '0 0.3rem';
+                    dots.style.padding = '0 0.2rem';
                     dots.textContent = '…';
                     controls.appendChild(dots);
                 }
             }
 
-            // Next Button
             const nextBtn = document.createElement('button');
             nextBtn.className = 'page-btn';
             nextBtn.textContent = 'Next →';
             nextBtn.disabled = currentPage === totalPages;
-            nextBtn.addEventListener('click', () => renderPage(currentPage + 1));
+            nextBtn.addEventListener('click', () => {
+                renderPage(currentPage + 1);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
             controls.appendChild(nextBtn);
         }
 
@@ -457,15 +460,20 @@
                 if (!res.ok) throw new Error('Could not fetch games.json');
                 const data = await res.json();
 
+                if (data.repo_url) {
+                    baseUrl = data.repo_url;
+                    document.getElementById('github-main-btn').href = `${baseUrl}/commits/main`;
+                }
+
                 allCommits = data.commits || (data.last_commit ? [data.last_commit] : []);
 
                 if (allCommits.length === 0) {
                     document.getElementById('timeline').innerHTML = '<div class="empty-state">No commits found in log.</div>';
-                    document.getElementById('history-stats').textContent = '0 total commits';
+                    document.getElementById('history-stats').textContent = '0 commits recorded';
                     return;
                 }
 
-                document.getElementById('history-stats').textContent = `${allCommits.length} total commits recorded across the project.`;
+                document.getElementById('history-stats').textContent = `${allCommits.length} total commits recorded across project history.`;
                 renderPage(1);
             } catch (err) {
                 console.warn(err);
