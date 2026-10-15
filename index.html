@@ -64,60 +64,6 @@
       position: relative;
     }
 
-    /* Full-Screen FoldText Intro Animation Overlay */
-    #intro-overlay {
-      position: fixed;
-      inset: 0;
-      background: #090d1a;
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: all;
-      overflow: hidden;
-      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
-    }
-
-    #intro-overlay.fade-out {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .fold-text-container {
-      perspective: 700px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      padding: 1.5rem;
-      max-width: 90vw;
-      user-select: none;
-    }
-
-    .fold-char-wrap {
-      display: inline-block;
-      position: relative;
-      transform-style: preserve-3d;
-      transform-origin: top center;
-      will-change: transform, opacity;
-      font-size: clamp(3rem, 10vw, 7rem);
-      font-weight: 800;
-      color: #f7f2e8;
-      line-height: 1;
-      white-space: pre;
-    }
-
-    .fold-char-shade {
-      position: absolute;
-      inset: 0;
-      background: #000;
-      opacity: 0.55;
-      pointer-events: none;
-      border-radius: 4px;
-      will-change: opacity;
-    }
-
     /* Custom Liquid Glass Status Bubble */
     #custom-status-bubble {
       position: fixed;
@@ -157,32 +103,10 @@
       display: block;
     }
 
-    /* High-Performance Liquid Blur Overlay (No Black Background) */
-    .global-gradual-blur {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 7.5rem;
-      pointer-events: none;
-      z-index: 40;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 40%, black 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.5) 40%, black 100%);
-      opacity: 1;
-      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: opacity;
-    }
   </style>
 </head>
 
 <body>
-  <!-- FoldText Intro Overlay -->
-  <div id="intro-overlay">
-    <div class="fold-text-container" id="fold-text">Loading...</div>
-  </div>
-
   <!-- Custom Liquid Glass Link Preview Bubble -->
   <div id="custom-status-bubble">
     <span id="custom-status-bubble-text"></span>
@@ -240,12 +164,6 @@
       </small>
     </div>
   </footer>
-
-  <!-- Single-Layer Liquid Blur Overlay -->
-  <div class="global-gradual-blur" id="gradual-blur"></div>
-
-  <!-- GSAP Core for FoldText 3D Intro Animation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <!-- Visual Background & Effects Scripts -->
   <script src="three.min.js"></script>
@@ -359,67 +277,6 @@
         window.location.href = url;
       }
     }
-
-    /* ==========================================================================
-       2. FoldText Intro Animation ("Loading...")
-       ========================================================================== */
-    (function runFoldTextIntro() {
-      const container = document.getElementById('fold-text');
-      const overlay = document.getElementById('intro-overlay');
-      if (!container || !overlay) return;
-
-      const rawText = container.textContent.trim();
-      container.innerHTML = '';
-
-      const chars = Array.from(rawText).map(char => {
-        const wrap = document.createElement('span');
-        wrap.className = 'fold-char-wrap';
-        wrap.textContent = char;
-
-        if (char.trim() !== '') {
-          const shade = document.createElement('span');
-          shade.className = 'fold-char-shade';
-          wrap.appendChild(shade);
-        }
-
-        container.appendChild(wrap);
-        return wrap;
-      });
-
-      const wraps = chars.filter(el => el.textContent.trim() !== '');
-      const shades = container.querySelectorAll('.fold-char-shade');
-
-      gsap.set(wraps, {
-        rotationX: -90,
-        opacity: 0,
-        transformOrigin: '50% 0%'
-      });
-      gsap.set(shades, { opacity: 0.55 });
-
-      const tl = gsap.timeline({
-        onComplete: () => {
-          setTimeout(() => {
-            overlay.classList.add('fade-out');
-            setTimeout(() => overlay.remove(), 650);
-          }, 450);
-        }
-      });
-
-      tl.to(wraps, {
-        rotationX: 0,
-        opacity: 1,
-        duration: 0.65,
-        ease: 'power3.out',
-        stagger: 0.045
-      }, 0.1);
-
-      tl.to(shades, {
-        opacity: 0,
-        duration: 0.65,
-        ease: 'power3.out',
-        stagger: 0.045
-      }, 0.1);
-    })();
 
     /* ==========================================================================
        3. Nav Tab Controls
