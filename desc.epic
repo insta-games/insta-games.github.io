@@ -11,7 +11,6 @@
 "match3" has description "Match colorful gems! Swap to create matches of 3 or more!"
 "memory" has description "Flip tiles and find pairs."
 "minesweeper" has description "Classic mine detection with 3 difficulty levels!"
-"pacman" has description "Chase pellets, outrun ghosts, and clear the maze!"
 "pong" has description "Classic Pong vs AI!"
 "pongcircular" has description "Keep the ball bouncing inside the circular arena!"
 "simon" has description "Repeat the color sequence. How long can you go?"

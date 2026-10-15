@@ -116,20 +116,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://insta-games.github.io/single/pacman/</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
   <!-- Multiplayer Games -->
-  <url>
-    <loc>https://insta-games.github.io/multi/pacman/</loc>
-    <lastmod>2026-04-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
   <url>
     <loc>https://insta-games.github.io/multi/pong/</loc>
     <lastmod>2025-01-13</lastmod>
