@@ -238,6 +238,43 @@ body {
   text-align: center;
 }
 
+.simon-board {
+  width: min(88vw, 420px);
+  aspect-ratio: 1;
+  margin: 1.5rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.simon-pad {
+  min-height: 0;
+  border: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  opacity: 0.72;
+  transition: opacity 0.15s ease, filter 0.15s ease, transform 0.15s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 10px 22px rgba(0, 0, 0, 0.24);
+}
+
+.simon-pad:hover,
+.simon-pad.flipped {
+  opacity: 1;
+  filter: brightness(1.35) saturate(1.2);
+  transform: scale(0.98);
+}
+
+.simon-red { background: #ef4444; }
+.simon-yellow { background: #eab308; }
+.simon-green { background: #22c55e; }
+.simon-blue { background: #3b82f6; }
+
 .nav-toggle {
   display: none;
   background: rgba(255, 255, 255, 0.05);
