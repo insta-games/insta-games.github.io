@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "e399cb9",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792075338,
+      "name": "Restore Simon game board",
+      "description": ""
+    },
+    {
+      "hash": "e9f0edb",
+      "author": "github-actions[bot]",
+      "unix_time": 1792075122,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "2cc522c",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792075111,
@@ -3346,10 +3360,10 @@
     }
   ],
   "last_commit": {
-    "hash": "2cc522c",
+    "hash": "e399cb9",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792075111,
-    "name": "Fix circular Pong arrow controls",
+    "unix_time": 1792075338,
+    "name": "Restore Simon game board",
     "description": ""
   }
 }
