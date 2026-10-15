@@ -72,6 +72,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.7rem;
+  letter-spacing: 0.02em;
   transition: opacity 0.2s cubic-bezier(0, 0.5, 0.5, 1);
 }
 
@@ -86,8 +87,11 @@ body {
 }
 
 .brand-text {
+  font-family: Georgia, 'Times New Roman', serif;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 14px rgba(255, 255, 255, 0.16);
 }
 
 /* Navigation */

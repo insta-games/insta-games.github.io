@@ -193,7 +193,7 @@
   // ─── Load Three.js then boot ──────────────────────────────────────────────────
   function loadThreeAndBoot() {
     if (typeof THREE !== 'undefined') {
-      bootSilk();
+      // Keep the site background static and avoid starting the animated WebGL layer.
       return;
     }
     const s = document.createElement('script');
