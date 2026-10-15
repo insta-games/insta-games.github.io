@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "124bb5e",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792075471,
+      "name": "Fix responsive sliding puzzle clicks",
+      "description": ""
+    },
+    {
+      "hash": "cdb2f08",
+      "author": "github-actions[bot]",
+      "unix_time": 1792075353,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "e399cb9",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792075338,
@@ -3360,10 +3374,10 @@
     }
   ],
   "last_commit": {
-    "hash": "e399cb9",
+    "hash": "124bb5e",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792075338,
-    "name": "Restore Simon game board",
+    "unix_time": 1792075471,
+    "name": "Fix responsive sliding puzzle clicks",
     "description": ""
   }
 }
