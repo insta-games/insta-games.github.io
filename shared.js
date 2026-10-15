@@ -211,12 +211,10 @@
     document.addEventListener('DOMContentLoaded', function () {
       injectLiquidGlassFilter();
       initBtnZoomOverlay();
-      loadThreeAndBoot();
     });
   } else {
     injectLiquidGlassFilter();
     initBtnZoomOverlay();
-    loadThreeAndBoot();
   }
 
   // ─── Button full-screen zoom overlay ─────────────────────────────────────────
