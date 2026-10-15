@@ -15,7 +15,10 @@ let score = 0;
 let highScore = localStorage.getItem('blockPuzzleHighScore') || 0;
 let currentPieces = [];
 let draggedPiece = null;
+let selectedPiece = null;
 let dragOffset = { x: 0, y: 0 };
+let pointerStart = { x: 0, y: 0 };
+let hasDragged = false;
 
 // Block shapes (like Tetris but simpler)
 const shapes = [
@@ -195,6 +198,7 @@ function placePiece(piece, gridRow, gridCol) {
     }
     
     piece.placed = true;
+    if (selectedPiece === piece) selectedPiece = null;
     
     // Calculate score from piece
     let cells = 0;
@@ -318,6 +322,9 @@ function getCanvasPoint(e) {
 
 canvas.addEventListener('pointerdown', (e) => {
     const { x: mouseX, y: mouseY } = getCanvasPoint(e);
+    pointerStart.x = mouseX;
+    pointerStart.y = mouseY;
+    hasDragged = false;
     canvas.setPointerCapture(e.pointerId);
     
     for (const piece of currentPieces) {
@@ -330,9 +337,20 @@ canvas.addEventListener('pointerdown', (e) => {
         if (mouseX >= piece.x && mouseX <= piece.x + width &&
             mouseY >= piece.y && mouseY <= piece.y + height) {
             draggedPiece = piece;
+            selectedPiece = piece;
             dragOffset.x = mouseX - piece.x;
             dragOffset.y = mouseY - piece.y;
             break;
+        }
+    }
+
+    if (!draggedPiece && selectedPiece &&
+        mouseX >= GRID_OFFSET_X && mouseX < GRID_OFFSET_X + GRID_SIZE * CELL_SIZE &&
+        mouseY >= GRID_OFFSET_Y && mouseY < GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE) {
+        const gridCol = Math.floor((mouseX - GRID_OFFSET_X) / CELL_SIZE);
+        const gridRow = Math.floor((mouseY - GRID_OFFSET_Y) / CELL_SIZE);
+        if (canPlacePiece(selectedPiece, gridRow, gridCol)) {
+            placePiece(selectedPiece, gridRow, gridCol);
         }
     }
 });
@@ -340,13 +358,31 @@ canvas.addEventListener('pointerdown', (e) => {
 canvas.addEventListener('pointermove', (e) => {
     if (draggedPiece) {
         const { x, y } = getCanvasPoint(e);
+        hasDragged = hasDragged || Math.hypot(x - pointerStart.x, y - pointerStart.y) > 6;
         draggedPiece.x = x - dragOffset.x;
         draggedPiece.y = y - dragOffset.y;
     }
 });
 
-function finishDrag(shouldPlace = true) {
+function finishDrag(e, shouldPlace = true) {
     if (draggedPiece) {
+        if (!hasDragged) {
+            const { x, y } = getCanvasPoint(e);
+            const gridCol = Math.floor((x - GRID_OFFSET_X) / CELL_SIZE);
+            const gridRow = Math.floor((y - GRID_OFFSET_Y) / CELL_SIZE);
+
+            if (x >= GRID_OFFSET_X && x < GRID_OFFSET_X + GRID_SIZE * CELL_SIZE &&
+                y >= GRID_OFFSET_Y && y < GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE &&
+                canPlacePiece(draggedPiece, gridRow, gridCol)) {
+                placePiece(draggedPiece, gridRow, gridCol);
+            }
+
+            draggedPiece.x = 50 + currentPieces.indexOf(draggedPiece) * 180;
+            draggedPiece.y = PIECES_Y;
+            draggedPiece = null;
+            return;
+        }
+
         // Calculate grid position based on top-left corner of piece
         // Use Math.round for better snapping to grid
         const gridCol = Math.round((draggedPiece.x - GRID_OFFSET_X) / CELL_SIZE);
@@ -365,8 +401,36 @@ function finishDrag(shouldPlace = true) {
     }
 }
 
-canvas.addEventListener('pointerup', finishDrag);
-canvas.addEventListener('pointercancel', () => finishDrag(false));
+canvas.addEventListener('pointerup', (e) => finishDrag(e));
+canvas.addEventListener('pointercancel', (e) => finishDrag(e, false));
+
+canvas.addEventListener('click', (e) => {
+    const { x, y } = getCanvasPoint(e);
+
+    if (x >= GRID_OFFSET_X && x < GRID_OFFSET_X + GRID_SIZE * CELL_SIZE &&
+        y >= GRID_OFFSET_Y && y < GRID_OFFSET_Y + GRID_SIZE * CELL_SIZE) {
+        if (!selectedPiece) return;
+
+        const gridCol = Math.floor((x - GRID_OFFSET_X) / CELL_SIZE);
+        const gridRow = Math.floor((y - GRID_OFFSET_Y) / CELL_SIZE);
+        if (canPlacePiece(selectedPiece, gridRow, gridCol)) {
+            placePiece(selectedPiece, gridRow, gridCol);
+            draggedPiece = null;
+        }
+        return;
+    }
+
+    for (const piece of currentPieces) {
+        if (piece.placed) continue;
+        const width = piece.shape[0].length * CELL_SIZE;
+        const height = piece.shape.length * CELL_SIZE;
+        if (x >= piece.x && x <= piece.x + width &&
+            y >= piece.y && y <= piece.y + height) {
+            selectedPiece = piece;
+            break;
+        }
+    }
+});
 
 newGameBtn.addEventListener('click', init);
 
