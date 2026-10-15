@@ -329,24 +329,6 @@ body {
   white-space: pre-wrap;
 }
 
-/* Ad Placement Slots */
-.ad-container {
-  margin: 1.5rem auto;
-  text-align: center;
-  background: rgba(17, 24, 39, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(59, 130, 246, 0.1);
-  border-radius: 12px;
-  padding: 1rem;
-  min-height: 90px;
-}
-
-.ad-header,
-.ad-footer {
-  max-width: 728px;
-}
-
 /* Footer */
 .site-footer {
   padding: 2rem 0;

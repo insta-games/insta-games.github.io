@@ -811,27 +811,6 @@
       "description": ""
     },
     {
-      "hash": "4709756",
-      "author": "sanjith-esp32",
-      "unix_time": 1768444877,
-      "name": "Add Google AdSense meta tag to all HTML files",
-      "description": ""
-    },
-    {
-      "hash": "c67420b",
-      "author": "sanjith-esp32",
-      "unix_time": 1768444685,
-      "name": "Add Google AdSense account meta tag",
-      "description": ""
-    },
-    {
-      "hash": "4d2983c",
-      "author": "sanjith-esp32",
-      "unix_time": 1768444629,
-      "name": "Add ads.txt for Google AdSense verification",
-      "description": ""
-    },
-    {
       "hash": "a6a8443",
       "author": "sanjith-esp32",
       "unix_time": 1768444411,
@@ -1382,20 +1361,6 @@
       "author": "sanjith-esp32",
       "unix_time": 1768272656,
       "name": "Add Fruit Ninja to homepage",
-      "description": ""
-    },
-    {
-      "hash": "3388025",
-      "author": "sanjith-esp32",
-      "unix_time": 1768272378,
-      "name": "Remove ads disabled console message",
-      "description": ""
-    },
-    {
-      "hash": "1d1e401",
-      "author": "sanjith-esp32",
-      "unix_time": 1768271922,
-      "name": "Add Google AdSense script to all pages",
       "description": ""
     },
     {
@@ -2393,13 +2358,6 @@
       "description": ""
     },
     {
-      "hash": "0599846",
-      "author": "sanjith-esp32",
-      "unix_time": 1762879433,
-      "name": "Add About page with mission, stats, and contact info for AdSense compliance",
-      "description": ""
-    },
-    {
       "hash": "59e3384",
       "author": "sanjith-esp32",
       "unix_time": 1762878989,
@@ -2607,13 +2565,6 @@
       "author": "sanjith-esp32",
       "unix_time": 1762864906,
       "name": "Add Privacy Policy and Terms of Service pages",
-      "description": ""
-    },
-    {
-      "hash": "b1c98ae",
-      "author": "sanjith-esp32",
-      "unix_time": 1762864741,
-      "name": "Prepare website for advertisements with ad placeholders and configuration",
       "description": ""
     },
     {

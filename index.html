@@ -11,14 +11,9 @@
     gtag('config', 'G-Q293MVMDY4');
   </script>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609292028680816"
-    crossorigin="anonymous"></script>
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="google-site-verification" content="v6kuKQ8mKBtWUPWgPpaZ53kGCxTPkKIHPTG4aUaiDfs" />
-  <meta name="google-adsense-account" content="ca-pub-9609292028680816" />
   <title>Insta-Games - Play Free Browser Games Instantly</title>
   <meta name="description"
     content="Play free browser games instantly! Classic arcade games, puzzle games, and multiplayer games. No downloads required." />
@@ -129,7 +124,6 @@
   </header>
 
   <!-- Header Ad Placeholder -->
-  <div class="ad-container ad-header" data-ad-placement="header" id="ad-header-top"></div>
 
   <!-- Full Page Content -->
   <main class="container">
@@ -229,7 +223,7 @@
        4. Game Indexing & Button Rendering
        ========================================================================== */
     function formatDirName(name) {
-      return name.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      return name.replace(/[-_]/g, ' ').replace(/connect4/gi, 'connect 4').replace(/\b\w/g, c => c.toUpperCase());
     }
 
     function normalizeKey(str) {
