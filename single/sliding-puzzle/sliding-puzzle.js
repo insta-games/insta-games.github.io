@@ -229,11 +229,10 @@ function formatTime(seconds) {
 }
 
 function getTilePosition(event) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const x = (event.clientX - rect.left) * scaleX;
-    const y = (event.clientY - rect.top) * scaleY;
+    const scaleX = canvas.width / canvas.clientWidth;
+    const scaleY = canvas.height / canvas.clientHeight;
+    const x = event.offsetX * scaleX;
+    const y = event.offsetY * scaleY;
 
     return {
         col: Math.floor(x / TILE_SIZE),
