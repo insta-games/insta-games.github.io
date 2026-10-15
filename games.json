@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "3f79e0d",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792075561,
+      "name": "Guard sliding puzzle tile clicks",
+      "description": ""
+    },
+    {
+      "hash": "acf5f02",
+      "author": "github-actions[bot]",
+      "unix_time": 1792075486,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "124bb5e",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792075471,
@@ -3374,10 +3388,10 @@
     }
   ],
   "last_commit": {
-    "hash": "124bb5e",
+    "hash": "3f79e0d",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792075471,
-    "name": "Fix responsive sliding puzzle clicks",
+    "unix_time": 1792075561,
+    "name": "Guard sliding puzzle tile clicks",
     "description": ""
   }
 }
