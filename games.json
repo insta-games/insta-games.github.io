@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "8ead9c8",
+      "author": "s sanjith",
+      "unix_time": 1792052855,
+      "name": "Remove animated header background",
+      "description": ""
+    },
+    {
+      "hash": "d155ec4",
+      "author": "github-actions[bot]",
+      "unix_time": 1792051400,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "482e7e5",
       "author": "s sanjith",
       "unix_time": 1792051380,
@@ -3101,10 +3115,10 @@
     }
   ],
   "last_commit": {
-    "hash": "482e7e5",
+    "hash": "8ead9c8",
     "author": "s sanjith",
-    "unix_time": 1792051380,
-    "name": "Move special games into single player",
+    "unix_time": 1792052855,
+    "name": "Remove animated header background",
     "description": ""
   }
 }
