@@ -224,14 +224,22 @@ function formatTime(seconds) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
+function getTilePosition(event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = (event.clientX - rect.left) * scaleX;
+    const y = (event.clientY - rect.top) * scaleY;
+
+    return {
+        col: Math.floor(x / TILE_SIZE),
+        row: Math.floor(y / TILE_SIZE)
+    };
+}
+
 // Event listeners
 canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const col = Math.floor(x / TILE_SIZE);
-    const row = Math.floor(y / TILE_SIZE);
+    const { row, col } = getTilePosition(e);
     
     if (row >= 0 && row < GRID_SIZE && col >= 0 && col < GRID_SIZE) {
         hoverTile = { row, col };
@@ -254,12 +262,7 @@ canvas.addEventListener('mouseleave', () => {
 });
 
 canvas.addEventListener('click', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const col = Math.floor(x / TILE_SIZE);
-    const row = Math.floor(y / TILE_SIZE);
+    const { row, col } = getTilePosition(e);
     
     moveTile(row, col);
 });
