@@ -1,15 +1,13 @@
 /**
  * glass-header.js
- * Liquid-glass header bar effect — vanilla Three.js port of the React Bits FluidGlass "bar" mode.
- * Renders an animated gradient scene into an FBO, then uses MeshPhysicalMaterial (transmission)
- * to refract it through a rounded-rect bar that sits behind the nav items.
+ * Header background effect disabled. The header uses its static CSS styling.
  */
 (function () {
   'use strict';
 
   // ─── Wait for THREE to be available ────────────────────────────────────────
   function init() {
-    if (typeof THREE === 'undefined') return;
+    return;
 
     const header = document.querySelector('.site-header');
     if (!header) return;
