@@ -271,18 +271,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function draw() {
         // Keep the board surface close to the site's dark glass background.
-        const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        bgGradient.addColorStop(0, 'rgba(17, 24, 39, 0.78)');
-        bgGradient.addColorStop(1, 'rgba(5, 8, 17, 0.88)');
-        ctx.fillStyle = bgGradient;
+        ctx.fillStyle = '#0b1220';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Add a restrained inner surface so the board feels framed, not pasted on.
-        const boardGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        boardGradient.addColorStop(0, 'rgba(30, 41, 59, 0.72)');
-        boardGradient.addColorStop(0.5, 'rgba(15, 23, 42, 0.76)');
-        boardGradient.addColorStop(1, 'rgba(2, 6, 23, 0.84)');
-        ctx.fillStyle = boardGradient;
+        // Use a single dark surface so the board sits quietly against the page.
+        ctx.fillStyle = '#111827';
         ctx.shadowBlur = 24;
         ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
