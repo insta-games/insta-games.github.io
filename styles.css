@@ -137,6 +137,11 @@ body {
   touch-action: none;
 }
 
+.snake-canvas {
+  display: block;
+  margin: 0 auto;
+}
+
 .game-2048-board {
   --board-gap: 12px;
   width: min(92vw, 460px);
