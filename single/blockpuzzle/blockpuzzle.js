@@ -41,7 +41,6 @@ function init() {
     scoreDisplay.textContent = 'Score: 0';
     highScoreDisplay.textContent = `Best: ${highScore}`;
     generateNewPieces();
-    draw();
 }
 
 // Generate 3 new pieces
@@ -309,11 +308,17 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-// Mouse events
-canvas.addEventListener('mousedown', (e) => {
+function getCanvasPoint(e) {
     const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    return {
+        x: (e.clientX - rect.left) * canvas.width / rect.width,
+        y: (e.clientY - rect.top) * canvas.height / rect.height
+    };
+}
+
+canvas.addEventListener('pointerdown', (e) => {
+    const { x: mouseX, y: mouseY } = getCanvasPoint(e);
+    canvas.setPointerCapture(e.pointerId);
     
     for (const piece of currentPieces) {
         if (piece.placed) continue;
@@ -332,26 +337,22 @@ canvas.addEventListener('mousedown', (e) => {
     }
 });
 
-canvas.addEventListener('mousemove', (e) => {
+canvas.addEventListener('pointermove', (e) => {
     if (draggedPiece) {
-        const rect = canvas.getBoundingClientRect();
-        draggedPiece.x = e.clientX - rect.left - dragOffset.x;
-        draggedPiece.y = e.clientY - rect.top - dragOffset.y;
+        const { x, y } = getCanvasPoint(e);
+        draggedPiece.x = x - dragOffset.x;
+        draggedPiece.y = y - dragOffset.y;
     }
 });
 
-canvas.addEventListener('mouseup', (e) => {
+function finishDrag(shouldPlace = true) {
     if (draggedPiece) {
-        const rect = canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        
         // Calculate grid position based on top-left corner of piece
         // Use Math.round for better snapping to grid
         const gridCol = Math.round((draggedPiece.x - GRID_OFFSET_X) / CELL_SIZE);
         const gridRow = Math.round((draggedPiece.y - GRID_OFFSET_Y) / CELL_SIZE);
         
-        if (canPlacePiece(draggedPiece, gridRow, gridCol)) {
+        if (shouldPlace && canPlacePiece(draggedPiece, gridRow, gridCol)) {
             placePiece(draggedPiece, gridRow, gridCol);
         } else {
             // Return to original position
@@ -362,7 +363,10 @@ canvas.addEventListener('mouseup', (e) => {
         
         draggedPiece = null;
     }
-});
+}
+
+canvas.addEventListener('pointerup', finishDrag);
+canvas.addEventListener('pointercancel', () => finishDrag(false));
 
 newGameBtn.addEventListener('click', init);
 
