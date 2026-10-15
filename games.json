@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "ceb7f20",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792074257,
+      "name": "Refine Connect Four board styling",
+      "description": ""
+    },
+    {
+      "hash": "e7f18e7",
+      "author": "github-actions[bot]",
+      "unix_time": 1792073960,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "f1a2b67",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792073946,
@@ -3255,10 +3269,10 @@
     }
   ],
   "last_commit": {
-    "hash": "f1a2b67",
+    "hash": "ceb7f20",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792073946,
-    "name": "Fix broken game header logos",
+    "unix_time": 1792074257,
+    "name": "Refine Connect Four board styling",
     "description": ""
   }
 }
