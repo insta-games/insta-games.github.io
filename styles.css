@@ -170,7 +170,19 @@ body {
 
 .snake-canvas {
   display: block;
+  width: min(100%, 600px);
+  height: auto;
   margin: 0 auto;
+}
+
+.hockey-canvas,
+.pingpong-canvas,
+.racing-canvas,
+.tanks-canvas,
+.checkers-canvas,
+.fruitninja-canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 .memory-grid {
