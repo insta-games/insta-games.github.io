@@ -504,8 +504,8 @@
                     const diveMult = (keys.s || keys.ArrowDown || sameSideDownThreat) ? 2.2 : 1.0;
                     if (!pointerActive) {
                         const step = 0.055 * diveMult;
-                        if (keys.w || keys.ArrowUp) leftPaddle.targetAngle -= step;
-                        if (keys.s || keys.ArrowDown) leftPaddle.targetAngle += step;
+                        if (keys.w || keys.ArrowUp) leftPaddle.targetAngle += step;
+                        if (keys.s || keys.ArrowDown) leftPaddle.targetAngle -= step;
                     }
                     // Constrain left player paddle inside left semicircle [-PI, -PI/2] U [PI/2, PI]
                     const halfSpan = leftPaddle.span / 2;
