@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "a0a92cd",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792075860,
+      "name": "Use canvas-local puzzle hover coordinates",
+      "description": ""
+    },
+    {
+      "hash": "d17ed41",
+      "author": "github-actions[bot]",
+      "unix_time": 1792075575,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "3f79e0d",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792075561,
@@ -3388,10 +3402,10 @@
     }
   ],
   "last_commit": {
-    "hash": "3f79e0d",
+    "hash": "a0a92cd",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792075561,
-    "name": "Guard sliding puzzle tile clicks",
+    "unix_time": 1792075860,
+    "name": "Use canvas-local puzzle hover coordinates",
     "description": ""
   }
 }
