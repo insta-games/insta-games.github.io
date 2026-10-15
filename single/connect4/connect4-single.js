@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (board[row][col] === 0) {
                 board[row][col] = currentPlayer;
                 checkWin(row, col);
+                updateStatus();
                 if (!gameOver) {
                     currentPlayer = currentPlayer === 1 ? 2 : 1;
                     updateStatus();
