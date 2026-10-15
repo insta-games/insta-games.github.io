@@ -41,6 +41,27 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "2ef4f94",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792074359,
+      "name": "Remove Connect Four board gradient",
+      "description": ""
+    },
+    {
+      "hash": "e589fcc",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792074350,
+      "name": "Fix Connect Four player win status",
+      "description": ""
+    },
+    {
+      "hash": "74af311",
+      "author": "github-actions[bot]",
+      "unix_time": 1792074270,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "ceb7f20",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792074257,
@@ -3269,10 +3290,10 @@
     }
   ],
   "last_commit": {
-    "hash": "ceb7f20",
+    "hash": "2ef4f94",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792074257,
-    "name": "Refine Connect Four board styling",
+    "unix_time": 1792074359,
+    "name": "Remove Connect Four board gradient",
     "description": ""
   }
 }
