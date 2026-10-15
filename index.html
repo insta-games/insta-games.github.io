@@ -198,8 +198,6 @@
       <nav class="site-nav" id="site-nav">
         <a href="javascript:void(0)" id="nav-singleplayer" class="active">Single Player</a>
         <a href="javascript:void(0)" id="nav-local-multiplayer">Local Multiplayer</a>
-        <a href="javascript:void(0)" id="nav-special">Special Games</a>
-        <a href="commit.html">Commit History</a>
         <a href="about/">About</a>
         <a href="feedback/">Feedback</a>
       </nav>
@@ -227,13 +225,6 @@
       </div>
     </section>
 
-    <!-- Special Games Section -->
-    <section class="features" id="section-special" style="display:none;">
-      <h2>Special Games</h2>
-      <div class="grid" id="grid-special">
-        <div class="empty-state">No games found.</div>
-      </div>
-    </section>
   </main>
 
   <!-- Footer Ad Placeholder -->
@@ -242,7 +233,6 @@
   <footer class="site-footer">
     <div class="container">
       <small>&copy; <span id="year"></span> Insta-Games |
-        <a href="commit.html" style="color: var(--accent); text-decoration: none;">Commit History</a> |
         <a href="privacy/" style="color: var(--accent); text-decoration: none;">Privacy Policy</a> |
         <a href="terms/" style="color: var(--accent); text-decoration: none;">Terms of Service</a> |
         <a href="about/" style="color: var(--accent); text-decoration: none;">About</a> |
@@ -446,8 +436,7 @@
 
     const tabs = [
       { nav: document.getElementById('nav-singleplayer'), sec: document.getElementById('section-singleplayer') },
-      { nav: document.getElementById('nav-local-multiplayer'), sec: document.getElementById('section-local-multiplayer') },
-      { nav: document.getElementById('nav-special'), sec: document.getElementById('section-special') }
+      { nav: document.getElementById('nav-local-multiplayer'), sec: document.getElementById('section-local-multiplayer') }
     ];
 
     tabs.forEach(tab => {
@@ -504,16 +493,16 @@
       return { single: [], multi: [], special: [] };
     }
 
-    function renderCategory(dirs, folder, gridId, descMap) {
+    function renderCategory(dirs, folder, gridId, descMap, append = false) {
       const grid = document.getElementById(gridId);
       if (!grid) return;
 
       if (!dirs || dirs.length === 0) {
-        grid.innerHTML = '<div class="empty-state">No games found.</div>';
+        if (!append) grid.innerHTML = '<div class="empty-state">No games found.</div>';
         return;
       }
 
-      grid.innerHTML = '';
+      if (!append) grid.innerHTML = '';
 
       for (const dir of dirs) {
         const title = formatDirName(dir);
@@ -563,7 +552,7 @@
 
       renderCategory(catalog.single || [], 'single', 'grid-singleplayer', descMap);
       renderCategory(catalog.multi || [], 'multi', 'grid-local-multiplayer', descMap);
-      renderCategory(catalog.special || [], 'special', 'grid-special', descMap);
+      renderCategory(catalog.special || [], 'special', 'grid-singleplayer', descMap, true);
     });
   </script>
 </body>
