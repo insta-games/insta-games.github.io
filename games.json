@@ -5,6 +5,7 @@
     "breakout",
     "checkers",
     "connect4",
+    "copter",
     "dino",
     "flappy",
     "fruitninja",
@@ -12,6 +13,7 @@
     "match3",
     "memory",
     "minesweeper",
+    "pacman",
     "pong",
     "pongcircular",
     "simon",
@@ -25,6 +27,7 @@
     "checkers",
     "connect4",
     "hockey",
+    "pacman",
     "pingpong",
     "pong",
     "racing",
@@ -37,6 +40,34 @@
   ],
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
+    {
+      "hash": "6c561f9",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792074799,
+      "name": "Restore Cyber Pong site chrome",
+      "description": ""
+    },
+    {
+      "hash": "30614cd",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792074645,
+      "name": "Remove Pac-Man game tabs",
+      "description": ""
+    },
+    {
+      "hash": "a290bdb",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792074489,
+      "name": "Remove Copter game tab",
+      "description": ""
+    },
+    {
+      "hash": "b77c68d",
+      "author": "github-actions[bot]",
+      "unix_time": 1792074372,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
     {
       "hash": "2ef4f94",
       "author": "Sanjith Anand Ram",
@@ -3287,10 +3318,10 @@
     }
   ],
   "last_commit": {
-    "hash": "2ef4f94",
+    "hash": "6c561f9",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792074359,
-    "name": "Remove Connect Four board gradient",
+    "unix_time": 1792074799,
+    "name": "Restore Cyber Pong site chrome",
     "description": ""
   }
 }
