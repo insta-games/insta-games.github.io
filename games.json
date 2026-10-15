@@ -41,6 +41,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "a2ae325",
+      "author": "s sanjith",
+      "unix_time": 1792054696,
+      "name": "Restore legacy colors and scrolling",
+      "description": ""
+    },
+    {
+      "hash": "4716cf5",
+      "author": "github-actions[bot]",
+      "unix_time": 1792053504,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "43f8a01",
       "author": "s sanjith",
       "unix_time": 1792053491,
@@ -3129,10 +3143,10 @@
     }
   ],
   "last_commit": {
-    "hash": "43f8a01",
+    "hash": "a2ae325",
     "author": "s sanjith",
-    "unix_time": 1792053491,
-    "name": "Restore legacy site chrome",
+    "unix_time": 1792054696,
+    "name": "Restore legacy colors and scrolling",
     "description": ""
   }
 }
