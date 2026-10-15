@@ -39,6 +39,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "7e817c8",
+      "author": "Sanjith Anand Ram",
+      "unix_time": 1792076432,
+      "name": "Remove Pacman games",
+      "description": ""
+    },
+    {
+      "hash": "20ff232",
+      "author": "github-actions[bot]",
+      "unix_time": 1792076334,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "bd29c04",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792076319,
@@ -3442,10 +3456,10 @@
     }
   ],
   "last_commit": {
-    "hash": "bd29c04",
+    "hash": "7e817c8",
     "author": "Sanjith Anand Ram",
-    "unix_time": 1792076319,
-    "name": "Restore Memory Match board styles",
+    "unix_time": 1792076432,
+    "name": "Remove Pacman games",
     "description": ""
   }
 }
