@@ -42,6 +42,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "d74bdda",
+      "author": "s sanjith",
+      "unix_time": 1792050718,
+      "name": "Remove latest commit banners",
+      "description": ""
+    },
+    {
+      "hash": "e4944ee",
+      "author": "github-actions[bot]",
+      "unix_time": 1789904611,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "1767fdb",
       "author": "greg-webdev",
       "unix_time": 1789904598,
@@ -3060,10 +3074,10 @@
     }
   ],
   "last_commit": {
-    "hash": "1767fdb",
-    "author": "greg-webdev",
-    "unix_time": 1789904598,
-    "name": "Merge branch 'main' of https://github.com/insta-games/insta-games.github.io",
+    "hash": "d74bdda",
+    "author": "s sanjith",
+    "unix_time": 1792050718,
+    "name": "Remove latest commit banners",
     "description": ""
   }
 }
