@@ -269,32 +269,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function draw() {
-        // Background with themed gradient
+        // Keep the board surface close to the site's dark glass background.
         const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        bgGradient.addColorStop(0, '#1e293b');
-        bgGradient.addColorStop(1, '#0f172a');
+        bgGradient.addColorStop(0, 'rgba(17, 24, 39, 0.78)');
+        bgGradient.addColorStop(1, 'rgba(5, 8, 17, 0.88)');
         ctx.fillStyle = bgGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // Draw board with themed blue gradient and rounded corners
+        // Add a restrained inner surface so the board feels framed, not pasted on.
         const boardGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        boardGradient.addColorStop(0, '#2563eb');
-        boardGradient.addColorStop(0.5, '#1e40af');
-        boardGradient.addColorStop(1, '#1e3a8a');
+        boardGradient.addColorStop(0, 'rgba(30, 41, 59, 0.72)');
+        boardGradient.addColorStop(0.5, 'rgba(15, 23, 42, 0.76)');
+        boardGradient.addColorStop(1, 'rgba(2, 6, 23, 0.84)');
         ctx.fillStyle = boardGradient;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 24;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.shadowBlur = 0;
         
-        // Draw board frame/border for depth
-        ctx.strokeStyle = '#1e3a8a';
-        ctx.lineWidth = 4;
+        // Use the site's cyan accent as a quiet edge highlight.
+        ctx.strokeStyle = 'rgba(6, 182, 212, 0.32)';
+        ctx.lineWidth = 2;
         ctx.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
         
         // Inner highlight on board
-        ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.12)';
+        ctx.lineWidth = 1;
         ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
         
         // Draw grid and pieces
