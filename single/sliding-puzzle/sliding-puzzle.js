@@ -59,6 +59,10 @@ function getNeighbors(row, col) {
 
 // Move a tile
 function moveTile(row, col, countMove = true) {
+    if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE || tiles[row][col] === 0) {
+        return;
+    }
+
     // Check if the tile is adjacent to empty space
     const rowDiff = Math.abs(row - emptyPos.row);
     const colDiff = Math.abs(col - emptyPos.col);
