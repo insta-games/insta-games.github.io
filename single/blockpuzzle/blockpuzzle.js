@@ -6,7 +6,7 @@ const newGameBtn = document.getElementById('newGameBtn');
 
 const GRID_SIZE = 8;
 const CELL_SIZE = 50;
-const GRID_OFFSET_X = 50;
+const GRID_OFFSET_X = (canvas.width - GRID_SIZE * CELL_SIZE) / 2;
 const GRID_OFFSET_Y = 50;
 const PIECES_Y = 500;
 
@@ -118,17 +118,12 @@ function drawPiece(piece, alpha = 1) {
                 const x = piece.x + col * CELL_SIZE;
                 const y = piece.y + row * CELL_SIZE;
                 
-                // Dark blue block with gradient
-                const gradient = ctx.createLinearGradient(x, y, x + CELL_SIZE, y + CELL_SIZE);
-                gradient.addColorStop(0, '#1e3a8a');
-                gradient.addColorStop(1, '#1e40af');
-                ctx.fillStyle = gradient;
+                ctx.fillStyle = piece.color;
                 ctx.fillRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
                 
-                // Glowing edge
-                ctx.strokeStyle = '#3b82f6';
+                ctx.strokeStyle = piece.color;
                 ctx.lineWidth = 2;
-                ctx.shadowColor = '#3b82f6';
+                ctx.shadowColor = piece.color;
                 ctx.shadowBlur = 6;
                 ctx.strokeRect(x + 3, y + 3, CELL_SIZE - 6, CELL_SIZE - 6);
                 
@@ -191,13 +186,11 @@ function canPlacePiece(piece, gridRow, gridCol) {
 // Place piece on grid
 function placePiece(piece, gridRow, gridCol) {
     const shape = piece.shape;
-    const colors = ['#ef4444', '#f97316', '#eab308', '#10b981', '#06b6d4', '#8b5cf6'];
     
     for (let row = 0; row < shape.length; row++) {
         for (let col = 0; col < shape[row].length; col++) {
             if (shape[row][col]) {
-                // Assign random color to each placed block
-                grid[gridRow + row][gridCol + col] = colors[Math.floor(Math.random() * colors.length)];
+                grid[gridRow + row][gridCol + col] = piece.color;
             }
         }
     }
