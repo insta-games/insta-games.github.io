@@ -39,6 +39,20 @@
   "repo_url": "https://github.com/insta-games/insta-games.github.io",
   "commits": [
     {
+      "hash": "dec9bc3",
+      "author": "Geg",
+      "unix_time": 1793239511,
+      "name": "Update README.md",
+      "description": "Signed-off-by: Geg <greg@notgreg.space>"
+    },
+    {
+      "hash": "018fdbc",
+      "author": "github-actions[bot]",
+      "unix_time": 1792079073,
+      "name": "Auto-update full commit history [skip ci]",
+      "description": ""
+    },
+    {
       "hash": "fc8d027",
       "author": "Sanjith Anand Ram",
       "unix_time": 1792079059,
@@ -3498,10 +3512,10 @@
     }
   ],
   "last_commit": {
-    "hash": "fc8d027",
-    "author": "Sanjith Anand Ram",
-    "unix_time": 1792079059,
-    "name": "Fix multiplayer mobile layouts",
-    "description": ""
+    "hash": "dec9bc3",
+    "author": "Geg",
+    "unix_time": 1793239511,
+    "name": "Update README.md",
+    "description": "Signed-off-by: Geg <greg@notgreg.space>"
   }
 }
